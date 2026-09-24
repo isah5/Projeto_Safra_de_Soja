@@ -123,11 +123,22 @@ por região, deixando claro no artigo que é uma aproximação, não um dado
 observado. Essa limitação já era esperada e está descrita no artigo
 (seção 3.2, nota "Limitação a declarar explicitamente").
 
+### Coordenadas dos municípios (auxiliar, para casar com o INMET)
+
+O IBGE não expõe latitude/longitude na API usada para a Tabela 1612, mas o
+notebook de análise exploratória precisa disso para achar a estação INMET
+mais próxima de cada município. Usamos a base pública
+[kelvins/municipios-brasileiros](https://github.com/kelvins/municipios-brasileiros)
+(código IBGE → lat/long/UF, licença MIT), filtrada para o RS: `dataset/raw/municipios_brasil_coords.csv`.
+
 ## Chaves e formato final
 
-- Chave primária da base final (a ser gerada no notebook): `codigo_ibge_municipio` + `ano_safra`
-- Arquivo(s) brutos (já disponíveis): `dataset/raw/`
-- Arquivo(s) processado(s)/final(is) (a gerar nos notebooks): `dataset/processed/painel_municipio_safra.csv`
+- Chave primária da base final: `codigo_ibge_municipio` + `ano_safra`
+- Arquivo(s) brutos: `dataset/raw/`
+- Arquivo processado/final: `dataset/processed/painel_municipio_safra.csv` —
+  gerado pelo notebook `notebooks/analise_exploratoria.ipynb`, junta IBGE +
+  clima INMET (estação mais próxima) + ONI por safra. **Ainda não inclui**
+  a adubação fosfatada (ver seção acima).
 
 ## Dicionário de variáveis
 
