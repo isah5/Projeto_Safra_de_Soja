@@ -33,7 +33,6 @@ correlações, cobertura temporal/espacial e relação ONI × rendimento)."]
 ```python
 """
 Previsão de Produtividade Municipal da Soja no RS
-Grupo: [preencher]
 Integrantes: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
              Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067)
 Orientador: Prof. Dr. Ivan Carlos Alcântara de Oliveira

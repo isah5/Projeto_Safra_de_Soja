@@ -11,6 +11,7 @@ Data       | Autor           | Descrição
 -----------|-----------------|--------------------------------------------
 2026-09-24 | [nome do autor] | Criação do template de descrição do dataset
 2026-09-24 | [nome do autor] | Download dos dados reais do IBGE/SIDRA (Tabela 1612) e do ONI/NOAA; documentação atualizada
+2026-09-24 | [nome do autor] | Adicionados dados diários do INMET (45 estações do RS, 2000-2023), baixados manualmente via portal BDMEP
 -->
 
 # Dataset — descrição
@@ -21,7 +22,7 @@ Data       | Autor           | Descrição
 |---|---|---|---|---|---|
 | IBGE/SIDRA — Tabela 1612 | Área plantada, área colhida, produção e rendimento médio de soja | 2000–2023 | Município (RS) | https://sidra.ibge.gov.br/tabela/1612 | ✅ baixado — `dataset/raw/ibge_sidra_1612_soja_rs_2000_2023.csv` |
 | NOAA/CPC — ONI | Índice trimestral (médias móveis de 3 meses) do ENOS (El Niño/La Niña) | 1999–2024 | Trimestral (a agregar por safra) | https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt | ✅ baixado — `dataset/raw/noaa_oni_1999_2024.csv` |
-| INMET — BDMEP | Precipitação e temperatura observadas | 2000–2023 | Estação meteorológica | https://bdmep.inmet.gov.br/ | ❌ **pendente** — API do INMET (`apitempo.inmet.gov.br`, `bdmep.inmet.gov.br`) não respondeu nas tentativas automatizadas; requer download manual via portal BDMEP (cadastro + token gratuito) |
+| INMET — BDMEP | Precipitação total diária e temperatura (máx/média/mín) diária, por estação automática | 2000-09-21 a 2023-12-31 | Estação meteorológica (diário) | https://bdmep.inmet.gov.br/ | ✅ baixado (manual, via portal BDMEP) — `dataset/raw/inmet_estacoes_RS_consolidado.csv` (dados diários) + `dataset/raw/inmet_estacoes_metadados.csv` (lat/long/situação de cada estação) |
 | Embrapa / CQFS-RS/SC | Recomendações de adubação fosfatada (MAP, Superfosfato Simples, Superfosfato Triplo, DAP) | — | Classe de solo/região | (referência bibliográfica, sem API — dados a transcrever do manual) | ❌ pendente — transcrever manualmente do manual CQFS-RS/SC (2016) |
 
 ### Como os dados do IBGE foram obtidos
@@ -57,6 +58,30 @@ essas janelas trimestrais para uma métrica por safra (ex.: média do ONI nas
 janelas que cobrem a semeadura–colheita de cada safra no RS, tipicamente
 out–mar).
 
+### Como os dados do INMET foram obtidos
+
+Baixados manualmente pelo portal BDMEP (https://bdmep.inmet.gov.br/), já que
+a API automática (`apitempo.inmet.gov.br`) não respondeu nas tentativas via
+script. Cobertura: **45 estações automáticas** distribuídas pelo RS (ex.:
+Porto Alegre, Rio Grande, Santa Maria, Uruguaiana, Bagé, Erechim, Passo
+Fundo, Bento Gonçalves), período 2000-09-21 a 2023-12-31, granularidade
+diária.
+
+- `dataset/raw/inmet_estacoes_metadados.csv` — uma linha por estação, com
+  código, nome, latitude, longitude, altitude e situação (`Operante`,
+  `Pane` ou `Desativada`).
+- `dataset/raw/inmet_estacoes_RS_consolidado.csv` — 248.267 linhas (estação
+  × dia), com precipitação total diária, temperatura máxima/média/mínima
+  diária, e variáveis extras (pressão, umidade, ponto de orvalho, vento).
+
+**Ainda falta**, no notebook de preparação: (1) calcular, para cada
+município, a estação mais próxima usando as coordenadas de
+`inmet_estacoes_metadados.csv` e o centróide do município (via malha
+municipal do IBGE); (2) agregar os dados diários por safra (ex.: soma de
+precipitação e médias de temperatura na janela semeadura–colheita,
+possivelmente contagem de veranicos); (3) tratar os períodos em que a
+estação estava em `Pane` como dado ausente, não como zero.
+
 ## Chaves e formato final
 
 - Chave primária da base final (a ser gerada no notebook): `codigo_ibge_municipio` + `ano_safra`
@@ -74,10 +99,22 @@ out–mar).
 | `area_plantada_ha` | Área plantada | ha | IBGE/SIDRA |
 | `producao_ton` | Produção total | toneladas | IBGE/SIDRA |
 | `oni_media_safra` | ONI médio na janela semeadura–colheita | índice | NOAA/CPC |
-| `precipitacao_mm` | Precipitação observada (estação mais próxima) | mm | INMET |
-| `temperatura_media_c` | Temperatura média observada | °C | INMET |
+| `precipitacao_total_safra_mm` | Soma da precipitação diária na janela semeadura–colheita (estação mais próxima) | mm | INMET |
+| `temperatura_media_safra_c` | Média da temperatura média diária na janela semeadura–colheita | °C | INMET |
 | `dose_p2o5_recomendada` | Dose de P₂O₅ recomendada por classe de solo | kg/ha | Embrapa / CQFS-RS/SC |
 | ... | [completar conforme colunas finais geradas nos notebooks] | | |
+
+Colunas brutas disponíveis em `inmet_estacoes_RS_consolidado.csv` (antes da
+agregação por safra): `Codigo Estacao`, `Nome Estacao`, `Latitude`,
+`Longitude`, `Altitude`, `Situacao`, `Data Medicao`, `PRECIPITACAO TOTAL,
+DIARIO (AUT)(mm)`, `PRESSAO ATMOSFERICA MEDIA DIARIA (AUT)(mB)`,
+`TEMPERATURA DO PONTO DE ORVALHO MEDIA DIARIA (AUT)(°C)`, `TEMPERATURA
+MAXIMA, DIARIA (AUT)(°C)`, `TEMPERATURA MEDIA, DIARIA (AUT)(°C)`,
+`TEMPERATURA MINIMA, DIARIA (AUT)(°C)`, `UMIDADE RELATIVA DO AR, MEDIA
+DIARIA (AUT)(%)`, `UMIDADE RELATIVA DO AR, MINIMA DIARIA (AUT)(%)`, `VENTO,
+RAJADA MAXIMA DIARIA (AUT)(m/s)`, `VENTO, VELOCIDADE MEDIA DIARIA
+(AUT)(m/s)`. O arquivo usa `;` como separador e `,` como separador decimal
+(padrão INMET) — atenção ao ler com pandas (`sep=';', decimal=','`).
 
 ## Limitações conhecidas
 
@@ -87,6 +124,12 @@ out–mar).
   podem ter séries históricas incompletas.
 - A estação INMET usada por município é a mais próxima disponível, podendo
   não representar exatamente o microclima local.
+- Várias estações do INMET aparecem como `Pane` em parte do período (falha
+  de equipamento) — os dias correspondentes ficam com valor ausente na
+  série e devem ser tratados como dado faltante, não como zero.
+- A rede automática do INMET no RS começou a operar de forma escalonada
+  (algumas estações só têm dados a partir de 2006-2007), então nem todo
+  município tem cobertura climática completa desde 2000.
 
 ## Licença de uso dos dados originais
 
