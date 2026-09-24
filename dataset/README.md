@@ -23,7 +23,7 @@ Data       | Autor           | Descrição
 | IBGE/SIDRA — Tabela 1612 | Área plantada, área colhida, produção e rendimento médio de soja | 2000–2023 | Município (RS) | https://sidra.ibge.gov.br/tabela/1612 | ✅ baixado — `dataset/raw/ibge_sidra_1612_soja_rs_2000_2023.csv` |
 | NOAA/CPC — ONI | Índice trimestral (médias móveis de 3 meses) do ENOS (El Niño/La Niña) | 1999–2024 | Trimestral (a agregar por safra) | https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt | ✅ baixado — `dataset/raw/noaa_oni_1999_2024.csv` |
 | INMET — BDMEP | Precipitação total diária e temperatura (máx/média/mín) diária, por estação automática | 2000-09-21 a 2023-12-31 | Estação meteorológica (diário) | https://bdmep.inmet.gov.br/ | ✅ baixado (manual, via portal BDMEP) — `dataset/raw/inmet_estacoes_RS_consolidado.csv` (dados diários) + `dataset/raw/inmet_estacoes_metadados.csv` (lat/long/situação de cada estação) |
-| Embrapa / CQFS-RS/SC | Recomendações de adubação fosfatada (MAP, Superfosfato Simples, Superfosfato Triplo, DAP) | — | Classe de solo/região | (referência bibliográfica, sem API — dados a transcrever do manual) | ❌ pendente — transcrever manualmente do manual CQFS-RS/SC (2016) |
+| Embrapa / CQFS-RS/SC | Recomendação de adubação fosfatada e potássica para soja, por classe de teor de P/K no solo | — | Classe de teor de P/K no solo (não por município) | https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192 | ✅ baixado — `dataset/raw/embrapa_tabela_2.3_interpretacao_teor_p_k.csv` + `dataset/raw/embrapa_tabela_2.4_recomendacao_p2o5_k2o_soja.csv` |
 
 ### Como os dados do IBGE foram obtidos
 
@@ -81,6 +81,47 @@ municipal do IBGE); (2) agregar os dados diários por safra (ex.: soma de
 precipitação e médias de temperatura na janela semeadura–colheita,
 possivelmente contagem de veranicos); (3) tratar os períodos em que a
 estação estava em `Pane` como dado ausente, não como zero.
+
+### Como os dados de adubação fosfatada foram obtidos
+
+O manual original da CQFS-RS/SC (2016), citado nas Referências do artigo, é
+comercializado como livro impresso pela SBCS-Núcleo Regional Sul
+(sbcs-nrs.org.br) e **não tem PDF gratuito oficial**. As mesmas tabelas de
+recomendação (a base técnica é a mesma comissão/manual) são reproduzidas
+livremente pela Embrapa em "Indicações Técnicas para a Cultura da Soja no
+Rio Grande do Sul e em Santa Catarina", disponível sem custo no repositório
+oficial Infoteca-e da Embrapa:
+<https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192>
+(edição safras 2014/2015 e 2015/2016, que cita "MANUAL... (2004)" como
+fonte primária das tabelas — a estrutura de classes e doses é a mesma usada
+nas edições posteriores do manual, incluindo a de 2016).
+
+Duas tabelas foram transcritas dessas páginas (Tabela 2.3 e Tabela 2.4 do
+documento):
+
+- `dataset/raw/embrapa_tabela_2.3_interpretacao_teor_p_k.csv` — classifica o
+  teor de P e K do solo (mg/dm³) em Muito baixo/Baixo/Médio/Alto/Muito alto,
+  variando conforme a classe textural do solo (argila) e a CTC a pH 7,0.
+- `dataset/raw/embrapa_tabela_2.4_recomendacao_p2o5_k2o_soja.csv` — dose de
+  P₂O₅ e K₂O (kg/ha) recomendada por classe de teor, para 1º e 2º cultivo
+  após a adubação corretiva, considerando rendimento esperado de 2 t/ha
+  (para rendimentos maiores, soma-se 15 kg/ha de P₂O₅ e 25 kg/ha de K₂O por
+  tonelada adicional). Há também uma recomendação pontual de enxofre (20 kg
+  S/ha quando o teor no solo é menor que 10 mg/dm³), registrada aqui como
+  nota e não como tabela.
+
+**Importante — isto não é uma série por município/ano**: ao contrário do
+IBGE, ONI e INMET, esta fonte é uma **tabela de referência agronômica**
+(dose recomendada em função do teor de P/K no solo), não uma medição
+histórica. Não existe base pública de "quanto fósforo foi realmente
+aplicado" por município e safra. Para usar isso no painel município–safra,
+o grupo precisará de uma **hipótese simplificadora explícita** — por
+exemplo, assumir uma classe de teor de solo típica por região do RS (com
+base em levantamentos de fertilidade do solo já publicados, citando a
+fonte) e aplicar a dose correspondente da Tabela 2.4 como atributo fixo ou
+por região, deixando claro no artigo que é uma aproximação, não um dado
+observado. Essa limitação já era esperada e está descrita no artigo
+(seção 3.2, nota "Limitação a declarar explicitamente").
 
 ## Chaves e formato final
 
