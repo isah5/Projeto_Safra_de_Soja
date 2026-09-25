@@ -22,10 +22,6 @@ brutos do IBGE/SIDRA, ONI e INMET, realiza a limpeza e integração em nível
 município–safra, e apresenta a análise exploratória (distribuições,
 correlações, cobertura temporal/espacial e relação ONI × rendimento)."]
 
-| Data        Descrição                              |
-|-----------------------------------------------------|
-| 2026-09-24 |  Criação do notebook / primeira versão   |
-```
 
 ## Para scripts Python (.py) — primeiras linhas, como comentário
 
