@@ -13,7 +13,6 @@ de alterações (data, autor, descrição). Os modelos abaixo já trazem os trê
 ```markdown
 # Previsão de Produtividade Municipal da Soja no RS — Análise Exploratória
 
-**Grupo:** [preencher]
 **Integrantes:** Isabelle Franco (RA 10425395) · Gustavo Rodrigues (RA 10403091) ·
 Pedro Henrique (RA 10388298) · Lorenzo Tadeo (RA 10420067)
 **Orientador:** Prof. Dr. Ivan Carlos Alcântara de Oliveira
@@ -23,9 +22,9 @@ brutos do IBGE/SIDRA, ONI e INMET, realiza a limpeza e integração em nível
 município–safra, e apresenta a análise exploratória (distribuições,
 correlações, cobertura temporal/espacial e relação ONI × rendimento)."]
 
-| Data       | Autor           | Descrição                              |
-|------------|-----------------|-----------------------------------------|
-| 2026-09-24 | [nome do autor] | Criação do notebook / primeira versão   |
+| Data        Descrição                              |
+|-----------------------------------------------------|
+| 2026-09-24 |  Criação do notebook / primeira versão   |
 ```
 
 ## Para scripts Python (.py) — primeiras linhas, como comentário
