@@ -1,5 +1,5 @@
 <!--
-Grupo: [preencher] | Integrantes: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
+Integrantes: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
 Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067) | Orientador: Prof. Dr. Ivan Carlos Alcântara de Oliveira
 
 Síntese do conteúdo deste arquivo: descreve as fontes de dados usadas no
@@ -9,9 +9,11 @@ variáveis planejado para a base final e as limitações conhecidas.
 HISTÓRICO DE ALTERAÇÕES
 Data       | Autor           | Descrição
 -----------|-----------------|--------------------------------------------
-2026-09-24 | [nome do autor] | Criação do template de descrição do dataset
-2026-09-24 | [nome do autor] | Download dos dados reais do IBGE/SIDRA (Tabela 1612) e do ONI/NOAA; documentação atualizada
-2026-09-24 | [nome do autor] | Adicionados dados diários do INMET (45 estações do RS, 2000-2023), baixados manualmente via portal BDMEP
+2026-09-24 | Criação do template de descrição do dataset
+2026-09-24  | Download dos dados reais do IBGE/SIDRA (Tabela 1612) e do ONI/NOAA; documentação atualizada
+2026-09-24 | Adicionados dados diários do INMET (45 estações do RS, 2000-2023), baixados manualmente via portal BDMEP
+2026-09-25 | Estendido o range do IBGE e do ONI de 2000-2023 para 2000-2025 (a API do IBGE já publica dados até 2025); INMET segue em 2000-2023, atualização pendente
+2026-09-25 | Estendido o INMET para 2000-2025 (download manual complementar via BDMEP, mesmas 45 estações, período 2024-2025); base completa nas 3 fontes
 -->
 
 # Dataset — descrição
@@ -20,9 +22,9 @@ Data       | Autor           | Descrição
 
 | Fonte | Conteúdo | Período | Granularidade | Link | Status |
 |---|---|---|---|---|---|
-| IBGE/SIDRA — Tabela 1612 | Área plantada, área colhida, produção e rendimento médio de soja | 2000–2023 | Município (RS) | https://sidra.ibge.gov.br/tabela/1612 | ✅ baixado — `dataset/raw/ibge_sidra_1612_soja_rs_2000_2023.csv` |
-| NOAA/CPC — ONI | Índice trimestral (médias móveis de 3 meses) do ENOS (El Niño/La Niña) | 1999–2024 | Trimestral (a agregar por safra) | https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt | ✅ baixado — `dataset/raw/noaa_oni_1999_2024.csv` |
-| INMET — BDMEP | Precipitação total diária e temperatura (máx/média/mín) diária, por estação automática | 2000-09-21 a 2023-12-31 | Estação meteorológica (diário) | https://bdmep.inmet.gov.br/ | ✅ baixado (manual, via portal BDMEP) — `dataset/raw/inmet_estacoes_RS_consolidado.csv` (dados diários) + `dataset/raw/inmet_estacoes_metadados.csv` (lat/long/situação de cada estação) |
+| IBGE/SIDRA — Tabela 1612 | Área plantada, área colhida, produção e rendimento médio de soja | 2000–2025 | Município (RS) | https://sidra.ibge.gov.br/tabela/1612 | ✅ baixado — `dataset/raw/ibge_sidra_1612_soja_rs_2000_2025.csv` |
+| NOAA/CPC — ONI | Índice trimestral (médias móveis de 3 meses) do ENOS (El Niño/La Niña) | 1999–2025 | Trimestral (a agregar por safra) | https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt | ✅ baixado — `dataset/raw/noaa_oni_1999_2025.csv` |
+| INMET — BDMEP | Precipitação total diária e temperatura (máx/média/mín) diária, por estação automática | 2000-01-01 a 2025-12-31 | Estação meteorológica (diário) | https://bdmep.inmet.gov.br/ | ✅ baixado (manual, via portal BDMEP, em duas etapas) — `dataset/raw/inmet_estacoes_RS_consolidado_2000_2025.csv` (dados diários) + `dataset/raw/inmet_estacoes_metadados.csv` (lat/long/situação de cada estação) |
 | Embrapa / CQFS-RS/SC | Recomendação de adubação fosfatada e potássica para soja, por classe de teor de P/K no solo | — | Classe de teor de P/K no solo (não por município) | https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192 | ✅ baixado — `dataset/raw/embrapa_tabela_2.3_interpretacao_teor_p_k.csv` + `dataset/raw/embrapa_tabela_2.4_recomendacao_p2o5_k2o_soja.csv` |
 
 ### Como os dados do IBGE foram obtidos
@@ -30,16 +32,23 @@ Data       | Autor           | Descrição
 Via API pública do SIDRA (sem necessidade de token), tabela 1612, variáveis
 109 (área plantada), 216 (área colhida), 214 (quantidade produzida) e 112
 (rendimento médio), classificação 81 categoria 2713 (Soja em grão), para
-todos os municípios do RS (`N6[N3[43]]`), período 2000–2023:
+todos os municípios do RS (`N6[N3[43]]`). A API do IBGE já publica dados até
+2025 (a PAM de um ano costuma sair por volta de setembro do ano seguinte),
+então usamos o range completo disponível, não só até 2023 como na primeira
+versão desta base. Por limite de tamanho da API, a busca foi feita em duas
+chamadas e depois unida:
 
 ```
 https://servicodados.ibge.gov.br/api/v3/agregados/1612/periodos/2000-2023/variaveis/109|216|214|112?localidades=N6[N3[43]]&classificacao=81[2713]
+https://servicodados.ibge.gov.br/api/v3/agregados/1612/periodos/2024-2025/variaveis/109|216|214|112?localidades=N6[N3[43]]&classificacao=81[2713]
 ```
 
-O JSON bruto está em `dataset/raw/ibge_sidra_1612_soja_rs_2000_2023_raw.json`
-e a versão já tabulada (município × ano, uma linha por combinação) em
-`dataset/raw/ibge_sidra_1612_soja_rs_2000_2023.csv` (11.928 linhas = 497
-municípios × 24 safras). Valores ausentes (município sem produção de soja
+(pedir os 26 anos de uma vez só retorna erro 500 do servidor do IBGE — é
+mais confiável dividir a consulta.) O JSON bruto unido está em
+`dataset/raw/ibge_sidra_1612_soja_rs_2000_2025_raw.json` e a versão já
+tabulada (município × ano, uma linha por combinação) em
+`dataset/raw/ibge_sidra_1612_soja_rs_2000_2025.csv` (12.922 linhas = 497
+municípios × 26 safras). Valores ausentes (município sem produção de soja
 naquele ano) aparecem como célula vazia.
 
 ### Como os dados do ONI foram obtidos
@@ -51,36 +60,42 @@ https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt
 ```
 
 Cada linha é uma janela móvel de 3 meses (ex.: `DJF` = dez–jan–fev).
-`dataset/raw/noaa_oni_1999_2024.csv` traz a série filtrada para 1999–2024
+`dataset/raw/noaa_oni_1999_2025.csv` traz a série filtrada para 1999–2025
 com colunas `seas`, `ano`, `total_sst`, `oni_anom` (o `oni_anom` é o índice
-ONI propriamente dito). **Ainda falta**, no notebook de preparação, agregar
-essas janelas trimestrais para uma métrica por safra (ex.: média do ONI nas
-janelas que cobrem a semeadura–colheita de cada safra no RS, tipicamente
-out–mar).
+ONI propriamente dito). A NOAA já disponibiliza observações além de 2025,
+mas cortamos em 2025 porque é o último ano com dado de safra do IBGE. O
+notebook agrega essas janelas trimestrais em uma métrica por safra (média
+do ONI nas janelas que cobrem out–mar de cada safra no RS).
 
 ### Como os dados do INMET foram obtidos
 
 Baixados manualmente pelo portal BDMEP (https://bdmep.inmet.gov.br/), já que
 a API automática (`apitempo.inmet.gov.br`) não respondeu nas tentativas via
-script. Cobertura: **45 estações automáticas** distribuídas pelo RS (ex.:
-Porto Alegre, Rio Grande, Santa Maria, Uruguaiana, Bagé, Erechim, Passo
-Fundo, Bento Gonçalves), período 2000-09-21 a 2023-12-31, granularidade
-diária.
+script. Feito em **duas etapas**: primeiro 2000-01-01 a 2023-12-31, depois
+(quando o IBGE e o ONI foram estendidos) o complemento 2024-01-01 a
+2025-12-31, para as mesmas **45 estações automáticas** distribuídas pelo RS
+(ex.: Porto Alegre, Rio Grande, Santa Maria, Uruguaiana, Bagé, Erechim,
+Passo Fundo, Bento Gonçalves). O segundo download trouxe também dados de
+outras ~37 estações novas da rede do INMET, que foram descartados para
+manter o mesmo conjunto de 45 estações ao longo de toda a série — misturar
+estações com históricos de tamanhos muito diferentes complicaria a
+interpretação sem ganho real de cobertura.
 
 - `dataset/raw/inmet_estacoes_metadados.csv` — uma linha por estação, com
   código, nome, latitude, longitude, altitude e situação (`Operante`,
   `Pane` ou `Desativada`).
-- `dataset/raw/inmet_estacoes_RS_consolidado.csv` — 248.267 linhas (estação
-  × dia), com precipitação total diária, temperatura máxima/média/mínima
-  diária, e variáveis extras (pressão, umidade, ponto de orvalho, vento).
+- `dataset/raw/inmet_estacoes_RS_consolidado_2000_2025.csv` — 280.641
+  linhas (estação × dia), 2000-01-01 a 2025-12-31, com precipitação total
+  diária, temperatura máxima/média/mínima diária, e variáveis extras
+  (pressão, umidade, ponto de orvalho, vento).
 
-**Ainda falta**, no notebook de preparação: (1) calcular, para cada
-município, a estação mais próxima usando as coordenadas de
-`inmet_estacoes_metadados.csv` e o centróide do município (via malha
-municipal do IBGE); (2) agregar os dados diários por safra (ex.: soma de
-precipitação e médias de temperatura na janela semeadura–colheita,
-possivelmente contagem de veranicos); (3) tratar os períodos em que a
-estação estava em `Pane` como dado ausente, não como zero.
+O notebook faz: (1) cálculo, para cada município, da estação mais próxima
+(Haversine, usando as coordenadas de `inmet_estacoes_metadados.csv` e
+`municipios_brasil_coords.csv`); (2) agregação dos dados diários por safra
+(soma de precipitação, média de temperatura, na janela
+semeadura–colheita); (3) tratamento de qualquer combinação estação-safra
+com menos de 150 dos ~182 dias esperados (por `Pane` ou por a estação ainda
+não estar instalada) como ausente, em vez de soma parcial enganosa.
 
 ### Como os dados de adubação fosfatada foram obtidos
 
@@ -156,7 +171,7 @@ mais próxima de cada município. Usamos a base pública
 | `dose_p2o5_recomendada` | Dose de P₂O₅ recomendada por classe de solo | kg/ha | Embrapa / CQFS-RS/SC |
 | ... | [completar conforme colunas finais geradas nos notebooks] | | |
 
-Colunas brutas disponíveis em `inmet_estacoes_RS_consolidado.csv` (antes da
+Colunas brutas disponíveis em `inmet_estacoes_RS_consolidado_2000_2025.csv` (antes da
 agregação por safra): `Codigo Estacao`, `Nome Estacao`, `Latitude`,
 `Longitude`, `Altitude`, `Situacao`, `Data Medicao`, `PRECIPITACAO TOTAL,
 DIARIO (AUT)(mm)`, `PRESSAO ATMOSFERICA MEDIA DIARIA (AUT)(mB)`,
@@ -172,7 +187,7 @@ RAJADA MAXIMA DIARIA (AUT)(m/s)`, `VENTO, VELOCIDADE MEDIA DIARIA
 
 - Dados de adubação são **recomendações agronômicas por classe de solo**, não
   consumo real por produtor/município/ano.
-- Municípios criados por desmembramento ao longo do período (2000–2023)
+- Municípios criados por desmembramento ao longo do período (2000–2025)
   podem ter séries históricas incompletas.
 - A estação INMET usada por município é a mais próxima disponível, podendo
   não representar exatamente o microclima local.

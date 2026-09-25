@@ -38,7 +38,7 @@ Orientador: Prof.\ Dr.\ Ivan Carlos Alcântara de Oliveira
   vary across municipalities. This project proposes a machine learning
   approach to anticipate municipal soybean yield in the state using public
   data. The dataset combines historical yield, area and production series
-  from IBGE/SIDRA Table 1612 (RS municipalities, 2000--2023); the Oceanic
+  from IBGE/SIDRA Table 1612 (RS municipalities, 2000--2025); the Oceanic
   Niño Index (ONI) from NOAA, as a large-scale climate signal linked to
   regional rainfall patterns; and observed INMET station data, used to
   validate the meteorological variables. As a distinguishing feature relative
@@ -63,7 +63,7 @@ Orientador: Prof.\ Dr.\ Ivan Carlos Alcântara de Oliveira
   solução de Inteligência Artificial para estimar antecipadamente a
   produtividade municipal da soja no estado, a partir de dados públicos. A
   base será estruturada com a série histórica de rendimento, área e produção
-  da Tabela 1612 do IBGE/SIDRA (municípios do RS, 2000--2023); o Oceanic
+  da Tabela 1612 do IBGE/SIDRA (municípios do RS, 2000--2025); o Oceanic
   Niño Index (ONI) da NOAA, como sinal climático de grande escala associado
   ao regime de chuvas na região; e dados observados do INMET, utilizados
   para validação das variáveis meteorológicas. Como diferencial em relação a
@@ -134,7 +134,7 @@ modelos contra linhas de base históricas simples.
 \begin{itemize}
   \item Consolidar uma base analítica integrada em nível
     município--safra, cobrindo os municípios do RS e as safras disponíveis
-    na Tabela 1612 do IBGE/SIDRA (2000--2023);
+    na Tabela 1612 do IBGE/SIDRA (2000--2025);
   \item Construir atributos climáticos agregados por safra a partir do ONI e
     validados com dados observados do INMET;
   \item Incorporar atributos de adubação fosfatada (MAP, SS, ST, DAP) com
@@ -212,7 +212,7 @@ Optou-se por tratar o problema como uma \textbf{regressão em painel}
 histórica expandida como atributos) sob \textbf{validação temporal}, em vez
 de um modelo de série temporal clássico por município (ARIMA, suavização
 exponencial, LSTM univariado). A razão é o volume de dados disponível por
-unidade: a série de cada município cobre cerca de 24 safras (2000--2023),
+unidade: a série de cada município cobre cerca de 26 safras (2000--2025),
 abaixo do mínimo prático ($\sim$40--50 pontos) para ajustar um ARIMA ou uma
 rede recorrente de forma confiável; no RS, isso é agravado pela criação de
 novos municípios por desmembramento ao longo do período, que interrompe a
@@ -243,6 +243,7 @@ caso o tempo do projeto permita testar um modelo de série temporal agregado
 por estado como comparação adicional.
 
 \subsection{Dataset: origem, conteúdo e preparação}
+\label{sec:dataset}
 
 \begin{table}[ht]
 \centering
@@ -252,7 +253,7 @@ por estado como comparação adicional.
 \hline
 \textbf{Fonte} & \textbf{Conteúdo} & \textbf{Uso no projeto} \\ \hline
 IBGE/SIDRA -- Tabela 1612 & Rendimento (kg/ha), área plantada/colhida e
-  produção de soja, por município do RS, 2000--2023 & Variável-alvo e
+  produção de soja, por município do RS, 2000--2025 & Variável-alvo e
   histórico produtivo \\ \hline
 NOAA/CPC -- ONI & Índice trimestral do ENOS (El Niño/La Niña) & Sinal
   climático de grande escala, disponível antes e durante a safra \\ \hline
@@ -264,18 +265,28 @@ Embrapa / CQFS-RS/SC & Recomendações de adubação fosfatada (MAP,
 \end{tabular}
 \end{table}
 
-A base final terá como chaves código IBGE do município e safra. Os dados
-brutos do SIDRA serão obtidos via API do IBGE (consultando primeiro os
-metadados da Tabela 1612 para confirmar os códigos exatos de variável e
-classificação antes da extração) e reorganizados para o formato
-município $\times$ ano; o ONI será agregado por janela de safra
-(semeadura--colheita); e os dados do INMET, obtidos via BDMEP, usarão a
-estação mais próxima de cada município como referência de validação
-cruzada com o sinal climático agregado. A análise exploratória cobrirá:
-cobertura temporal e espacial (municípios com séries incompletas), valores
-ausentes, correlação entre rendimento e as demais variáveis, e a relação
-entre fase do ENOS e rendimento médio -- reproduzindo, com a base do RS, o
-tipo de verificação já documentado na literatura (Pilau et al., 2022).
+A base final tem como chaves o código IBGE do município e a safra. Os dados
+brutos do SIDRA foram obtidos via API pública do IBGE (tabela 1612,
+variáveis de área plantada, área colhida, produção e rendimento médio,
+categoria soja em grão) para os 497 municípios do RS, 2000--2025 (26
+safras), e reorganizados para o formato município $\times$ ano; o ONI foi
+agregado por janela de safra (outubro do ano anterior a março do ano da
+safra), também disponível até 2025; e os dados diários do INMET (45
+estações automáticas do RS, 2000--2025, obtidos via BDMEP em duas etapas)
+foram associados a cada município pela estação mais próxima (distância de
+Haversine) e agregados na mesma janela de safra (soma de precipitação,
+média de temperatura), com combinações estação--safra de janela incompleta
+(menos de 150 dos $\sim$182 dias esperados, por falha de equipamento ou
+estação recém-instalada) tratadas como ausentes em vez de soma parcial. O
+painel município--safra resultante foi implementado
+em um notebook Python (disponível no GitHub do projeto) e a análise
+exploratória cobriu: cobertura temporal dos dados (percentual de municípios
+com rendimento informado por safra), distribuição do rendimento, série
+temporal do rendimento médio estadual comparado ao ONI, e correlação entre
+rendimento e as demais variáveis -- reproduzindo, com a base do RS, o tipo
+de verificação já documentado na literatura (Pilau et al., 2022). Os
+resultados dessa análise exploratória são detalhados na
+Seção~\ref{sec:resultados-parciais}.
 
 \begin{quote}
 \textbf{Nota sobre o índice climático:} a NOAA passou a adotar o Índice ONI
@@ -298,6 +309,7 @@ cada produtor.
 \end{quote}
 
 \section{Resultados Parciais}
+\label{sec:resultados-parciais}
 
 \subsection{Aspectos éticos do uso da IA e responsabilidade}
 
@@ -316,15 +328,51 @@ permitir auditoria e reprodução.
 
 \subsection{Resultados parciais obtidos até o momento}
 
-% TODO (grupo): preencher conforme o que já foi executado -- coleta via API
-% do SIDRA, primeira limpeza do ONI, integração inicial, gráficos da análise
-% exploratória.
+Até o momento, as quatro fontes de dados descritas na
+Seção~\ref{sec:dataset} foram efetivamente coletadas e documentadas, e o
+painel município--safra foi construído e analisado em um notebook Python.
+Os principais resultados dessa primeira análise exploratória são:
+
+\begin{itemize}
+  \item \textbf{Cobertura}: o percentual de municípios do RS com produção de
+    soja registrada na safra cresce de 70,4\% em 2000 para 87,3\% em 2025,
+    refletindo a expansão histórica da cultura no estado -- um ponto de
+    atenção para a interpretação de médias estaduais nos anos iniciais da
+    série.
+  \item \textbf{Verificação de sanidade dos dados}: a série de rendimento
+    médio estadual reproduz corretamente eventos climáticos conhecidos,
+    com destaque para a quebra de safra de 2004/2005 (rendimento médio de
+    apenas 662 kg/ha, o menor da série), coincidindo com a grande seca
+    histórica registrada no Rio Grande do Sul naquele período.
+  \item \textbf{Correlações preliminares} (nível município-safra, sem
+    separar por município): rendimento $\times$ ONI médio da safra
+    $\approx 0{,}22$; rendimento $\times$ precipitação acumulada na safra
+    $\approx 0{,}38$. Ambas fracas a moderadas, o que é esperado em uma
+    análise agregada e simples, e reforça a escolha de modelos capazes de
+    capturar interações não lineares (Random Forest, Gradient Boosting) na
+    próxima etapa, em vez de depender de uma relação linear direta.
+  \item \textbf{Limitações já identificadas} nesta primeira versão da base:
+    (i) a janela do ONI usada (OND+NDJ do ano anterior e DJF+JFM do ano da
+    safra) é uma primeira aproximação a validar; (ii) municípios distantes
+    das 45 estações do INMET têm o clima estimado por uma estação
+    potencialmente distante; (iii) períodos em que a estação estava em
+    pane geram dados ausentes, e janelas de safra com menos de 150 dos
+    $\sim$182 dias esperados de dado são tratadas como ausentes (não como
+    soma parcial); (iv) a adubação fosfatada (Embrapa/CQFS-RS/SC) ainda não
+    foi integrada ao painel, por ser uma tabela de referência por classe de
+    solo e não uma série real por município -- sua incorporação exigirá
+    uma hipótese explícita de mapeamento região--classe de solo, a ser
+    definida na próxima etapa.
+\end{itemize}
+
+O código completo desta etapa (coleta, integração e análise exploratória)
+está disponível no notebook \texttt{notebooks/analise\_exploratoria.ipynb}
+do repositório do projeto (Seção~\ref{sec:github}).
 
 \subsection{Endereço GitHub}
+\label{sec:github}
 
-% TODO (grupo): inserir o link do repositório público do grupo, por
-% exemplo:
-\url{https://github.com/USUARIO/NOME-DO-REPOSITORIO}
+\url{https://github.com/isah5/Projeto_Safra_de_Soja}
 
 \begin{thebibliography}{99}
 
