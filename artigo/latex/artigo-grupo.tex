@@ -12,14 +12,14 @@
 
 \sloppy
 
-\title{Previsão de Produtividade Municipal da Soja no Rio Grande do Sul com Aprendizado de Máquina e Variáveis Agrometeorológicas}
+\title{Previsão de Produtividade da Soja com Machine Learning: Abordagem Orientada por Variáveis Climáticas e Agrícolas}
 
 \author{Isabelle Franco, Gustavo Rodrigues, Pedro Henrique, Lorenzo Tadeo, Ivan Carlos A. de Oliveira\inst{1}}
 
 \address{Faculdade de Computação e Informática (FCI) -- Universidade Presbiteriana
   Mackenzie\\
   São Paulo -- SP -- Brasil
-  \email{\{isabelle.franco,gustavo.rodrigues,pedro.henrique,lorenzo.tadeo\}@mackenzista.com.br}
+  \email{\{10425395,10403091,10388298,10420067\}@mackenzista.com.br}
 }
 
 \begin{document}
@@ -28,7 +28,10 @@
 
 \begin{center}
 \footnotesize
-Isabelle Franco (RA 10425395) -- Gustavo Rodrigues (RA 10403091) -- Pedro Henrique (RA 10388298) -- Lorenzo Tadeo (RA 10420067)\\
+Isabelle Franco -- RA: 10425395 -- \texttt{10425395@mackenzista.com.br}\\
+Gustavo Rodrigues -- RA: 10403091 -- \texttt{10403091@mackenzista.com.br}\\
+Pedro Henrique -- RA: 10388298 -- \texttt{10388298@mackenzista.com.br}\\
+Lorenzo Tadeo -- RA: 10420067 -- \texttt{10420067@mackenzista.com.br}\\
 Orientador: Prof.\ Dr.\ Ivan Carlos Alcântara de Oliveira
 \end{center}
 
@@ -36,50 +39,56 @@ Orientador: Prof.\ Dr.\ Ivan Carlos Alcântara de Oliveira
   Rio Grande do Sul shows substantial year-to-year variability in soybean
   yield, driven by climatic conditions and by fertilization practices that
   vary across municipalities. This project proposes a machine learning
-  approach to anticipate municipal soybean yield in the state using public
-  data. The dataset combines historical yield, area and production series
-  from IBGE/SIDRA Table 1612 (RS municipalities, 2000--2025); the Oceanic
-  Niño Index (ONI) from NOAA, as a large-scale climate signal linked to
-  regional rainfall patterns; and observed INMET station data, used to
-  validate the meteorological variables. As a distinguishing feature relative
-  to approaches that rely solely on climate and yield history, the project
-  incorporates attributes related to common phosphate fertilization in RS --
-  MAP, Simple Superphosphate, Triple Superphosphate and DAP -- based on
-  agronomic recommendations from Embrapa and the RS/SC Soil Fertility
-  Committee, aiming to capture the effect of phosphorus, sulfur and calcium
-  availability on yield. In N1, the work focuses on problem definition,
-  ethical discussion, dataset documentation, exploratory analysis and data
-  preparation in Python, along with the methodological design. In later
-  stages, Linear Regression, Random Forest and Gradient Boosting will be
-  compared against historical baselines under temporal validation, with SHAP
-  applied to the best model to identify the climatic and fertilization
-  factors most associated with yield variation.
+  approach, under the Framework option, to anticipate municipal soybean
+  yield in the state using public data. The dataset combines historical
+  yield, area and production series from IBGE/SIDRA Table 1612 (RS
+  municipalities, 2000--2025); the Oceanic Niño Index (ONI) from NOAA, as
+  a large-scale climate signal linked to regional rainfall patterns; and
+  observed INMET station data, used to validate the meteorological
+  variables. As a distinguishing feature relative to approaches that rely
+  solely on climate and yield history, the project incorporates attributes
+  related to common phosphate fertilization in RS -- MAP, Simple
+  Superphosphate, Triple Superphosphate and DAP -- based on agronomic
+  recommendations from Embrapa and the RS/SC Soil Fertility Committee. In
+  N1, the work focuses on problem definition, ethical discussion, dataset
+  documentation, exploratory analysis and data preparation in Python,
+  along with the methodological design. In later stages, Linear
+  Regression, Random Forest and Gradient Boosting will be compared against
+  historical baselines under temporal validation, with SHAP applied to the
+  best model to identify the climatic and fertilization factors most
+  associated with yield variation.
+
+  \noindent\textbf{Keywords:} soybean; crop yield; machine learning;
+  exploratory data analysis; phosphate fertilization.
 \end{abstract}
 
 \begin{resumo}
   O Rio Grande do Sul apresenta elevada variabilidade interanual na
   produtividade da soja, influenciada por condições climáticas e por
-  práticas de adubação que variam entre municípios. Este projeto propõe uma
-  solução de Inteligência Artificial para estimar antecipadamente a
-  produtividade municipal da soja no estado, a partir de dados públicos. A
-  base será estruturada com a série histórica de rendimento, área e produção
-  da Tabela 1612 do IBGE/SIDRA (municípios do RS, 2000--2025); o Oceanic
-  Niño Index (ONI) da NOAA, como sinal climático de grande escala associado
-  ao regime de chuvas na região; e dados observados do INMET, utilizados
-  para validação das variáveis meteorológicas. Como diferencial em relação a
-  abordagens que consideram apenas clima e histórico produtivo, serão
-  incorporados atributos relacionados à adubação fosfatada usual no RS --
-  MAP, Superfosfato Simples, Superfosfato Triplo e DAP --, com base em
-  recomendações agronômicas da Embrapa e da Comissão de Química e
-  Fertilidade do Solo RS/SC, buscando capturar o efeito da disponibilidade
-  de fósforo, enxofre e cálcio no solo gaúcho sobre a produtividade. Na N1, o
-  trabalho concentra-se na definição do problema, discussão ética,
-  documentação do dataset, análise exploratória e preparação dos dados em
-  Python, além da especificação metodológica. Nas etapas seguintes, serão
-  comparados modelos de Regressão Linear, Random Forest e Gradient Boosting
-  com linhas de base históricas, sob validação temporal, e aplicada a
-  técnica SHAP ao melhor modelo para identificar os fatores climáticos e de
-  adubação mais associados às oscilações de produtividade.
+  práticas de adubação que variam entre municípios. Este projeto propõe
+  uma solução de Inteligência Artificial, na opção Framework, para estimar
+  antecipadamente a produtividade municipal da soja no estado, a partir de
+  dados públicos. A base foi estruturada com a série histórica de
+  rendimento, área e produção da Tabela 1612 do IBGE/SIDRA (municípios do
+  RS, 2000--2025); o Oceanic Niño Index (ONI) da NOAA, como sinal
+  climático de grande escala associado ao regime de chuvas na região; e
+  dados observados do INMET, utilizados para validação das variáveis
+  meteorológicas. Como diferencial em relação a abordagens que consideram
+  apenas clima e histórico produtivo, serão incorporados atributos
+  relacionados à adubação fosfatada usual no RS -- MAP, Superfosfato
+  Simples, Superfosfato Triplo e DAP --, com base em recomendações
+  agronômicas da Embrapa e da Comissão de Química e Fertilidade do Solo
+  RS/SC. Na N1, o trabalho concentra-se na definição do problema,
+  discussão ética, documentação do dataset, análise exploratória e
+  preparação dos dados em Python, além da especificação metodológica. Nas
+  etapas seguintes, serão comparados modelos de Regressão Linear, Random
+  Forest e Gradient Boosting com linhas de base históricas, sob validação
+  temporal, e aplicada a técnica SHAP ao melhor modelo para identificar os
+  fatores climáticos e de adubação mais associados às oscilações de
+  produtividade.
+
+  \noindent\textbf{Palavras-chave:} soja; produtividade agrícola;
+  aprendizado de máquina; análise exploratória; adubação fosfatada.
 \end{resumo}
 
 \section{Introdução}
@@ -93,286 +102,337 @@ condicionada pela interação entre regime de chuvas, temperatura, ocorrência
 de veranicos, fenômenos climáticos de larga escala (El Niño/La Niña) e
 práticas de manejo do solo -- em especial a adubação fosfatada, relevante
 para os solos ácidos e historicamente pobres em fósforo do RS. A Pesquisa
-Agrícola Municipal (PAM) do IBGE, disponibilizada pela Tabela 1612 do SIDRA,
-oferece uma série histórica municipal de rendimento, área e produção desde
-1974, o que permite trabalhar com uma amostra ampla (muitos municípios
-$\times$ muitas safras) mantendo uma única granularidade geográfica -- o
-município -- dentro de um único estado.
+Agrícola Municipal (PAM) do IBGE, disponibilizada pela Tabela 1612 do
+SIDRA, oferece uma série histórica municipal de rendimento, área e
+produção desde 1974, o que permite trabalhar com uma amostra ampla (muitos
+municípios $\times$ muitas safras) mantendo uma única granularidade
+geográfica -- o município -- dentro de um único estado.
 
 \subsection{Justificativa}
 
 Modelos de Machine Learning como Random Forest e Gradient Boosting são
 adequados a este problema porque capturam relações não lineares entre
-variáveis climáticas, de adubação e produtividade, superando as limitações
-de projeções estatísticas lineares tradicionais. Complementar o histórico
-produtivo com o ONI (sinal climático disponível antes e durante a safra) e
-com atributos de adubação fosfatada permite testar se informações
-conhecidas \emph{antes} do fim da safra carregam sinal preditivo útil -- e
-não apenas reproduzir, a posteriori, o que já é sabido pela própria série de
-rendimento.
-
-\subsection{Motivação}
-
-Estimativas antecipadas e municipais de produtividade podem apoiar o
-planejamento de cooperativas, produtores e órgãos públicos, sinalizando com
-maior granularidade geográfica municípios sob risco de rendimento abaixo da
-referência histórica. O projeto não pretende substituir avaliações
-agronômicas locais nem prever o resultado de uma propriedade específica -- o
-objetivo é um indicador regional, transparente e reprodutível, construído
-inteiramente a partir de dados públicos.
+variáveis climáticas, de adubação e produtividade, superando as
+limitações de projeções estatísticas lineares tradicionais. Complementar
+o histórico produtivo com o ONI (sinal climático disponível antes e
+durante a safra) e com atributos de adubação fosfatada permite testar se
+informações conhecidas \emph{antes} do fim da safra carregam sinal
+preditivo útil -- e não apenas reproduzir, a posteriori, o que já é
+sabido pela própria série de rendimento. Estimativas antecipadas e
+municipais de produtividade podem apoiar o planejamento de cooperativas,
+produtores e órgãos públicos, sinalizando com maior granularidade
+geográfica municípios sob risco de rendimento abaixo da referência
+histórica -- sem pretender substituir avaliações agronômicas locais nem
+prever o resultado de uma propriedade específica; o objetivo é um
+indicador regional, transparente e reprodutível, construído inteiramente
+a partir de dados públicos.
 
 \subsection{Objetivo}
 
-Desenvolver e avaliar uma abordagem de aprendizado de máquina supervisionado
-capaz de prever a produtividade da soja (kg/ha) por \textbf{município do Rio
-Grande do Sul e por safra}, a partir de variáveis climáticas, do sinal ENOS
-(ONI) e de atributos de adubação fosfatada, comparando o desempenho dos
-modelos contra linhas de base históricas simples.
+O objetivo geral é desenvolver e avaliar uma abordagem de aprendizado de
+máquina supervisionado capaz de prever a produtividade da soja (kg/ha) por
+município do Rio Grande do Sul e por safra, a partir de variáveis
+climáticas, do sinal ENOS (ONI) e de atributos de adubação fosfatada,
+comparando o desempenho dos modelos contra linhas de base históricas
+simples.
 
-\subsection{Contribuições esperadas}
+Como objetivos específicos, pretende-se:
 
 \begin{itemize}
-  \item Consolidar uma base analítica integrada em nível
-    município--safra, cobrindo os municípios do RS e as safras disponíveis
-    na Tabela 1612 do IBGE/SIDRA (2000--2025);
-  \item Construir atributos climáticos agregados por safra a partir do ONI e
-    validados com dados observados do INMET;
-  \item Incorporar atributos de adubação fosfatada (MAP, SS, ST, DAP) com
+  \item consolidar uma base analítica integrada em nível
+    município--safra, cobrindo os municípios do RS e as safras
+    disponíveis na Tabela 1612 do IBGE/SIDRA (2000--2025);
+  \item construir atributos climáticos agregados por safra a partir do
+    ONI e validados com dados observados do INMET;
+  \item incorporar atributos de adubação fosfatada (MAP, SS, ST, DAP) com
     base em recomendações agronômicas por tipo de solo;
-  \item Treinar e comparar Regressão Linear (baseline), Random Forest e um
-    modelo de Gradient Boosting contra linhas de base históricas (média
-    histórica do município e rendimento da safra anterior), sob validação
-    temporal;
-  \item Aplicar SHAP ao melhor modelo para identificar os fatores climáticos
-    e de adubação mais influentes sobre a produtividade.
+  \item treinar e comparar Regressão Linear (baseline), Random Forest e
+    um modelo de Gradient Boosting contra linhas de base históricas
+    (média histórica do município e rendimento da safra anterior), sob
+    validação temporal;
+  \item aplicar SHAP ao melhor modelo para identificar os fatores
+    climáticos e de adubação mais influentes sobre a produtividade.
 \end{itemize}
 
-\section{Fundamentação Teórica (Resumida)}
+\subsection{Opção do projeto}
 
-\subsection{Conceitos fundamentais}
+A opção escolhida é Framework. A solução será implementada em Python,
+utilizando bibliotecas de ciência de dados e aprendizado de máquina, com
+destaque para pandas e NumPy no tratamento dos dados, Matplotlib na
+análise exploratória e scikit-learn na preparação, treinamento e
+avaliação dos modelos (Regressão Linear, Random Forest e Gradient
+Boosting), além de SHAP para a interpretabilidade do melhor modelo. O
+problema é tratado como regressão supervisionada, já que a variável-alvo
+é a produtividade em kg/ha.
 
-O problema é formulado como \textbf{regressão supervisionada}, em que a
-variável-alvo é o rendimento médio municipal da soja (kg/ha). Serão
-comparados três modelos: \textbf{Regressão Linear}, usada como baseline
-interpretável; \textbf{Random Forest}, um ensemble de árvores de decisão por
-\emph{bagging}, adequado para capturar interações não lineares entre
-variáveis climáticas e de solo; e \textbf{Gradient Boosting}, que constrói
-árvores sequencialmente para corrigir os erros residuais do conjunto
-anterior, geralmente com melhor desempenho em dados tabulares. Para
-interpretar as previsões do melhor modelo será usado \textbf{SHAP} (SHapley
-Additive exPlanations), técnica de Inteligência Artificial Explicável (XAI)
-que atribui a cada variável uma contribuição marginal para a previsão
-individual, permitindo identificar quais fatores climáticos e de adubação
-mais pesam nas estimativas.
+\section{Descrição do Problema}
 
-\subsection{Trabalhos relacionados}
+O problema consiste em estimar a produtividade da soja para cada
+combinação município--safra no Rio Grande do Sul a partir de informações
+climáticas e de adubação associadas àquela safra. A variável-alvo é o
+rendimento médio municipal da soja, expresso em kg/ha; as variáveis
+explicativas são formadas pelo histórico produtivo do município, pelo
+estado do ENOS (índice ONI) e por atributos de adubação fosfatada
+derivados de recomendações agronômicas por classe de solo. Os dados são
+divididos temporalmente -- treino com safras mais antigas, teste com as
+mais recentes --, nunca por divisão aleatória, para evitar vazamento de
+informação futura; os hiperparâmetros dos modelos são ajustados apenas
+sobre os dados de treino, com validação temporal interna. Optou-se por
+tratar o problema como uma regressão em painel (municípios empilhados,
+com o rendimento da safra anterior e a média histórica expandida como
+atributos) em vez de um modelo de série temporal clássico por município,
+porque a série de cada município cobre cerca de 26 safras (2000--2025) --
+abaixo do mínimo prático para ajustar um ARIMA ou uma rede recorrente de
+forma confiável, agravado pela criação de novos municípios por
+desmembramento ao longo do período.
 
-Diversos estudos aplicam aprendizado de máquina à previsão de produtividade
-agrícola. Jeong et al. (2016) mostraram que Random Forest supera modelos de
-regressão múltipla na previsão de produtividade de grãos em múltiplas
-regiões do mundo. Van Klompenburg, Kassahun e Catal (2020), em revisão
-sistemática, identificam Random Forest e redes neurais como os algoritmos
-mais utilizados para previsão de safra, destacando a importância de
-variáveis climáticas e a necessidade de validação temporal para evitar
-vazamento de dados. Especificamente para a soja no Sul do Brasil, Pilau et
-al. (2022) e Nóia Júnior et al. (2020) documentam efeito negativo
-consistente da fase fria do ENOS (La Niña) sobre a produtividade da soja no
-Rio Grande do Sul, o que justifica a inclusão do ONI como atributo. Von Bloh
-et al. (2023) comparam modelos de machine learning para previsão de
-produtividade de soja no Brasil e reforçam a vantagem de modelos baseados em
-árvores frente a baselines lineares quando há relações não lineares entre
-clima e rendimento. Nenhum desses trabalhos, no entanto, incorpora
-explicitamente variáveis de adubação fosfatada municipal -- o que constitui
-a principal diferença da proposta deste projeto.
+O problema é formulado como regressão supervisionada. Serão comparados
+três modelos: Regressão Linear, usada como baseline interpretável; Random
+Forest, um ensemble de árvores de decisão por \emph{bagging}, adequado
+para capturar interações não lineares entre variáveis climáticas e de
+solo; e Gradient Boosting, que constrói árvores sequencialmente para
+corrigir os erros residuais do conjunto anterior, geralmente com melhor
+desempenho em dados tabulares. Para interpretar as previsões do melhor
+modelo será usado SHAP (SHapley Additive exPlanations), técnica de
+Inteligência Artificial Explicável (XAI) que atribui a cada variável uma
+contribuição marginal para a previsão individual, permitindo identificar
+quais fatores climáticos e de adubação mais pesam nas estimativas.
 
-\section{Metodologia e Resultados Esperados}
+Diversos estudos aplicam aprendizado de máquina à previsão de
+produtividade agrícola. Jeong et al. (2016) mostraram que Random Forest
+supera modelos de regressão múltipla na previsão de produtividade de
+grãos em múltiplas regiões do mundo. Van Klompenburg, Kassahun e Catal
+(2020), em revisão sistemática, identificam Random Forest e redes
+neurais como os algoritmos mais utilizados para previsão de safra,
+destacando a importância de variáveis climáticas e a necessidade de
+validação temporal para evitar vazamento de dados. Especificamente para a
+soja no Sul do Brasil, Pilau et al. (2022) e Nóia Júnior et al. (2020)
+documentam efeito negativo consistente da fase fria do ENOS (La Niña)
+sobre a produtividade da soja no Rio Grande do Sul, o que justifica a
+inclusão do ONI como atributo. Von Bloh et al. (2023) comparam modelos de
+machine learning para previsão de produtividade de soja no Brasil e
+reforçam a vantagem de modelos baseados em árvores frente a baselines
+lineares quando há relações não lineares entre clima e rendimento.
+Nenhum desses trabalhos, no entanto, incorpora explicitamente variáveis
+de adubação fosfatada municipal -- o que constitui a principal diferença
+da proposta deste projeto.
 
-\subsection{Abordagem}
+\section{Aspectos Éticos do Uso da IA e Responsabilidade}
 
-A pesquisa é aplicada, quantitativa e preditiva, com unidade de análise
-município--safra, restrita ao Rio Grande do Sul. Os dados serão divididos
-\textbf{temporalmente} -- treino com safras mais antigas, teste com as
-safras mais recentes --, nunca por divisão aleatória, para evitar
-vazamento de informação futura. Os hiperparâmetros dos modelos serão
-ajustados apenas sobre os dados de treino, com validação temporal interna
-(ex.: \emph{walk-forward}).
+O projeto utiliza exclusivamente dados públicos e agregados em nível
+municipal, sem dados pessoais ou identificação de indivíduos, o que o
+mantém aderente à LGPD e dispensa submissão a Comitê de Ética. O
+principal risco ético está na interpretação do indicador: ele não deve
+ser tomado como recomendação automática de crédito, seguro ou decisão de
+plantio, e decisões com impacto econômico devem continuar envolvendo
+avaliação agronômica humana. Municípios com séries curtas ou estações
+meteorológicas com falhas podem apresentar desempenho inferior do modelo
+-- essa limitação será documentada, assim como a natureza normativa (e
+não observacional) dos dados de adubação usados, já que não existe base
+pública do volume efetivamente aplicado por produtor. Código, versões
+das bases e parâmetros dos modelos serão versionados no GitHub do
+projeto para permitir auditoria e reprodução.
 
-Os três modelos (Regressão Linear, Random Forest, Gradient Boosting) serão
-comparados entre si e contra duas linhas de base simples: a média histórica
-expandida do município (calculada apenas com safras anteriores à safra
-prevista) e o rendimento da safra imediatamente anterior. As métricas de
-avaliação serão MAE, RMSE e R\textsuperscript{2}, reportadas de forma
-agregada e, quando a amostra permitir, também por município.
+\section{Dataset, Análise Exploratória e Preparação dos Dados}
 
-\subsubsection{Justificativa: regressão em painel com validação temporal, e
-  não série temporal clássica}
+\subsection{Origem e conteúdo das bases}
+\label{sec:origem-bases}
 
-Optou-se por tratar o problema como uma \textbf{regressão em painel}
-(municípios empilhados, com o rendimento da safra anterior e a média
-histórica expandida como atributos) sob \textbf{validação temporal}, em vez
-de um modelo de série temporal clássico por município (ARIMA, suavização
-exponencial, LSTM univariado). A razão é o volume de dados disponível por
-unidade: a série de cada município cobre cerca de 26 safras (2000--2025),
-abaixo do mínimo prático ($\sim$40--50 pontos) para ajustar um ARIMA ou uma
-rede recorrente de forma confiável; no RS, isso é agravado pela criação de
-novos municípios por desmembramento ao longo do período, que interrompe a
-continuidade de algumas séries.
-
-Duas alternativas de série temporal ``de verdade'' foram consideradas e
-descartadas para esta etapa:
-
-\begin{enumerate}
-  \item \textbf{Série temporal agregada por estado} (produtividade média do
-    RS por safra, $\sim$50 pontos desde 1974, viável para ARIMA) --
-    descartada por eliminar a granularidade municipal, contrariando
-    diretamente a exigência do parecer de fixar uma granularidade única e
-    informativa.
-  \item \textbf{Modelo de série temporal global} (ex.: DeepAR, N-BEATS,
-    Temporal Fusion Transformer), treinado simultaneamente sobre todas as
-    séries municipais -- reduz a exigência de pontos por série, mas
-    tipicamente ainda pede centenas de séries com dezenas de pontos cada,
-    além de maior complexidade de implementação e ajuste; descartada por
-    desproporção entre esforço e prazo do N1/N2 (três meses).
-\end{enumerate}
-
-A abordagem de painel preserva a estrutura temporal essencial -- o treino
-usa apenas safras passadas para prever safras futuras (split temporal, nunca
-aleatório) -- sem exigir o volume de dados que os métodos de série temporal
-genuínos demandariam. Essa escolha poderá ser revisitada como extensão,
-caso o tempo do projeto permita testar um modelo de série temporal agregado
-por estado como comparação adicional.
-
-\subsection{Dataset: origem, conteúdo e preparação}
-\label{sec:dataset}
+Os dados foram capturados pelo grupo em fontes públicas e oficiais. A
+unidade final da base é município--safra, de modo que cada linha
+representa um município do Rio Grande do Sul em uma safra. A Tabela~\ref{tab:fontes}
+apresenta as fontes utilizadas e a função de cada conjunto de dados no
+projeto.
 
 \begin{table}[ht]
 \centering
-\caption{Fontes de dados utilizadas no projeto}
-\label{tab:dataset}
+\caption{Fontes de dados utilizadas no projeto. Fonte: elaboração própria (2026).}
+\label{tab:fontes}
 \begin{tabular}{|p{2.3cm}|p{4.7cm}|p{4.2cm}|}
 \hline
 \textbf{Fonte} & \textbf{Conteúdo} & \textbf{Uso no projeto} \\ \hline
 IBGE/SIDRA -- Tabela 1612 & Rendimento (kg/ha), área plantada/colhida e
-  produção de soja, por município do RS, 2000--2025 & Variável-alvo e
-  histórico produtivo \\ \hline
-NOAA/CPC -- ONI & Índice trimestral do ENOS (El Niño/La Niña) & Sinal
-  climático de grande escala, disponível antes e durante a safra \\ \hline
-INMET & Precipitação e temperatura observadas em estações & Validação da
-  qualidade/cobertura dos dados climáticos usados \\ \hline
+  produção de soja, por município do RS, 2000--2025. & Variável-alvo e
+  histórico produtivo. \\ \hline
+NOAA/CPC -- ONI & Índice trimestral do ENOS (El Niño/La Niña). & Sinal
+  climático de grande escala, disponível antes e durante a safra. \\ \hline
+INMET / BDMEP & Precipitação e temperatura observadas em 45 estações
+  automáticas do RS. & Validação da qualidade/cobertura dos dados
+  climáticos usados. \\ \hline
 Embrapa / CQFS-RS/SC & Recomendações de adubação fosfatada (MAP,
-  Superfosfato Simples, Superfosfato Triplo, DAP) por classe de solo &
-  Atributos de disponibilidade de P, S e Ca no solo \\ \hline
+  Superfosfato Simples, Superfosfato Triplo, DAP) por classe de solo. &
+  Atributos de disponibilidade de P, S e Ca no solo. \\ \hline
 \end{tabular}
 \end{table}
 
-A base final tem como chaves o código IBGE do município e a safra. Os dados
-brutos do SIDRA foram obtidos via API pública do IBGE (tabela 1612,
-variáveis de área plantada, área colhida, produção e rendimento médio,
-categoria soja em grão) para os 497 municípios do RS, 2000--2025 (26
-safras), e reorganizados para o formato município $\times$ ano; o ONI foi
-agregado por janela de safra (outubro do ano anterior a março do ano da
-safra), também disponível até 2025; e os dados diários do INMET (45
-estações automáticas do RS, 2000--2025, obtidos via BDMEP em duas etapas)
-foram associados a cada município pela estação mais próxima (distância de
-Haversine) e agregados na mesma janela de safra (soma de precipitação,
-média de temperatura), com combinações estação--safra de janela incompleta
-(menos de 150 dos $\sim$182 dias esperados, por falha de equipamento ou
-estação recém-instalada) tratadas como ausentes em vez de soma parcial. O
-painel município--safra resultante foi implementado
-em um notebook Python (disponível no GitHub do projeto) e a análise
-exploratória cobriu: cobertura temporal dos dados (percentual de municípios
-com rendimento informado por safra), distribuição do rendimento, série
-temporal do rendimento médio estadual comparado ao ONI, e correlação entre
-rendimento e as demais variáveis -- reproduzindo, com a base do RS, o tipo
-de verificação já documentado na literatura (Pilau et al., 2022). Os
-resultados dessa análise exploratória são detalhados na
-Seção~\ref{sec:resultados-parciais}.
+\subsection{Estrutura da base integrada}
 
-\begin{quote}
-\textbf{Nota sobre o índice climático:} a NOAA passou a adotar o Índice ONI
-Relativo (RONI) como referência oficial para monitoramento e previsão do
-ENOS, em substituição ao ONI tradicional. O projeto usará o ONI por ser o
-índice mais consolidado na literatura de produtividade agrícola no RS
-(Pilau et al., 2022; Nóia Júnior et al., 2020), mas essa escolha será
-justificada explicitamente no artigo, com o RONI como alternativa a avaliar
-caso o tempo do projeto permita.
-\end{quote}
+A base final tem como chave primária o código IBGE do município e a
+safra (\texttt{ano\_safra}). A Tabela~\ref{tab:dicionario} resume as
+principais variáveis do painel município--safra resultante da integração
+das quatro fontes.
 
-\begin{quote}
-\textbf{Limitação a declarar explicitamente:} os dados de adubação
-fosfatada normalmente não existem como série real de consumo por município
-e ano, mas como recomendação agronômica por tipo de solo. Isso será tratado
-como atributo de referência (dose recomendada por classe de solo/região), e
-essa limitação será documentada na seção de aspectos éticos e nas
-conclusões -- não será apresentada como o volume efetivamente aplicado por
-cada produtor.
-\end{quote}
+\begin{table}[ht]
+\centering
+\caption{Dicionário resumido da base integrada. Fonte: elaboração própria (2026).}
+\label{tab:dicionario}
+\begin{tabular}{|p{3.3cm}|p{4.4cm}|p{1.5cm}|p{1.8cm}|}
+\hline
+\textbf{Coluna} & \textbf{Descrição} & \textbf{Unidade} & \textbf{Fonte} \\ \hline
+\texttt{codigo\_ibge\_municipio} / \texttt{municipio} & Identificação do
+  município & código / texto & IBGE \\ \hline
+\texttt{ano\_safra} & Ano da safra & ano & IBGE \\ \hline
+\texttt{rendimento\_kg\_ha} & Rendimento médio (variável-alvo) & kg/ha &
+  IBGE/SIDRA \\ \hline
+\texttt{area\_plantada\_ha} / \texttt{producao\_ton} & Área plantada e
+  produção total & ha / t & IBGE/SIDRA \\ \hline
+\texttt{oni\_media\_safra} & ONI médio na janela semeadura--colheita &
+  índice & NOAA/CPC \\ \hline
+\texttt{precipitacao\_total\_safra\_mm} & Precipitação acumulada na
+  janela de safra (estação mais próxima) & mm & INMET \\ \hline
+\texttt{temperatura\_media\_safra\_c} & Temperatura média diária na
+  janela de safra & \textdegree C & INMET \\ \hline
+\texttt{dose\_p2o5\_recomendada} & Dose de P\textsubscript{2}O\textsubscript{5}
+  recomendada por classe de solo (a integrar) & kg/ha &
+  Embrapa/CQFS-RS/SC \\ \hline
+\end{tabular}
+\end{table}
 
-\section{Resultados Parciais}
-\label{sec:resultados-parciais}
+\subsection{Análise exploratória em Python}
 
-\subsection{Aspectos éticos do uso da IA e responsabilidade}
+A análise exploratória da N1 foi realizada em um notebook Python
+(disponível no GitHub do projeto, Seção~\ref{sec:resultados-exploratoria}) e cobriu:
+cobertura temporal dos dados (percentual de municípios com rendimento
+informado por safra), distribuição do rendimento, série temporal do
+rendimento médio estadual comparada ao ONI, rendimento por fase do ENOS e
+correlação entre rendimento e as demais variáveis -- reproduzindo, com a
+base do RS, o tipo de verificação já documentado na literatura (Pilau et
+al., 2022). O notebook parte da Tabela 1612 do SIDRA/IBGE, seleciona soja
+em grão para os municípios do RS, converte os valores numéricos e
+reorganiza as variáveis por município e safra; a mesma lógica é usada
+para integrar as fontes climáticas.
 
-O projeto utiliza exclusivamente dados públicos e agregados em nível
-municipal, sem dados pessoais ou identificação de indivíduos, o que o
-mantém aderente à LGPD e dispensa submissão a Comitê de Ética. O principal
-risco ético está na interpretação do indicador: ele não deve ser tomado
-como recomendação automática de crédito, seguro ou decisão de plantio, e
-decisões com impacto econômico devem continuar envolvendo avaliação
-agronômica humana. Municípios com séries curtas ou estações meteorológicas
-com falhas podem apresentar desempenho inferior do modelo -- essa
-limitação será documentada, assim como a natureza normativa (e não
-observacional) dos dados de adubação usados. Código, versões das bases e
-parâmetros dos modelos serão versionados no GitHub do projeto para
-permitir auditoria e reprodução.
+\subsection{Preparação dos dados}
 
-\subsection{Resultados parciais obtidos até o momento}
+Os dados brutos do SIDRA foram obtidos via API pública do IBGE (tabela
+1612, variáveis de área plantada, área colhida, produção e rendimento
+médio, categoria soja em grão) para os 497 municípios do RS, 2000--2025
+(26 safras), e reorganizados para o formato município $\times$ ano. O
+ONI foi agregado por janela de safra (outubro do ano anterior a março do
+ano da safra), também disponível até 2025. Os dados diários do INMET (45
+estações automáticas do RS, 2000--2025, obtidos via BDMEP em duas
+etapas) foram associados a cada município pela estação mais próxima
+(distância de Haversine) e agregados na mesma janela de safra (soma de
+precipitação, média de temperatura), com combinações estação--safra de
+janela incompleta (menos de 150 dos $\sim$182 dias esperados, por falha
+de equipamento ou estação recém-instalada) tratadas como ausentes em vez
+de soma parcial. Os dados de adubação fosfatada (Embrapa/CQFS-RS/SC)
+ainda não foram integrados ao painel, por serem uma tabela de referência
+por classe de solo, e não uma série real por município -- sua
+incorporação exigirá uma hipótese explícita de mapeamento
+região--classe de solo, a ser definida na próxima etapa.
+
+\subsection{Resultados iniciais da análise exploratória}
+\label{sec:resultados-exploratoria}
 
 Até o momento, as quatro fontes de dados descritas na
-Seção~\ref{sec:dataset} foram efetivamente coletadas e documentadas, e o
-painel município--safra foi construído e analisado em um notebook Python.
-Os principais resultados dessa primeira análise exploratória são:
+Seção~\ref{sec:origem-bases} foram efetivamente coletadas e documentadas, e o
+painel município--safra foi construído e analisado em um notebook
+Python, reunindo 12.922 pares município-safra (497 municípios do Rio
+Grande do Sul entre 2000 e 2025). O percentual de municípios do RS com
+produção de soja registrada na safra cresce de 70,4\% em 2000 para
+87,3\% em 2025, refletindo a expansão histórica da cultura no estado --
+um ponto de atenção para a interpretação de médias estaduais nos anos
+iniciais da série.
 
-\begin{itemize}
-  \item \textbf{Cobertura}: o percentual de municípios do RS com produção de
-    soja registrada na safra cresce de 70,4\% em 2000 para 87,3\% em 2025,
-    refletindo a expansão histórica da cultura no estado -- um ponto de
-    atenção para a interpretação de médias estaduais nos anos iniciais da
-    série.
-  \item \textbf{Verificação de sanidade dos dados}: a série de rendimento
-    médio estadual reproduz corretamente eventos climáticos conhecidos,
-    com destaque para a quebra de safra de 2004/2005 (rendimento médio de
-    apenas 662 kg/ha, o menor da série), coincidindo com a grande seca
-    histórica registrada no Rio Grande do Sul naquele período.
-  \item \textbf{Correlações preliminares} (nível município-safra, sem
-    separar por município): rendimento $\times$ ONI médio da safra
-    $\approx 0{,}22$; rendimento $\times$ precipitação acumulada na safra
-    $\approx 0{,}38$. Ambas fracas a moderadas, o que é esperado em uma
-    análise agregada e simples, e reforça a escolha de modelos capazes de
-    capturar interações não lineares (Random Forest, Gradient Boosting) na
-    próxima etapa, em vez de depender de uma relação linear direta.
-  \item \textbf{Limitações já identificadas} nesta primeira versão da base:
-    (i) a janela do ONI usada (OND+NDJ do ano anterior e DJF+JFM do ano da
-    safra) é uma primeira aproximação a validar; (ii) municípios distantes
-    das 45 estações do INMET têm o clima estimado por uma estação
-    potencialmente distante; (iii) períodos em que a estação estava em
-    pane geram dados ausentes, e janelas de safra com menos de 150 dos
-    $\sim$182 dias esperados de dado são tratadas como ausentes (não como
-    soma parcial); (iv) a adubação fosfatada (Embrapa/CQFS-RS/SC) ainda não
-    foi integrada ao painel, por ser uma tabela de referência por classe de
-    solo e não uma série real por município -- sua incorporação exigirá
-    uma hipótese explícita de mapeamento região--classe de solo, a ser
-    definida na próxima etapa.
-\end{itemize}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.85\textwidth]{figuras/fig1_rendimento_por_safra.png}
+\caption{Rendimento médio da soja nos municípios do RS, por safra
+  (2000--2025). Fonte: elaboração própria a partir de IBGE/SIDRA (2026).}
+\label{fig:rendimento-safra}
+\end{figure}
 
-O código completo desta etapa (coleta, integração e análise exploratória)
-está disponível no notebook \texttt{notebooks/analise\_exploratoria.ipynb}
-do repositório do projeto (Seção~\ref{sec:github}).
+A série de rendimento médio estadual reproduz corretamente eventos
+climáticos conhecidos, com destaque para a quebra de safra de 2004/2005
+(rendimento médio de apenas 662 kg/ha, o menor da série), coincidindo
+com a grande seca histórica registrada no Rio Grande do Sul naquele
+período.
 
-\subsection{Endereço GitHub}
-\label{sec:github}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.75\textwidth]{figuras/fig2_rendimento_por_enos.png}
+\caption{Rendimento médio da soja por fase do ENOS, classificada pelo
+  ONI médio da safra (RS, 2000--2025). Fonte: elaboração própria a
+  partir de IBGE/SIDRA e NOAA/CPC (2026).}
+\label{fig:rendimento-enos}
+\end{figure}
 
-\url{https://github.com/isah5/Projeto_Safra_de_Soja}
+Considerando todos os pares município-safra, o rendimento médio
+observado sob La Niña ($\approx$2.151 kg/ha) é inferior ao observado em
+safras neutras ($\approx$2.432 kg/ha) e sob El Niño ($\approx$2.395
+kg/ha). Esse resultado é compatível com Pilau et al. (2022) e Nóia
+Júnior et al. (2020), que descrevem efeitos negativos consistentes da
+fase fria do ENOS sobre a produtividade da soja no sul do Brasil, e
+reforça o uso do ONI como atributo do modelo.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.85\textwidth]{figuras/fig3_matriz_correlacao.png}
+\caption{Matriz de correlação entre as variáveis do painel
+  município--safra (RS, 2000--2025). Fonte: elaboração própria (2026).}
+\label{fig:correlacao}
+\end{figure}
+
+No nível município-safra (sem separar por município), a correlação
+entre rendimento e ONI médio da safra é fraca ($\approx$0,22) e entre
+rendimento e precipitação acumulada na safra é moderada ($\approx$0,38)
+-- coerente com a literatura, mas mostra que variáveis agregadas simples
+não bastam sozinhas; é esperado que Random Forest e Gradient Boosting
+capturem melhor as interações não lineares na etapa de modelagem.
+Limitações já identificadas nesta primeira versão da base: (i) a janela
+do ONI usada é uma primeira aproximação a validar; (ii) municípios
+distantes das 45 estações do INMET têm o clima estimado por uma estação
+potencialmente distante; (iii) períodos em que a estação estava em pane
+geram dados ausentes; (iv) a adubação fosfatada ainda não foi integrada
+ao painel.
+
+\section{Metodologia e Resultados Esperados}
+
+\subsection{Abordagem metodológica}
+
+A pesquisa é aplicada, quantitativa e preditiva, com unidade de análise
+município--safra, restrita ao Rio Grande do Sul. Os três modelos
+(Regressão Linear, Random Forest, Gradient Boosting) serão comparados
+entre si e contra duas linhas de base simples: a média histórica
+expandida do município (calculada apenas com safras anteriores à safra
+prevista) e o rendimento da safra imediatamente anterior. As métricas de
+avaliação serão MAE, RMSE e R\textsuperscript{2}, reportadas de forma
+agregada e, quando a amostra permitir, também por município. Duas
+alternativas de série temporal por município foram consideradas e
+descartadas para esta etapa: uma série agregada por estado (eliminaria a
+granularidade municipal) e um modelo de série temporal global (ex.:
+DeepAR, N-BEATS), descartado por desproporção entre esforço e prazo do
+N1/N2.
+
+\subsection{Resultados esperados}
+
+Espera-se que os modelos consigam superar, de forma consistente em
+safras de teste, as previsões baseadas apenas na média histórica,
+especialmente quando variáveis de precipitação, temperatura, ONI e
+adubação fosfatada forem incorporadas. Como produto final, pretende-se
+obter: uma base municipal integrada e documentada; um pipeline
+reprodutível de preparação e modelagem em Python; comparação objetiva
+entre modelos e linhas de base; métricas por safra e por região; e a
+aplicação de SHAP ao melhor modelo para identificar os fatores
+climáticos e de adubação mais relevantes para as previsões. Caso os
+modelos não superem as linhas de base em anos fora da amostra, esse
+resultado também será reportado, pois indicará os limites
+informacionais dos dados utilizados.
+
+\textbf{Endereço GitHub:} \url{https://github.com/isah5/Projeto_Safra_de_Soja}
+
+\section{Referências}
 
 \begin{thebibliography}{99}
 
@@ -386,13 +446,13 @@ FRIEDMAN, J. H. Greedy function approximation: a gradient boosting machine.
 \bibitem{ibge}
 IBGE -- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. Produção Agrícola
 Municipal: tabela 1612 -- lavouras temporárias. Rio de Janeiro: IBGE/SIDRA.
-Disponível em: \url{https://sidra.ibge.gov.br/tabela/1612}. Acesso em: 24
+Disponível em: \url{https://sidra.ibge.gov.br/tabela/1612}. Acesso em: 25
 set. 2026.
 
 \bibitem{inmet}
 INMET -- INSTITUTO NACIONAL DE METEOROLOGIA. BDMEP -- Banco de Dados
 Meteorológicos. Brasília, DF. Disponível em:
-\url{https://bdmep.inmet.gov.br/}. Acesso em: 24 set. 2026.
+\url{https://bdmep.inmet.gov.br/}. Acesso em: 25 set. 2026.
 
 \bibitem{jeong2016}
 JEONG, J. H. et al. Random forests for global and regional crop yield
@@ -403,7 +463,7 @@ NOAA -- NATIONAL OCEANIC AND ATMOSPHERIC ADMINISTRATION. Climate Prediction
 Center. Oceanic Niño Index (ONI): Cold \& Warm Episodes by Season.
 Disponível em:
 \url{https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php}.
-Acesso em: 24 set. 2026.
+Acesso em: 25 set. 2026.
 
 \bibitem{noia2020}
 NÓIA JÚNIOR, R. S. et al. Effects of the El Niño Southern Oscillation
