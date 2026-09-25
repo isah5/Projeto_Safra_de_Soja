@@ -1,11 +1,11 @@
 <!--
-Grupo: [preencher] | Integrantes: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
+Grupo: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
 Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067) | Orientador: Prof. Dr. Ivan Carlos Alcântara de Oliveira
 
 HISTÓRICO DE ALTERAÇÕES
 Data       | Autor           | Descrição
 -----------|-----------------|--------------------------------------------
-2026-09-24 | [nome do autor] | Criação da pasta do artigo + fonte LaTeX inicial
+2026-09-24 | Isabelle Franco | Criação da pasta do artigo + fonte LaTeX inicial
 -->
 
 # Artigo

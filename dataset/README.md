@@ -9,11 +9,11 @@ variáveis planejado para a base final e as limitações conhecidas.
 HISTÓRICO DE ALTERAÇÕES
 Data       | Autor           | Descrição
 -----------|-----------------|--------------------------------------------
-2026-09-24 | Criação do template de descrição do dataset
-2026-09-24  | Download dos dados reais do IBGE/SIDRA (Tabela 1612) e do ONI/NOAA; documentação atualizada
-2026-09-24 | Adicionados dados diários do INMET (45 estações do RS, 2000-2023), baixados manualmente via portal BDMEP
-2026-09-25 | Estendido o range do IBGE e do ONI de 2000-2023 para 2000-2025 (a API do IBGE já publica dados até 2025); INMET segue em 2000-2023, atualização pendente
-2026-09-25 | Estendido o INMET para 2000-2025 (download manual complementar via BDMEP, mesmas 45 estações, período 2024-2025); base completa nas 3 fontes
+2026-09-24 | Isabelle Franco  | Criação do template de descrição do dataset
+2026-09-24 | Gustavo Rodrigues | Download dos dados reais do IBGE/SIDRA (Tabela 1612) e do ONI/NOAA; documentação atualizada
+2026-09-24 | Pedro Henrique  | Adicionados dados diários do INMET (45 estações do RS, 2000-2023), baixados manualmente via portal BDMEP
+2026-09-25 | Lorenzo Tadeo   | Estendido o range do IBGE e do ONI de 2000-2023 para 2000-2025 (a API do IBGE já publica dados até 2025); INMET segue em 2000-2023, atualização pendente
+2026-09-25 | Isabelle Franco | Estendido o INMET para 2000-2025 (download manual complementar via BDMEP, mesmas 45 estações, período 2024-2025); base completa nas 3 fontes
 -->
 
 # Dataset — descrição

@@ -2,17 +2,18 @@
 
 <!--
 CABEÇALHO DE IDENTIFICAÇÃO DO GRUPO
-Grupo: [preencher]
+Grupo: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
+       Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067)
 Integrantes: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
              Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067)
-Orientador: Prof. Dr. Ivan Carlos Alcântara de Oliveira
-Disciplina: [preencher]
+Prof: Dr. Ivan Carlos Alcântara de Oliveira
+Disciplina: Inteligência Artificial
 Instituição: Universidade Presbiteriana Mackenzie - FCI
 
 HISTÓRICO DE ALTERAÇÕES
 Data       | Autor              | Descrição
 -----------|--------------------|--------------------------------------------
-2026-09-24 | [nome do autor]    | Criação inicial do repositório (estrutura N1)
+2026-09-24 | Isabelle Franco    | Criação inicial do repositório (estrutura N1)
 -->
 
 Repositório público do projeto da disciplina, com o artigo científico
@@ -39,7 +40,7 @@ em Python.
 
 ## Artigo
 
-O artigo final (PDF, formato SBC) está em [`artigo/`](artigo/).
+O artigo final (PDF) está em [`artigo/`](artigo/).
 
 ## Licença / Uso dos dados
 
