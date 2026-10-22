@@ -1,6 +1,6 @@
 <!--
-Integrantes: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
-Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067) | Orientador: Prof. Dr. Ivan Carlos Alcântara de Oliveira
+Integrantes:
+Orientador:
 
 Síntese do conteúdo deste arquivo: descreve as fontes de dados usadas no
 projeto, os arquivos brutos já baixados em `dataset/raw/`, o dicionário de
@@ -9,12 +9,14 @@ variáveis planejado para a base final e as limitações conhecidas.
 HISTÓRICO DE ALTERAÇÕES
 Data       | Autor           | Descrição
 -----------|-----------------|--------------------------------------------
-2026-09-24 | Isabelle Franco  | Criação do template de descrição do dataset
-2026-09-24 | Gustavo Rodrigues | Download dos dados reais do IBGE/SIDRA (Tabela 1612) e do ONI/NOAA; documentação atualizada
-2026-09-24 | Pedro Henrique  | Adicionados dados diários do INMET (45 estações do RS, 2000-2023), baixados manualmente via portal BDMEP
-2026-09-25 | Lorenzo Tadeo   | Estendido o range do IBGE e do ONI de 2000-2023 para 2000-2025 (a API do IBGE já publica dados até 2025); INMET segue em 2000-2023, atualização pendente
-2026-09-25 | Isabelle Franco | Estendido o INMET para 2000-2025 (download manual complementar via BDMEP, mesmas 45 estações, período 2024-2025); base completa nas 3 fontes
-2026-10-22 | Isabelle Franco | Adicionado o arquivo processado de clima por subperíodo (estação × safra), gerado na Etapa 2 da modelagem
+2026-09-24 |                  | Criação do template de descrição do dataset
+2026-09-24 |                   | Download dos dados reais do IBGE/SIDRA (Tabela 1612) e do ONI/NOAA; documentação atualizada
+2026-09-24 |                 | Adicionados dados diários do INMET (45 estações do RS, 2000-2023), baixados manualmente via portal BDMEP
+2026-09-25 |                 | Estendido o range do IBGE e do ONI de 2000-2023 para 2000-2025 (a API do IBGE já publica dados até 2025); INMET segue em 2000-2023, atualização pendente
+2026-09-25 |                 | Estendido o INMET para 2000-2025 (download manual complementar via BDMEP, mesmas 45 estações, período 2024-2025); base completa nas 3 fontes
+2026-10-22 |                 | Adicionado o arquivo processado de clima por subperíodo (estação × safra), gerado na Etapa 2 da modelagem
+2026-10-22 |                 | Adicionada a tabela de regiões dos municípios do RS (API de localidades do IBGE)
+2026-10-22 |                 | Removido o JSON bruto do IBGE (não usado; o CSV tabulado é a fonte dos notebooks); tabelas da Embrapa passam a ser usadas na recomendação de adubação; adicionado o arquivo de recomendação da safra 2026
 -->
 
 # Dataset — descrição
@@ -45,9 +47,8 @@ https://servicodados.ibge.gov.br/api/v3/agregados/1612/periodos/2024-2025/variav
 ```
 
 (pedir os 26 anos de uma vez só retorna erro 500 do servidor do IBGE — é
-mais confiável dividir a consulta.) O JSON bruto unido está em
-`dataset/raw/ibge_sidra_1612_soja_rs_2000_2025_raw.json` e a versão já
-tabulada (município × ano, uma linha por combinação) em
+mais confiável dividir a consulta.) As respostas foram unidas e tabuladas
+(município × ano, uma linha por combinação) em
 `dataset/raw/ibge_sidra_1612_soja_rs_2000_2025.csv` (12.922 linhas = 497
 municípios × 26 safras). Valores ausentes (município sem produção de soja
 naquele ano) aparecem como célula vazia.
@@ -130,14 +131,15 @@ documento):
 IBGE, ONI e INMET, esta fonte é uma **tabela de referência agronômica**
 (dose recomendada em função do teor de P/K no solo), não uma medição
 histórica. Não existe base pública de "quanto fósforo foi realmente
-aplicado" por município e safra. Para usar isso no painel município–safra,
-o grupo precisará de uma **hipótese simplificadora explícita** — por
-exemplo, assumir uma classe de teor de solo típica por região do RS (com
-base em levantamentos de fertilidade do solo já publicados, citando a
-fonte) e aplicar a dose correspondente da Tabela 2.4 como atributo fixo ou
-por região, deixando claro no artigo que é uma aproximação, não um dado
-observado. Essa limitação já era esperada e está descrita no artigo
-(seção 3.2, nota "Limitação a declarar explicitamente").
+aplicado" por município e safra. Por isso, **as tabelas não entram como
+variável de previsão** (uma dose fixa por município não acrescenta
+informação ao modelo, que já capta o que é fixo de cada município pelo
+patamar). Elas são usadas na **aplicação do modelo**
+(`notebooks/modelagem_etapa4.ipynb`, seção 11): o rendimento esperado de
+cada município é combinado com a Tabela 2.4 para gerar a dose de P₂O₅ e K₂O
+para **cada uma das cinco classes de teor**, e a Tabela 2.3 orienta o
+produtor a identificar a sua classe pela própria análise de solo. Nenhuma
+suposição sobre o solo dos municípios é feita.
 
 ### Coordenadas dos municípios (auxiliar, para casar com o INMET)
 
@@ -147,21 +149,41 @@ mais próxima de cada município. Usamos a base pública
 [kelvins/municipios-brasileiros](https://github.com/kelvins/municipios-brasileiros)
 (código IBGE → lat/long/UF, licença MIT), filtrada para o RS: `dataset/raw/municipios_brasil_coords.csv`.
 
+### Regiões dos municípios (auxiliar, para métricas por região)
+
+Para calcular o erro do modelo por região, cada município do RS foi associado à sua
+microrregião, mesorregião, região geográfica imediata e intermediária, pela API pública
+de localidades do IBGE (sem token):
+
+```
+https://servicodados.ibge.gov.br/api/v1/localidades/estados/43/municipios
+```
+
+Salvo em `dataset/raw/ibge_municipios_rs_regioes.csv` (497 municípios, colunas
+`codigo_ibge_municipio`, `municipio`, `microrregiao`, `mesorregiao`,
+`regiao_imediata`, `regiao_intermediaria`). Baixado em 2026-10-22.
+
 ## Chaves e formato final
 
 - Chave primária da base final: `codigo_ibge_municipio` + `ano_safra`
 - Arquivo(s) brutos: `dataset/raw/`
 - Arquivo processado/final: `dataset/processed/painel_municipio_safra.csv` —
   gerado pelo notebook `notebooks/analise_exploratoria.ipynb`, junta IBGE +
-  clima INMET (estação mais próxima) + ONI por safra. **Ainda não inclui**
-  a adubação fosfatada (ver seção acima).
+  clima INMET (estação mais próxima) + ONI por safra. Não inclui a
+  adubação fosfatada (ver seção acima).
 - `dataset/processed/clima_subperiodos_estacao_safra.csv` — gerado por
   `notebooks/modelagem_etapa2.ipynb` a partir do INMET diário; uma linha por
   estação × safra (chave `codigo_estacao` + `ano_safra`, que liga ao painel), com
   chuva acumulada em out–nov, dez–fev, mar e abr–mai e, para dez–fev, maior
   sequência de dias secos (< 1 mm), dias com máxima ≥ 32 °C, média da máxima e
   média da umidade relativa mínima. Valor ausente quando a estação tem dado em
-  menos de 80% dos dias do subperíodo. Usado por `notebooks/modelagem_etapa3.ipynb`.
+  menos de 80% dos dias do subperíodo. Usado por `notebooks/modelagem_etapa3.ipynb`
+  e `notebooks/modelagem_etapa4.ipynb`.
+- `dataset/processed/recomendacao_adubacao_safra2026.csv` — gerado por
+  `notebooks/modelagem_etapa4.ipynb`; resultado da aplicação do modelo, não
+  insumo. Uma linha por município × classe de teor de P/K no solo (431
+  municípios × 5 classes), com o rendimento esperado para a safra 2026 (média
+  de 2021–2025) e a dose de P₂O₅ e K₂O (kg/ha) no 1º e 2º cultivo.
 
 ## Dicionário de variáveis
 
