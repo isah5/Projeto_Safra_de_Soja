@@ -14,6 +14,7 @@ Data       | Autor           | Descrição
 2026-09-24 | Pedro Henrique  | Adicionados dados diários do INMET (45 estações do RS, 2000-2023), baixados manualmente via portal BDMEP
 2026-09-25 | Lorenzo Tadeo   | Estendido o range do IBGE e do ONI de 2000-2023 para 2000-2025 (a API do IBGE já publica dados até 2025); INMET segue em 2000-2023, atualização pendente
 2026-09-25 | Isabelle Franco | Estendido o INMET para 2000-2025 (download manual complementar via BDMEP, mesmas 45 estações, período 2024-2025); base completa nas 3 fontes
+2026-10-22 | Isabelle Franco | Adicionado o arquivo processado de clima por subperíodo (estação × safra), gerado na Etapa 2 da modelagem
 -->
 
 # Dataset — descrição
@@ -154,6 +155,13 @@ mais próxima de cada município. Usamos a base pública
   gerado pelo notebook `notebooks/analise_exploratoria.ipynb`, junta IBGE +
   clima INMET (estação mais próxima) + ONI por safra. **Ainda não inclui**
   a adubação fosfatada (ver seção acima).
+- `dataset/processed/clima_subperiodos_estacao_safra.csv` — gerado por
+  `notebooks/modelagem_etapa2.ipynb` a partir do INMET diário; uma linha por
+  estação × safra (chave `codigo_estacao` + `ano_safra`, que liga ao painel), com
+  chuva acumulada em out–nov, dez–fev, mar e abr–mai e, para dez–fev, maior
+  sequência de dias secos (< 1 mm), dias com máxima ≥ 32 °C, média da máxima e
+  média da umidade relativa mínima. Valor ausente quando a estação tem dado em
+  menos de 80% dos dias do subperíodo. Usado por `notebooks/modelagem_etapa3.ipynb`.
 
 ## Dicionário de variáveis
 
