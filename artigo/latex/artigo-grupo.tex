@@ -1,3 +1,16 @@
+% Previsão de Produtividade Municipal da Soja no RS
+% Integrantes:
+% Orientador:
+%
+% Síntese do conteúdo deste arquivo: artigo do projeto (template SBC) --
+% problema, ética, dataset e análise exploratória, metodologia de modelagem,
+% resultados das quatro etapas, aplicação em adubação, discussão e conclusão.
+%
+% Histórico de alterações:
+% Data       | Autor           | Descrição
+% -----------|-----------------|--------------------------------------------
+% 2026-10-22 |                 | Metodologia e resultados da modelagem (Etapas 1-4), aplicação em adubação, discussão, conclusão; resumo/abstract e seções anteriores alinhados aos resultados
+
 \documentclass[12pt]{article}
 
 \usepackage{sbc-template}
@@ -14,81 +27,75 @@
 
 \title{Previsão de Produtividade da Soja com Machine Learning: Abordagem Orientada por Variáveis Climáticas e Agrícolas}
 
-\author{Isabelle Franco, Gustavo Rodrigues, Pedro Henrique, Lorenzo Tadeo, Ivan Carlos A. de Oliveira\inst{1}}
+\author{}
 
 \address{Faculdade de Computação e Informática (FCI) -- Universidade Presbiteriana
   Mackenzie\\
   São Paulo -- SP -- Brasil
-  \email{\{10425395,10403091,10388298,10420067\}@mackenzista.com.br}
 }
 
 \begin{document}
 
 \maketitle
 
-\begin{center}
-\footnotesize
-Isabelle Franco -- RA: 10425395 -- \texttt{10425395@mackenzista.com.br}\\
-Gustavo Rodrigues -- RA: 10403091 -- \texttt{10403091@mackenzista.com.br}\\
-Pedro Henrique -- RA: 10388298 -- \texttt{10388298@mackenzista.com.br}\\
-Lorenzo Tadeo -- RA: 10420067 -- \texttt{10420067@mackenzista.com.br}\\
-Orientador: Prof.\ Dr.\ Ivan Carlos Alcântara de Oliveira
-\end{center}
-
 \begin{abstract}
   Rio Grande do Sul shows substantial year-to-year variability in soybean
-  yield, driven by climatic conditions and by fertilization practices that
-  vary across municipalities. This project proposes a machine learning
-  approach, under the Framework option, to anticipate municipal soybean
-  yield in the state using public data. The dataset combines historical
-  yield, area and production series from IBGE/SIDRA Table 1612 (RS
-  municipalities, 2000--2025); the Oceanic Niño Index (ONI) from NOAA, as
-  a large-scale climate signal linked to regional rainfall patterns; and
-  observed INMET station data, used to validate the meteorological
-  variables. As a distinguishing feature relative to approaches that rely
-  solely on climate and yield history, the project incorporates attributes
-  related to common phosphate fertilization in RS -- MAP, Simple
-  Superphosphate, Triple Superphosphate and DAP -- based on agronomic
-  recommendations from Embrapa and the RS/SC Soil Fertility Committee. In
-  N1, the work focuses on problem definition, ethical discussion, dataset
-  documentation, exploratory analysis and data preparation in Python,
-  along with the methodological design. In later stages, Linear
-  Regression, Random Forest and Gradient Boosting will be compared against
-  historical baselines under temporal validation, with SHAP applied to the
-  best model to identify the climatic and fertilization factors most
-  associated with yield variation.
+  yield, largely driven by summer droughts. This work, under the Framework
+  option, develops and evaluates a machine learning approach to forecast
+  municipal soybean yield in the state from public data: IBGE/SIDRA Table
+  1612 (RS municipalities, 2000--2025), daily INMET weather station data
+  and NOAA's Oceanic Niño Index (ONI). Climate was aggregated by crop
+  development sub-period and complemented by a daily soil water balance
+  (Hargreaves--Samani evapotranspiration and a bucket model). Each forecast
+  combines an expected yield level -- the municipality's mean over the five
+  previous seasons -- with a climate-driven deviation, using only
+  information available by the end of March. Linear Regression, Random
+  Forest and Gradient Boosting were compared against two historical
+  baselines under a temporal split (test 2021--2025) and leave-one-season-out
+  validation. The best model, a linear regression with water deficit and
+  extreme-drought thresholds, reduced RMSE by 14\% and 22\% relative to the
+  municipal historical mean (740 and 684 kg/ha; R\textsuperscript{2} of 0.31
+  and 0.26) and outperformed the tree-based models. December--February
+  rainfall, minimum relative humidity and water deficit were the dominant
+  factors, with losses accelerating beyond a deficit of about 243 mm. The
+  model anticipated the 2012 and 2023 droughts but not the 2020 one, which
+  was not visible in station data. As an application, expected yields were
+  combined with Embrapa/CQFS-RS/SC tables to produce phosphate and potassium
+  fertilization recommendations by soil-test class for the 2026 season.
 
-  \noindent\textbf{Keywords:} soybean; crop yield; machine learning;
-  exploratory data analysis; phosphate fertilization.
+  \noindent\textbf{Keywords:} soybean; crop yield forecasting; machine
+  learning; water balance; fertilization.
 \end{abstract}
 
 \begin{resumo}
   O Rio Grande do Sul apresenta elevada variabilidade interanual na
-  produtividade da soja, influenciada por condições climáticas e por
-  práticas de adubação que variam entre municípios. Este projeto propõe
-  uma solução de Inteligência Artificial, na opção Framework, para estimar
-  antecipadamente a produtividade municipal da soja no estado, a partir de
-  dados públicos. A base foi estruturada com a série histórica de
-  rendimento, área e produção da Tabela 1612 do IBGE/SIDRA (municípios do
-  RS, 2000--2025); o Oceanic Niño Index (ONI) da NOAA, como sinal
-  climático de grande escala associado ao regime de chuvas na região; e
-  dados observados do INMET, utilizados para validação das variáveis
-  meteorológicas. Como diferencial em relação a abordagens que consideram
-  apenas clima e histórico produtivo, serão incorporados atributos
-  relacionados à adubação fosfatada usual no RS -- MAP, Superfosfato
-  Simples, Superfosfato Triplo e DAP --, com base em recomendações
-  agronômicas da Embrapa e da Comissão de Química e Fertilidade do Solo
-  RS/SC. Na N1, o trabalho concentra-se na definição do problema,
-  discussão ética, documentação do dataset, análise exploratória e
-  preparação dos dados em Python, além da especificação metodológica. Nas
-  etapas seguintes, serão comparados modelos de Regressão Linear, Random
-  Forest e Gradient Boosting com linhas de base históricas, sob validação
-  temporal, e aplicada a técnica SHAP ao melhor modelo para identificar os
-  fatores climáticos e de adubação mais associados às oscilações de
-  produtividade.
+  produtividade da soja, em grande parte causada por secas de verão. Este
+  trabalho, na opção Framework, desenvolve e avalia uma abordagem de
+  aprendizado de máquina para prever a produtividade municipal da soja no
+  estado a partir de dados públicos: a Tabela 1612 do IBGE/SIDRA
+  (municípios do RS, 2000--2025), dados diários das estações do INMET e o
+  Oceanic Niño Index (ONI) da NOAA. O clima foi agregado por subperíodo do
+  ciclo da cultura e complementado por um balanço hídrico diário
+  (evapotranspiração de Hargreaves--Samani e modelo de balde). Cada
+  previsão combina um patamar esperado -- a média do município nas cinco
+  safras anteriores -- com um desvio explicado pelo clima, usando apenas
+  informações disponíveis ao fim de março. Regressão Linear, Random
+  Forest e Gradient Boosting foram comparados com duas linhas de base
+  históricas, em validação com corte temporal (teste 2021--2025) e
+  deixando uma safra de fora. O melhor modelo, uma regressão linear com
+  déficit hídrico e limiares de seca extrema, reduziu o RMSE em 14\% e 22\%
+  em relação à média histórica do município (740 e 684 kg/ha;
+  R\textsuperscript{2} de 0,31 e 0,26) e superou os modelos baseados em
+  árvores. A chuva e a umidade relativa mínima de dezembro a fevereiro e
+  o déficit hídrico foram os fatores dominantes, com perdas que se
+  aceleram acima de um déficit de cerca de 243 mm. O modelo antecipou as
+  secas de 2012 e 2023, mas não a de 2020, que não aparece nos dados das
+  estações. Como aplicação, o rendimento esperado foi combinado com as
+  tabelas da Embrapa/CQFS-RS/SC para gerar recomendações de adubação
+  fosfatada e potássica por classe de teor do solo para a safra 2026.
 
-  \noindent\textbf{Palavras-chave:} soja; produtividade agrícola;
-  aprendizado de máquina; análise exploratória; adubação fosfatada.
+  \noindent\textbf{Palavras-chave:} soja; previsão de produtividade;
+  aprendizado de máquina; balanço hídrico; adubação.
 \end{resumo}
 
 \section{Introdução}
@@ -111,11 +118,11 @@ geográfica -- o município -- dentro de um único estado.
 \subsection{Justificativa}
 
 Modelos de Machine Learning como Random Forest e Gradient Boosting são
-adequados a este problema porque capturam relações não lineares entre
-variáveis climáticas, de adubação e produtividade, superando as
-limitações de projeções estatísticas lineares tradicionais. Complementar
-o histórico produtivo com o ONI (sinal climático disponível antes e
-durante a safra) e com atributos de adubação fosfatada permite testar se
+candidatos naturais a este problema, porque podem capturar relações não
+lineares entre clima e produtividade que projeções estatísticas lineares
+tradicionais não representam -- hipótese que este trabalho testa contra
+uma regressão linear. Complementar o histórico produtivo com o clima
+observado durante a safra e com o ONI permite testar se
 informações conhecidas \emph{antes} do fim da safra carregam sinal
 preditivo útil -- e não apenas reproduzir, a posteriori, o que já é
 sabido pela própria série de rendimento. Estimativas antecipadas e
@@ -131,10 +138,11 @@ a partir de dados públicos.
 
 O objetivo geral é desenvolver e avaliar uma abordagem de aprendizado de
 máquina supervisionado capaz de prever a produtividade da soja (kg/ha) por
-município do Rio Grande do Sul e por safra, a partir de variáveis
-climáticas, do sinal ENOS (ONI) e de atributos de adubação fosfatada,
-comparando o desempenho dos modelos contra linhas de base históricas
-simples.
+município do Rio Grande do Sul e por safra, a partir do histórico
+produtivo do município, de variáveis climáticas observadas e do sinal
+ENOS (ONI), comparando o desempenho dos modelos contra linhas de base
+históricas simples, e aplicar a previsão à recomendação de adubação
+fosfatada e potássica.
 
 Como objetivos específicos, pretende-se:
 
@@ -142,26 +150,33 @@ Como objetivos específicos, pretende-se:
   \item consolidar uma base analítica integrada em nível
     município--safra, cobrindo os municípios do RS e as safras
     disponíveis na Tabela 1612 do IBGE/SIDRA (2000--2025);
-  \item construir atributos climáticos agregados por safra a partir do
-    ONI e validados com dados observados do INMET;
-  \item incorporar atributos de adubação fosfatada (MAP, SS, ST, DAP) com
-    base em recomendações agronômicas por tipo de solo;
-  \item treinar e comparar Regressão Linear (baseline), Random Forest e
-    um modelo de Gradient Boosting contra linhas de base históricas
-    (média histórica do município e rendimento da safra anterior), sob
-    validação temporal;
-  \item aplicar SHAP ao melhor modelo para identificar os fatores
-    climáticos e de adubação mais influentes sobre a produtividade.
+  \item construir atributos climáticos por subperíodo do ciclo da soja e
+    de balanço hídrico a partir dos dados diários do INMET, além do ONI
+    por safra;
+  \item treinar e comparar Regressão Linear, Random Forest e Gradient
+    Boosting contra linhas de base históricas (média histórica do
+    município e rendimento da safra anterior), com validação temporal e
+    deixando uma safra de fora;
+  \item identificar os fatores climáticos mais influentes sobre a
+    produtividade, pelos coeficientes do modelo e pela decomposição das
+    previsões em contribuições por variável (equivalente ao SHAP);
+  \item combinar o rendimento esperado com as recomendações agronômicas
+    da Embrapa/CQFS-RS/SC para gerar a dose de adubação fosfatada e
+    potássica por classe de teor do solo.
 \end{itemize}
 
 \subsection{Opção do projeto}
 
-A opção escolhida é Framework. A solução será implementada em Python,
+A opção escolhida é Framework. A solução foi implementada em Python,
 utilizando bibliotecas de ciência de dados e aprendizado de máquina, com
 destaque para pandas e NumPy no tratamento dos dados, Matplotlib na
-análise exploratória e scikit-learn na preparação, treinamento e
+análise exploratória e scikit-learn (Pedregosa et al., 2011) na
+preparação, treinamento e
 avaliação dos modelos (Regressão Linear, Random Forest e Gradient
-Boosting), além de SHAP para a interpretabilidade do melhor modelo. O
+Boosting) e SciPy nos testes estatísticos dos coeficientes. A
+interpretabilidade foi obtida pelos coeficientes do modelo linear e pela
+decomposição de cada previsão em contribuições por variável, que para
+modelos lineares coincide com os valores SHAP (Lundberg e Lee, 2017). O
 problema é tratado como regressão supervisionada, já que a variável-alvo
 é a produtividade em kg/ha.
 
@@ -169,34 +184,38 @@ problema é tratado como regressão supervisionada, já que a variável-alvo
 
 O problema consiste em estimar a produtividade da soja para cada
 combinação município--safra no Rio Grande do Sul a partir de informações
-climáticas e de adubação associadas àquela safra. A variável-alvo é o
-rendimento médio municipal da soja, expresso em kg/ha; as variáveis
-explicativas são formadas pelo histórico produtivo do município, pelo
-estado do ENOS (índice ONI) e por atributos de adubação fosfatada
-derivados de recomendações agronômicas por classe de solo. Os dados são
-divididos temporalmente -- treino com safras mais antigas, teste com as
-mais recentes --, nunca por divisão aleatória, para evitar vazamento de
-informação futura; os hiperparâmetros dos modelos são ajustados apenas
-sobre os dados de treino, com validação temporal interna. Optou-se por
+climáticas associadas àquela safra. A variável-alvo é o rendimento médio
+municipal da soja, expresso em kg/ha; as variáveis explicativas são
+formadas pelo histórico produtivo do município (patamar esperado), por
+variáveis climáticas por subperíodo do ciclo e de balanço hídrico
+(INMET) e pelo estado do ENOS (índice ONI). Os dados nunca são divididos
+de forma aleatória, para evitar vazamento de informação futura: o
+patamar de cada safra usa apenas safras anteriores, e os modelos são
+avaliados com corte temporal (treino com safras mais antigas, teste com
+as mais recentes) e deixando uma safra de fora. Os hiperparâmetros dos
+modelos de árvores foram fixados a priori, sem ajuste fino, para que as
+safras de teste não influenciem a escolha do modelo. Optou-se por
 tratar o problema como uma regressão em painel (municípios empilhados,
-com o rendimento da safra anterior e a média histórica expandida como
-atributos) em vez de um modelo de série temporal clássico por município,
+com o patamar histórico do município como referência) em vez de um
+modelo de série temporal clássico por município,
 porque a série de cada município cobre cerca de 26 safras (2000--2025) --
 abaixo do mínimo prático para ajustar um ARIMA ou uma rede recorrente de
 forma confiável, agravado pela criação de novos municípios por
 desmembramento ao longo do período.
 
-O problema é formulado como regressão supervisionada. Serão comparados
-três modelos: Regressão Linear, usada como baseline interpretável; Random
-Forest, um ensemble de árvores de decisão por \emph{bagging}, adequado
-para capturar interações não lineares entre variáveis climáticas e de
-solo; e Gradient Boosting, que constrói árvores sequencialmente para
-corrigir os erros residuais do conjunto anterior, geralmente com melhor
-desempenho em dados tabulares. Para interpretar as previsões do melhor
-modelo será usado SHAP (SHapley Additive exPlanations), técnica de
-Inteligência Artificial Explicável (XAI) que atribui a cada variável uma
-contribuição marginal para a previsão individual, permitindo identificar
-quais fatores climáticos e de adubação mais pesam nas estimativas.
+O problema é formulado como regressão supervisionada. Foram comparados
+três modelos: Regressão Linear, interpretável; Random Forest (Breiman,
+2001), um ensemble de árvores de decisão por \emph{bagging}, adequado
+para capturar interações não lineares entre variáveis climáticas; e
+Gradient Boosting (Friedman, 2001), que
+constrói árvores sequencialmente para corrigir os erros residuais do
+conjunto anterior, geralmente com bom desempenho em dados tabulares. Para
+interpretar as previsões foi usado o conceito de SHAP (SHapley Additive
+exPlanations), técnica de Inteligência Artificial Explicável (XAI) que
+atribui a cada variável uma contribuição para a previsão individual. Como
+o melhor modelo é linear, os valores SHAP têm forma exata -- coeficiente
+$\times$ (valor da variável $-$ sua média) (Lundberg e Lee, 2017) --,
+permitindo identificar quais fatores climáticos mais pesam em cada safra.
 
 Diversos estudos aplicam aprendizado de máquina à previsão de
 produtividade agrícola. Jeong et al. (2016) mostraram que Random Forest
@@ -212,10 +231,11 @@ sobre a produtividade da soja no Rio Grande do Sul, o que justifica a
 inclusão do ONI como atributo. Von Bloh et al. (2023) comparam modelos de
 machine learning para previsão de produtividade de soja no Brasil e
 reforçam a vantagem de modelos baseados em árvores frente a baselines
-lineares quando há relações não lineares entre clima e rendimento.
-Nenhum desses trabalhos, no entanto, incorpora explicitamente variáveis
-de adubação fosfatada municipal -- o que constitui a principal diferença
-da proposta deste projeto.
+lineares quando há relações não lineares entre clima e rendimento. Este
+trabalho testa essa vantagem num cenário de dados limitados (cerca de
+5 mil pares município--safra), com o patamar de produtividade calculado
+apenas com safras anteriores, e liga a previsão municipal a uma
+aplicação prática: a recomendação de adubação fosfatada e potássica.
 
 \section{Aspectos Éticos do Uso da IA e Responsabilidade}
 
@@ -227,11 +247,14 @@ ser tomado como recomendação automática de crédito, seguro ou decisão de
 plantio, e decisões com impacto econômico devem continuar envolvendo
 avaliação agronômica humana. Municípios com séries curtas ou estações
 meteorológicas com falhas podem apresentar desempenho inferior do modelo
--- essa limitação será documentada, assim como a natureza normativa (e
+-- essa limitação está documentada, assim como a natureza normativa (e
 não observacional) dos dados de adubação usados, já que não existe base
-pública do volume efetivamente aplicado por produtor. Código, versões
-das bases e parâmetros dos modelos serão versionados no GitHub do
-projeto para permitir auditoria e reprodução.
+pública do volume efetivamente aplicado por produtor. Pelo mesmo motivo,
+a recomendação de adubação gerada pelo modelo é apresentada por classe
+de teor do solo, para ser confrontada com a análise de solo de cada
+lavoura, e não como dose automática por município. Código, versões das
+bases e parâmetros dos modelos estão versionados no GitHub do projeto
+para permitir auditoria e reprodução.
 
 \section{Dataset, Análise Exploratória e Preparação dos Dados}
 
@@ -256,12 +279,16 @@ IBGE/SIDRA -- Tabela 1612 & Rendimento (kg/ha), área plantada/colhida e
   histórico produtivo. \\ \hline
 NOAA/CPC -- ONI & Índice trimestral do ENOS (El Niño/La Niña). & Sinal
   climático de grande escala, disponível antes e durante a safra. \\ \hline
-INMET / BDMEP & Precipitação e temperatura observadas em 45 estações
-  automáticas do RS. & Validação da qualidade/cobertura dos dados
-  climáticos usados. \\ \hline
-Embrapa / CQFS-RS/SC & Recomendações de adubação fosfatada (MAP,
-  Superfosfato Simples, Superfosfato Triplo, DAP) por classe de solo. &
-  Atributos de disponibilidade de P, S e Ca no solo. \\ \hline
+INMET / BDMEP & Chuva, temperatura máxima e mínima e umidade relativa
+  diárias observadas em 45 estações automáticas do RS. & Variáveis
+  climáticas por subperíodo do ciclo e balanço hídrico. \\ \hline
+Embrapa / CQFS-RS/SC & Interpretação do teor de P e K no solo e dose
+  recomendada de P\textsubscript{2}O\textsubscript{5} e
+  K\textsubscript{2}O por classe de teor (Tabelas 2.3 e 2.4). &
+  Aplicação: recomendação de adubação a partir do rendimento
+  esperado. \\ \hline
+IBGE -- Localidades & Mesorregião de cada município do RS. & Erro do
+  modelo por região. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -274,7 +301,8 @@ das quatro fontes.
 
 \begin{table}[ht]
 \centering
-\caption{Dicionário resumido da base integrada. Fonte: elaboração própria (2026).}
+\caption{Dicionário resumido da base integrada e das principais variáveis
+  derivadas para a modelagem. Fonte: elaboração própria (2026).}
 \label{tab:dicionario}
 \begin{tabular}{|p{3.3cm}|p{4.4cm}|p{1.5cm}|p{1.8cm}|}
 \hline
@@ -292,9 +320,13 @@ das quatro fontes.
   janela de safra (estação mais próxima) & mm & INMET \\ \hline
 \texttt{temperatura\_media\_safra\_c} & Temperatura média diária na
   janela de safra & \textdegree C & INMET \\ \hline
-\texttt{dose\_p2o5\_recomendada} & Dose de P\textsubscript{2}O\textsubscript{5}
-  recomendada por classe de solo (a integrar) & kg/ha &
-  Embrapa/CQFS-RS/SC \\ \hline
+\texttt{chuva\_out\_nov}, \texttt{chuva\_dez\_fev}, \texttt{chuva\_mar} &
+  Chuva acumulada por subperíodo do ciclo & mm & INMET \\ \hline
+\texttt{urmin\_dez\_fev} / \texttt{dias\_calor\_dez\_fev} & Umidade
+  relativa mínima média / dias com máxima $\geq$ 32\,\textdegree C em
+  dez--fev & \% / dias & INMET \\ \hline
+\texttt{deficit\_dez\_fev} & Déficit hídrico acumulado em dez--fev
+  (balanço hídrico) & mm & INMET (calculado) \\ \hline
 \end{tabular}
 \end{table}
 
@@ -327,10 +359,10 @@ precipitação, média de temperatura), com combinações estação--safra de
 janela incompleta (menos de 150 dos $\sim$182 dias esperados, por falha
 de equipamento ou estação recém-instalada) tratadas como ausentes em vez
 de soma parcial. Os dados de adubação fosfatada (Embrapa/CQFS-RS/SC)
-ainda não foram integrados ao painel, por serem uma tabela de referência
-por classe de solo, e não uma série real por município -- sua
-incorporação exigirá uma hipótese explícita de mapeamento
-região--classe de solo, a ser definida na próxima etapa.
+não foram integrados ao painel como variável, por serem uma tabela de
+referência por classe de solo, e não uma série observada por município;
+seu uso, como aplicação do modelo, é descrito na
+Seção~\ref{sec:adubacao}.
 
 \subsection{Resultados iniciais da análise exploratória}
 \label{sec:resultados-exploratoria}
@@ -388,53 +420,355 @@ No nível município-safra (sem separar por município), a correlação
 entre rendimento e ONI médio da safra é fraca ($\approx$0,22) e entre
 rendimento e precipitação acumulada na safra é moderada ($\approx$0,38)
 -- coerente com a literatura, mas mostra que variáveis agregadas simples
-não bastam sozinhas; é esperado que Random Forest e Gradient Boosting
-capturem melhor as interações não lineares na etapa de modelagem.
-Limitações já identificadas nesta primeira versão da base: (i) a janela
-do ONI usada é uma primeira aproximação a validar; (ii) municípios
+não bastam sozinhas. A hipótese de que Random Forest e Gradient Boosting
+capturariam melhor as interações não lineares é avaliada na
+Seção~\ref{sec:resultados}. Limitações identificadas na base: (i) a
+janela do ONI usada é uma primeira aproximação; (ii) municípios
 distantes das 45 estações do INMET têm o clima estimado por uma estação
 potencialmente distante; (iii) períodos em que a estação estava em pane
-geram dados ausentes; (iv) a adubação fosfatada ainda não foi integrada
-ao painel.
+geram dados ausentes; (iv) a adubação fosfatada não é uma série
+observada (Seção~\ref{sec:adubacao}).
 
-\section{Metodologia e Resultados Esperados}
-
-\subsection{Abordagem metodológica}
+\section{Metodologia}
+\label{sec:metodologia}
 
 A pesquisa é aplicada, quantitativa e preditiva, com unidade de análise
-município--safra, restrita ao Rio Grande do Sul. Os três modelos
-(Regressão Linear, Random Forest, Gradient Boosting) serão comparados
-entre si e contra duas linhas de base simples: a média histórica
-expandida do município (calculada apenas com safras anteriores à safra
-prevista) e o rendimento da safra imediatamente anterior. As métricas de
-avaliação serão MAE, RMSE e R\textsuperscript{2}, reportadas de forma
-agregada e, quando a amostra permitir, também por município. Duas
-alternativas de série temporal por município foram consideradas e
-descartadas para esta etapa: uma série agregada por estado (eliminaria a
-granularidade municipal) e um modelo de série temporal global (ex.:
-DeepAR, N-BEATS), descartado por desproporção entre esforço e prazo do
-N1/N2.
+município--safra, restrita ao Rio Grande do Sul. A modelagem foi
+conduzida em quatro etapas, cada uma motivada pelo diagnóstico dos erros
+da anterior; todas estão em notebooks Python no GitHub do projeto. Duas
+alternativas de série temporal foram consideradas e descartadas: uma
+série agregada por estado (eliminaria a granularidade municipal) e um
+modelo de série temporal global (ex.: DeepAR, N-BEATS), por desproporção
+entre esforço e prazo e pelo tamanho reduzido da base.
 
-\subsection{Resultados esperados}
+\subsection{Variáveis climáticas por subperíodo e balanço hídrico}
 
-Espera-se que os modelos consigam superar, de forma consistente em
-safras de teste, as previsões baseadas apenas na média histórica,
-especialmente quando variáveis de precipitação, temperatura, ONI e
-adubação fosfatada forem incorporadas. Como produto final, pretende-se
-obter: uma base municipal integrada e documentada; um pipeline
-reprodutível de preparação e modelagem em Python; comparação objetiva
-entre modelos e linhas de base; métricas por safra e por região; e a
-aplicação de SHAP ao melhor modelo para identificar os fatores
-climáticos e de adubação mais relevantes para as previsões. Caso os
-modelos não superem as linhas de base em anos fora da amostra, esse
-resultado também será reportado, pois indicará os limites
-informacionais dos dados utilizados.
+A primeira versão dos modelos usou apenas a chuva total e a temperatura
+média de outubro a março. Como esse resumo não distingue \emph{quando}
+a chuva ocorreu, o clima diário do INMET foi reagregado em subperíodos
+do ciclo da soja no RS: out--nov (semeadura), dez--fev (floração e
+enchimento de grãos, período crítico) e março (maturação). Para
+dez--fev foram calculados também a maior sequência de dias secos
+($<$ 1 mm), o número de dias com temperatura máxima $\geq$
+32\,\textdegree C, a média da temperatura máxima e a média da umidade
+relativa mínima. Cada variável só é calculada se a estação tiver dado em
+pelo menos 80\% dos dias do subperíodo.
+
+Como chuva e umidade não medem diretamente a falta de água no solo, foi
+calculado um balanço hídrico diário por estação. A evapotranspiração de
+referência foi estimada pelo método de Hargreaves--Samani (Hargreaves e
+Samani, 1985), recomendado pela FAO quando não há medição de radiação
+solar (Allen et al., 1998):
+\begin{equation}
+ET_o = 0{,}0023 \cdot 0{,}408\,R_a \cdot (T_{\mathrm{med}} + 17{,}8)
+\sqrt{T_{\mathrm{max}} - T_{\mathrm{min}}}
+\end{equation}
+em que $R_a$ é a radiação no topo da atmosfera, calculada a partir da
+latitude da estação e do dia do ano. O solo foi representado como um
+reservatório (modelo de balde) com capacidade de água disponível (CAD) de
+75 mm, cheio em 1º de outubro; a cada dia entra a chuva e sai a
+evapotranspiração, e a parcela da demanda não atendida quando o
+reservatório se esgota é o déficit hídrico do dia. A variável usada é o
+déficit acumulado em dez--fev. Duas hipóteses são declaradas: CAD única
+para todo o estado e coeficiente de cultura igual a 1. A sensibilidade à
+CAD foi testada (50 e 100 mm) e não alterou o resultado.
+
+\subsection{Patamar esperado e modelos}
+
+Cada previsão é a soma de um \textbf{patamar} -- o rendimento esperado do
+município numa safra normal -- e de um \textbf{desvio} explicado pelo
+clima. Quatro formas de patamar foram comparadas, todas calculadas apenas
+com safras anteriores à prevista: reta de tendência estadual com todo o
+histórico, média móvel dos últimos 5 anos do município, média olímpica
+dos últimos 5 anos (descartando o melhor e o pior ano) e reta dos
+últimos 10 anos. A média móvel de 5 anos teve o melhor desempenho e foi
+adotada.
+
+O desvio foi modelado por: (F) regressão linear reduzida, com uma
+variável por fenômeno -- chuva de out--nov, chuva de dez--fev e seu
+quadrado, chuva de março, dias de calor e umidade mínima de dez--fev;
+(H1) F acrescida do déficit hídrico; (H2) H1 acrescida de dois termos de
+seca extrema, $\max(0,\ U_{20} - U)$ e $\max(0,\ D - D_{80})$, em que
+$U$ é a umidade mínima, $D$ o déficit hídrico e $U_{20}$ e $D_{80}$ os
+níveis que delimitam as 20\% safras mais secas do treino -- esses termos
+valem zero em safras normais e permitem que a perda cresça mais rápido
+na seca forte; (GB) Gradient Boosting com todas as variáveis climáticas,
+o ONI e as do balanço hídrico; e a média simples de H2 e GB. Random
+Forest (500 árvores) foi avaliado nas primeiras etapas. Os
+hiperparâmetros das árvores foram fixados a priori (Gradient Boosting:
+taxa de aprendizado 0,05, até 500 iterações com parada antecipada). As
+linhas de base são a média histórica do município (todas as safras
+anteriores) e o rendimento da safra anterior. O modelo usa apenas
+informações disponíveis até o fim de março (a chuva de março é a última
+variável), permitindo a previsão cerca de um mês antes da colheita
+(abril--maio).
+
+\subsection{Validação e métricas}
+
+A base de modelagem tem 5.260 pares município--safra (448 municípios,
+safras 2005--2025) com rendimento, patamar e todas as variáveis
+climáticas. Foram usadas duas validações: (i) \textbf{corte temporal},
+com treino até 2020 (3.669 linhas) e teste em 2021--2025 (1.591
+linhas), que simula a previsão real nas safras mais recentes; e (ii)
+\textbf{deixando uma safra de fora}, em que cada safra de 2008 a 2025 é
+prevista por um modelo treinado com todas as demais (5.125 linhas
+avaliadas), medindo a estabilidade da relação clima--rendimento. As
+métricas são RMSE, MAE, R\textsuperscript{2} e viés médio (previsto
+$-$ observado). O modelo final é o de menor RMSE médio nas duas
+validações.
+
+\section{Resultados}
+\label{sec:resultados}
+
+\subsection{Evolução da modelagem}
+
+A Tabela~\ref{tab:etapas} resume as quatro etapas. Na Etapa 1, nenhum
+modelo superou a média do período de teste (R\textsuperscript{2}
+negativo): as safras 2021 e 2022 tiveram chuva total semelhante
+($\approx$700 e $\approx$660 mm), mas rendimento recorde e quebra,
+respectivamente -- a diferença estava na chuva de dez--fev ($\approx$360
+$\times$ 200 mm). Na Etapa 2, o clima por subperíodo passou a explicar as
+safras, mas as previsões de 2021--2025 ficaram enviesadas para cima
+porque a tendência ajustada até 2020 projetava mais de 3.000 kg/ha, e a
+média observada em 2020--2025 foi de $\approx$2.370 kg/ha. Uma lição
+metodológica dessa etapa: a validação deixando uma safra de fora indicou
+R\textsuperscript{2} de 0,44, valor otimista porque a tendência usava
+safras posteriores à prevista; com o patamar calculado apenas com o
+passado (Etapa 3), o valor realista é $\approx$0,25.
+
+\begin{table}[ht]
+\centering
+\caption{Evolução da modelagem por etapa. RMSE em kg/ha (corte temporal
+  / deixando uma safra de fora). Fonte: elaboração própria (2026).}
+\label{tab:etapas}
+\begin{tabular}{|p{1.1cm}|p{4.6cm}|p{6.6cm}|}
+\hline
+\textbf{Etapa} & \textbf{Mudança} & \textbf{Resultado principal} \\ \hline
+1 & Clima agregado (out--mar) & R\textsuperscript{2} $<$ 0 no teste
+  2021--2025 para todos os modelos. \\ \hline
+2 & Clima por subperíodo & Clima explica as safras, mas viés de +500 a
+  +750 kg/ha em 2021--2025 pela tendência extrapolada. \\ \hline
+3 & Patamar com safras anteriores (média móvel 5 anos) & RMSE 767 / 689;
+  supera as linhas de base. \\ \hline
+4 & Balanço hídrico e limiares de seca extrema & RMSE 740 / 684 (modelo
+  final, H2). \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Comparação dos modelos}
+
+A Tabela~\ref{tab:resultados} compara os modelos nas duas validações. O
+modelo final (H2) reduziu o RMSE em 14\% (corte temporal) e 22\%
+(deixando uma safra de fora) em relação à média histórica do município,
+com MAE de 591 e 518 kg/ha. Repetir o rendimento da safra anterior foi
+a pior estratégia, pois propaga secas e recordes para a previsão
+seguinte. O déficit hídrico sozinho (H1) não melhorou o modelo, por medir
+a mesma seca que a chuva e a umidade de dez--fev (correlação $\approx$0,8
+entre elas); o ganho veio dos limiares de seca extrema. Os modelos de
+árvores ficaram atrás da regressão linear em todos os cenários: Random
+Forest teve desempenho semelhante ou inferior ao do Gradient Boosting nas
+Etapas 1 e 2 e não foi levado adiante, e a combinação de H2 com Gradient
+Boosting foi melhor em uma validação e pior na outra.
+
+\begin{table}[ht]
+\centering
+\caption{Desempenho dos modelos (Etapa 4). RMSE em kg/ha. Fonte:
+  elaboração própria (2026).}
+\label{tab:resultados}
+\begin{tabular}{|p{5.4cm}|c|c|c|c|}
+\hline
+ & \multicolumn{2}{c|}{\textbf{Corte 2021--2025}} &
+   \multicolumn{2}{c|}{\textbf{Uma safra de fora}} \\ \cline{2-5}
+\textbf{Modelo} & \textbf{RMSE} & \textbf{R\textsuperscript{2}} &
+  \textbf{RMSE} & \textbf{R\textsuperscript{2}} \\ \hline
+Linha de base: safra anterior & 1.276 & $-$1,05 & 979 & $-$0,51 \\ \hline
+Linha de base: média histórica & 861 & 0,07 & 877 & $-$0,21 \\ \hline
+GB -- Gradient Boosting & 813 & 0,17 & 721 & 0,18 \\ \hline
+H1 -- F + déficit hídrico & 777 & 0,24 & 688 & 0,25 \\ \hline
+F -- Regressão linear reduzida & 767 & 0,26 & 689 & 0,25 \\ \hline
+Média de H2 e GB & 755 & 0,28 & 677 & 0,28 \\ \hline
+\textbf{H2 -- H1 + limiares (final)} & \textbf{740} & \textbf{0,31} &
+  \textbf{684} & \textbf{0,26} \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Fatores climáticos}
+
+Os coeficientes do modelo F, mais estáveis para interpretação, indicam
+(sobre o desvio em relação ao patamar): +208 kg/ha a cada 100 mm de
+chuva em dez--fev acima da média ($\approx$417 mm), com ganho decrescente
+(termo quadrático negativo); +30 kg/ha por ponto percentual de umidade
+relativa mínima em dez--fev; +59 kg/ha a cada 100 mm de chuva em março;
+e $-$2,7 kg/ha por dia de calor. A chuva de out--nov não teve efeito
+significativo. A Figura~\ref{fig:contribuicao} decompõe a previsão de
+cada safra na contribuição de cada fator: em média, a chuva de dez--fev
+move a previsão em $\approx$250 kg/ha e a umidade mínima em $\approx$170
+kg/ha, enquanto chuva de março e calor pesam $\approx$35 kg/ha cada --
+o período de floração e enchimento concentra praticamente todo o efeito
+do clima. No modelo H2, os termos de seca extrema foram significativos:
+cada 100 mm de déficit acima de $\approx$243 mm reduz o rendimento em
+$\approx$300 kg/ha adicionais, e cada ponto de umidade mínima abaixo de
+$\approx$41,5\% em $\approx$37 kg/ha adicionais, evidenciando que a perda
+se acelera quando a seca passa de um limite. O déficit hídrico foi o
+melhor indicador isolado de seca (correlação de $-$0,61 com o desvio do
+rendimento). Os p-valores tendem a ser otimistas, pois linhas da mesma
+safra compartilham o mesmo ano climático.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.9\textwidth]{figuras/fig4_contribuicao_fatores.png}
+\caption{Contribuição de cada fator climático para o desvio do
+  rendimento em relação ao patamar, por safra (modelo F; equivalente aos
+  valores SHAP). Losango: desvio previsto; círculo: desvio observado.
+  Fonte: elaboração própria (2026).}
+\label{fig:contribuicao}
+\end{figure}
+
+\subsection{Safras de seca}
+
+A Figura~\ref{fig:secas} mostra, para cada safra prevista sem ter sido
+vista pelo modelo, o desvio médio estadual em relação ao patamar. As
+quebras de 2012 e 2023 foram antecipadas praticamente por inteiro, e a
+de 2022 passou de $\approx$25\% para $\approx$36\% de captação com o
+balanço hídrico e os limiares. A quebra de 2020 ($\approx$1.180 kg/ha
+abaixo do patamar) não foi captada ($\approx$3\%): pelas estações do
+INMET, o verão de 2020 foi apenas moderadamente seco (déficit médio de
+234 mm, contra 322 mm em 2012), com primavera chuvosa. A perda de 2020
+não está nas variáveis disponíveis -- possivelmente por chuva concentrada
+em poucos eventos, estações distantes das lavouras ou efeitos fora de
+dez--fev --, o que caracteriza um limite de informação, e não de
+algoritmo.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.9\textwidth]{figuras/fig5_secas_desvio_por_safra.png}
+\caption{Desvio médio estadual em relação ao patamar, por safra, na
+  validação deixando uma safra de fora: observado e previsto pelos
+  modelos F e H2. Fonte: elaboração própria (2026).}
+\label{fig:secas}
+\end{figure}
+
+\subsection{Erro por região e por município}
+
+O erro relativo (MAE como percentual do rendimento médio) foi menor no
+Nordeste (17,8\%) e no Noroeste (18,6\%) -- principal região produtora,
+com mais da metade das linhas da base -- e maior no Sudeste (27,2\%) e no
+Sudoeste (28,6\%), regiões de produtividade média menor
+(Figura~\ref{fig:regioes}). Entre os 375 municípios com pelo menos 8
+safras avaliadas, o erro relativo mediano foi de 19,9\% (metade entre
+16\% e 25\%), e municípios mais produtivos tiveram erro relativo menor
+(correlação de $-$0,62). Esses valores referem-se ao modelo F; o modelo
+H2 difere dele em menos de 1\% no RMSE dessa validação.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.7\textwidth]{figuras/fig6_erro_por_mesorregiao.png}
+\caption{Erro relativo (MAE \% do rendimento médio) por mesorregião do
+  IBGE, nas duas validações (modelo F). Fonte: elaboração própria
+  (2026).}
+\label{fig:regioes}
+\end{figure}
+
+\subsection{Aplicação: recomendação de adubação}
+\label{sec:adubacao}
+
+Como não há dado público de adubação efetivamente aplicada por município
+e safra, as tabelas da Embrapa/CQFS-RS/SC (Reunião de Pesquisa de Soja
+da Região Sul, 2014; SBCS/CQFS-RS/SC, 2016) foram usadas como aplicação
+do modelo, e não como variável de previsão. A adubação é decidida no
+plantio, antes do clima do verão; por isso, o rendimento esperado usado é
+o patamar do modelo (média do município em 2021--2025). A Tabela 2.4 da
+Embrapa indica a dose de P\textsubscript{2}O\textsubscript{5} e
+K\textsubscript{2}O por classe de teor do nutriente no solo para
+rendimento de 2 t/ha, acrescida de 15 kg/ha de
+P\textsubscript{2}O\textsubscript{5} e 25 kg/ha de K\textsubscript{2}O
+por tonelada adicional (aplicado aqui de forma proporcional). A dose é
+apresentada para as cinco classes, e o produtor identifica a sua pela
+análise de solo (Tabela 2.3). Duas regras de interpretação do grupo:
+doses zero da tabela (classe ``Muito alto'', 1º cultivo) foram mantidas
+em zero, e rendimentos esperados abaixo de 2 t/ha usam a dose da tabela,
+sem redução. O resultado, para 431 municípios, está no arquivo
+\texttt{recomendacao\_adubacao\_safra2026.csv} (pasta
+\texttt{dataset/processed} do repositório); a
+Tabela~\ref{tab:adubacao} ilustra três mesorregiões.
+
+\begin{table}[ht]
+\centering
+\caption{Dose recomendada no 1º cultivo (kg/ha) para o rendimento
+  esperado mediano de três mesorregiões, por classe de teor do solo.
+  Fonte: elaboração própria a partir de Embrapa/CQFS-RS/SC (2026).}
+\label{tab:adubacao}
+\begin{tabular}{|p{3.6cm}|c|c|c|c|c|c|}
+\hline
+\textbf{Mesorregião (rend. esperado)} & \textbf{Nutriente} &
+  \textbf{M. baixo} & \textbf{Baixo} & \textbf{Médio} & \textbf{Alto} &
+  \textbf{M. alto} \\ \hline
+Nordeste (2.911 kg/ha) & P\textsubscript{2}O\textsubscript{5} & 124 & 84
+  & 74 & 44 & 0 \\ \cline{2-7}
+ & K\textsubscript{2}O & 148 & 108 & 98 & 68 & 0 \\ \hline
+Noroeste (2.515 kg/ha) & P\textsubscript{2}O\textsubscript{5} & 118 & 78
+  & 68 & 38 & 0 \\ \cline{2-7}
+ & K\textsubscript{2}O & 138 & 98 & 88 & 58 & 0 \\ \hline
+Sudoeste (1.755 kg/ha) & P\textsubscript{2}O\textsubscript{5} & 110 & 70
+  & 60 & 30 & 0 \\ \cline{2-7}
+ & K\textsubscript{2}O & 125 & 85 & 75 & 45 & 0 \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Discussão e Limitações}
+
+Ao contrário do que sugerem estudos com bases maiores (Jeong et al.,
+2016; Von Bloh et al., 2023), a regressão linear superou Random Forest e
+Gradient Boosting. Dois fatores explicam o resultado: a base tem cerca de
+5 mil linhas e 21 safras, pouco para modelos mais flexíveis; e as secas
+recentes foram mais extremas que qualquer safra do treino -- 2022 teve 44
+dias de calor em dez--fev, contra no máximo 33 até 2020 --, e modelos de
+árvores não extrapolam além dos valores observados no treino. A não
+linearidade relevante (perda que se acelera na seca extrema) foi
+capturada por termos de limiar explícitos, mantendo o modelo
+interpretável.
+
+O erro remanescente ($\approx$20\% por município) reflete principalmente
+limites de informação: metade dos pares município--safra com rendimento
+não tem clima do INMET com cobertura suficiente; o clima de cada
+município vem da estação mais próxima, que pode estar a dezenas de
+quilômetros; e fatores como pragas, doenças, data de semeadura e manejo
+não estão nos dados. O próprio rendimento municipal da PAM é uma
+estimativa, e alguns municípios apresentam valores idênticos em safras
+consecutivas. Hipóteses declaradas: CAD única de 75 mm e coeficiente de
+cultura igual a 1 no balanço hídrico; e, na adubação, uso de recomendação
+normativa (não de dose aplicada), com rendimento esperado que inclui três
+secas recentes e pode estar abaixo do potencial do produtor. Como
+extensões, a inclusão de clima em grade (ex.: NASA POWER) ampliaria a
+cobertura e aproximaria o clima das lavouras, e índices de vegetação por
+satélite (NDVI) poderiam captar perdas que o clima não explica, como a
+de 2020.
+
+\section{Conclusão}
+
+O trabalho construiu uma base municipal integrada e reprodutível e um
+modelo que prevê, ao fim de março, o rendimento da soja de cada município do RS
+com erro $\approx$14--22\% menor que a média histórica do município. Os
+resultados mostram que, para este problema, a forma de representar o
+clima e o patamar de produtividade pesou mais do que a escolha do
+algoritmo: resumir a chuva por subperíodo, calcular o patamar apenas com
+o passado e representar explicitamente a seca extrema trouxeram os
+ganhos, enquanto modelos de árvores não superaram a regressão linear. A
+chuva, a umidade e o déficit hídrico de dezembro a fevereiro concentram o
+efeito do clima. A aplicação em adubação mostra como a previsão pode
+apoiar uma decisão agronômica concreta, mantendo a análise de solo do
+produtor como referência.
 
 \textbf{Endereço GitHub:} \url{https://github.com/isah5/Projeto_Safra_de_Soja}
 
 \section{Referências}
 
 \begin{thebibliography}{99}
+
+\bibitem{allen1998}
+ALLEN, R. G.; PEREIRA, L. S.; RAES, D.; SMITH, M. \emph{Crop
+evapotranspiration: guidelines for computing crop water requirements}.
+FAO Irrigation and Drainage Paper 56. Roma: FAO, 1998.
 
 \bibitem{breiman2001}
 BREIMAN, L. Random forests. \emph{Machine Learning}, v. 45, p. 5--32, 2001.
@@ -443,11 +777,22 @@ BREIMAN, L. Random forests. \emph{Machine Learning}, v. 45, p. 5--32, 2001.
 FRIEDMAN, J. H. Greedy function approximation: a gradient boosting machine.
 \emph{The Annals of Statistics}, v. 29, n. 5, p. 1189--1232, 2001.
 
+\bibitem{hargreaves1985}
+HARGREAVES, G. H.; SAMANI, Z. A. Reference crop evapotranspiration from
+temperature. \emph{Applied Engineering in Agriculture}, v. 1, n. 2,
+p. 96--99, 1985.
+
 \bibitem{ibge}
 IBGE -- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. Produção Agrícola
 Municipal: tabela 1612 -- lavouras temporárias. Rio de Janeiro: IBGE/SIDRA.
 Disponível em: \url{https://sidra.ibge.gov.br/tabela/1612}. Acesso em: 25
 set. 2026.
+
+\bibitem{ibgelocalidades}
+IBGE -- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. API de
+Localidades: municípios do Rio Grande do Sul. Disponível em:
+\url{https://servicodados.ibge.gov.br/api/v1/localidades/estados/43/municipios}.
+Acesso em: 22 out. 2026.
 
 \bibitem{inmet}
 INMET -- INSTITUTO NACIONAL DE METEOROLOGIA. BDMEP -- Banco de Dados
@@ -457,6 +802,11 @@ Meteorológicos. Brasília, DF. Disponível em:
 \bibitem{jeong2016}
 JEONG, J. H. et al. Random forests for global and regional crop yield
 predictions. \emph{PLOS ONE}, v. 11, n. 6, e0156571, 2016.
+
+\bibitem{lundberg2017}
+LUNDBERG, S. M.; LEE, S.-I. A unified approach to interpreting model
+predictions. In: \emph{Advances in Neural Information Processing Systems
+30 (NIPS 2017)}. p. 4765--4774, 2017.
 
 \bibitem{noaa}
 NOAA -- NATIONAL OCEANIC AND ATMOSPHERIC ADMINISTRATION. Climate Prediction
@@ -471,10 +821,21 @@ phenomenon and sowing dates on soybean yield and on the occurrence of
 extreme weather events in southern Brazil. \emph{Agricultural and Forest
 Meteorology}, v. 290, 108038, 2020.
 
+\bibitem{pedregosa2011}
+PEDREGOSA, F. et al. Scikit-learn: machine learning in Python.
+\emph{Journal of Machine Learning Research}, v. 12, p. 2825--2830, 2011.
+
 \bibitem{pilau2022}
 PILAU, F. G. et al. Impact of ENSO-related rainfall variability on soybean
 yield in the state of Rio Grande do Sul, Brazil. \emph{Agrometeoros}, v. 30,
 e027115, 2022.
+
+\bibitem{reuniao2014}
+REUNIÃO DE PESQUISA DE SOJA DA REGIÃO SUL. \emph{Indicações técnicas para
+a cultura da soja no Rio Grande do Sul e em Santa Catarina, safras
+2014/2015 e 2015/2016}. Disponível em:
+\url{https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192}.
+Acesso em: 22 out. 2026.
 
 \bibitem{sbcs2016}
 SOCIEDADE BRASILEIRA DE CIÊNCIA DO SOLO -- NÚCLEO REGIONAL SUL / COMISSÃO

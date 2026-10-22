@@ -2,18 +2,16 @@
 
 <!--
 CABEÇALHO DE IDENTIFICAÇÃO DO GRUPO
-Grupo: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
-       Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067)
-Integrantes: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
-             Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067)
-Prof: Dr. Ivan Carlos Alcântara de Oliveira
+Grupo:
+Integrantes:
+Prof:
 Disciplina: Inteligência Artificial
 Instituição: Universidade Presbiteriana Mackenzie - FCI
 
 HISTÓRICO DE ALTERAÇÕES
 Data       | Autor              | Descrição
 -----------|--------------------|--------------------------------------------
-2026-09-24 | Isabelle Franco    | Criação inicial do repositório (estrutura N1)
+2026-09-24 |                    | Criação inicial do repositório (estrutura N1)
 -->
 
 Repositório público do projeto da disciplina, com o artigo científico
