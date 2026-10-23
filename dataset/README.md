@@ -17,6 +17,7 @@ Data       | Autor           | Descrição
 2026-10-22 |                 | Adicionado o arquivo processado de clima por subperíodo (estação × safra), gerado na Etapa 2 da modelagem
 2026-10-22 |                 | Adicionada a tabela de regiões dos municípios do RS (API de localidades do IBGE)
 2026-10-22 |                 | Removido o JSON bruto do IBGE (não usado; o CSV tabulado é a fonte dos notebooks); tabelas da Embrapa passam a ser usadas na recomendação de adubação; adicionado o arquivo de recomendação da safra 2026
+2026-10-23 |                 | Adicionado o clima diário do NASA POWER (87 células da grade que cobrem os municípios do RS, 2000-2025), baixado por `dataset/baixar_nasa_power.py`; adicionados os arquivos processados de balanço hídrico das estações (Etapa 4) e de clima do NASA POWER por célula e safra (Etapa 5)
 -->
 
 # Dataset — descrição
@@ -28,6 +29,7 @@ Data       | Autor           | Descrição
 | IBGE/SIDRA — Tabela 1612 | Área plantada, área colhida, produção e rendimento médio de soja | 2000–2025 | Município (RS) | https://sidra.ibge.gov.br/tabela/1612 | ✅ baixado — `dataset/raw/ibge_sidra_1612_soja_rs_2000_2025.csv` |
 | NOAA/CPC — ONI | Índice trimestral (médias móveis de 3 meses) do ENOS (El Niño/La Niña) | 1999–2025 | Trimestral (a agregar por safra) | https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt | ✅ baixado — `dataset/raw/noaa_oni_1999_2025.csv` |
 | INMET — BDMEP | Precipitação total diária e temperatura (máx/média/mín) diária, por estação automática | 2000-01-01 a 2025-12-31 | Estação meteorológica (diário) | https://bdmep.inmet.gov.br/ | ✅ baixado (manual, via portal BDMEP, em duas etapas) — `dataset/raw/inmet_estacoes_RS_consolidado_2000_2025.csv` (dados diários) + `dataset/raw/inmet_estacoes_metadados.csv` (lat/long/situação de cada estação) |
+| NASA POWER (NASA/LaRC) | Chuva, temperatura média/máxima/mínima, ponto de orvalho e umidade relativa média diários (reanálise MERRA-2) | 2000–2025 (só out–mai) | Célula da grade de 0,5° × 0,625° (diário) | https://power.larc.nasa.gov/ | ✅ baixado (script `dataset/baixar_nasa_power.py`) — `dataset/raw/nasa_power_rs_2000_2025.csv` + `dataset/raw/nasa_power_celulas_municipios_rs.csv` |
 | Embrapa / CQFS-RS/SC | Recomendação de adubação fosfatada e potássica para soja, por classe de teor de P/K no solo | — | Classe de teor de P/K no solo (não por município) | https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192 | ✅ baixado — `dataset/raw/embrapa_tabela_2.3_interpretacao_teor_p_k.csv` + `dataset/raw/embrapa_tabela_2.4_recomendacao_p2o5_k2o_soja.csv` |
 
 ### Como os dados do IBGE foram obtidos
@@ -98,6 +100,33 @@ O notebook faz: (1) cálculo, para cada município, da estação mais próxima
 semeadura–colheita); (3) tratamento de qualquer combinação estação-safra
 com menos de 150 dos ~182 dias esperados (por `Pane` ou por a estação ainda
 não estar instalada) como ausente, em vez de soma parcial enganosa.
+
+### Como os dados do NASA POWER foram obtidos
+
+Pela API pública de dados diários do NASA POWER (sem necessidade de token), comunidade
+`AG` (agroclimatologia), com o script `dataset/baixar_nasa_power.py` (rodar a partir da
+raiz do repositório: `python dataset/baixar_nasa_power.py`). Exemplo de consulta para
+uma célula:
+
+```
+https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,T2MDEW,RH2M&community=AG&latitude=-28.5&longitude=-52.5&start=20000101&end=20251231&format=JSON
+```
+
+A grade do NASA POWER (MERRA-2) tem células de 0,5° de latitude × 0,625° de longitude
+(~50 km), e todos os pontos de uma célula recebem o mesmo valor (verificado consultando
+pontos diferentes da mesma célula). Por isso, cada município do RS é associado à célula
+que contém a sua coordenada (`municipios_brasil_coords.csv`, filtrado pela UF 43), e cada
+célula é baixada uma única vez: os 497 municípios caem em **87 células**. Só os meses de
+outubro a maio (janela da safra) são guardados. Baixado em 2026-10-23, sem nenhum valor
+ausente.
+
+- `dataset/raw/nasa_power_celulas_municipios_rs.csv` — município → célula
+  (`codigo_ibge_municipio`, `lat_celula`, `lon_celula`).
+- `dataset/raw/nasa_power_rs_2000_2025.csv` — 550.275 linhas (célula × dia), com
+  `chuva_mm` (PRECTOTCORR, precipitação corrigida), `t2m_c`, `tmax_c`, `tmin_c`,
+  `tdew_c` (ponto de orvalho) e `rh2m_pct` (umidade relativa média). O NASA POWER não
+  fornece a umidade relativa mínima; o notebook da Etapa 5 a estima pelo ponto de
+  orvalho e pela temperatura máxima (FAO-56).
 
 ### Como os dados de adubação fosfatada foram obtidos
 
@@ -179,6 +208,16 @@ Salvo em `dataset/raw/ibge_municipios_rs_regioes.csv` (497 municípios, colunas
   média da umidade relativa mínima. Valor ausente quando a estação tem dado em
   menos de 80% dos dias do subperíodo. Usado por `notebooks/modelagem_etapa3.ipynb`
   e `notebooks/modelagem_etapa4.ipynb`.
+- `dataset/processed/balanco_hidrico_estacao_safra.csv` — gerado por
+  `notebooks/modelagem_etapa4.ipynb` a partir do INMET diário; uma linha por estação ×
+  safra, com o déficit hídrico de dez–fev (CAD de 50, 75 e 100 mm; `deficit_dez_fev`
+  usa 75 mm), o balanço chuva − ETo e a ETo acumulados em dez–fev. Usado por
+  `notebooks/modelagem_etapa5_nasa_power.ipynb`.
+- `dataset/processed/clima_nasa_power_celula_safra.csv` — gerado por
+  `notebooks/modelagem_etapa5_nasa_power.ipynb` a partir do NASA POWER diário; uma linha
+  por célula × safra (chave `celula` + `ano_safra`; a célula de cada município está em
+  `dataset/raw/nasa_power_celulas_municipios_rs.csv`), com as mesmas variáveis do clima
+  por subperíodo e do balanço hídrico das estações.
 - `dataset/processed/recomendacao_adubacao_safra2026.csv` — gerado por
   `notebooks/modelagem_etapa4.ipynb`; resultado da aplicação do modelo, não
   insumo. Uma linha por município × classe de teor de P/K no solo (431
@@ -227,6 +266,9 @@ RAJADA MAXIMA DIARIA (AUT)(m/s)`, `VENTO, VELOCIDADE MEDIA DIARIA
 - A rede automática do INMET no RS começou a operar de forma escalonada
   (algumas estações só têm dados a partir de 2006-2007), então nem todo
   município tem cobertura climática completa desde 2000.
+- O NASA POWER é uma reanálise em grade (~50 km), não uma medição local: municípios na
+  mesma célula recebem o mesmo clima, e extremos locais tendem a ser suavizados. A
+  umidade relativa mínima é estimada, não medida.
 
 ## Licença de uso dos dados originais
 
