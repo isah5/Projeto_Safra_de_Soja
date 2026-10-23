@@ -4,12 +4,14 @@
 %
 % Síntese do conteúdo deste arquivo: artigo do projeto (template SBC) --
 % problema, ética, dataset e análise exploratória, metodologia de modelagem,
-% resultados das quatro etapas, aplicação em adubação, discussão e conclusão.
+% resultados das cinco etapas, aplicação em adubação, discussão e conclusão.
 %
 % Histórico de alterações:
 % Data       | Autor           | Descrição
 % -----------|-----------------|--------------------------------------------
 % 2026-10-22 |                 | Metodologia e resultados da modelagem (Etapas 1-4), aplicação em adubação, discussão, conclusão; resumo/abstract e seções anteriores alinhados aos resultados
+% 2026-10-23 |                 | Correção do ONI por safra: atualizados rendimento por fase do ENOS, correlação ONI × rendimento, linhas GB e "Média de H2 e GB" da Tab. de resultados (figuras 2 e 3 regeradas)
+% 2026-10-23 |                 | Etapa 5: clima do NASA POWER (cobertura de 5.260 para 8.651 pares município-safra) e novo modelo final FL (F + limiar de déficit); resumo/abstract, dados, metodologia, resultados, figuras 4-6, discussão e conclusão atualizados
 
 \documentclass[12pt]{article}
 
@@ -43,23 +45,26 @@
   yield, largely driven by summer droughts. This work, under the Framework
   option, develops and evaluates a machine learning approach to forecast
   municipal soybean yield in the state from public data: IBGE/SIDRA Table
-  1612 (RS municipalities, 2000--2025), daily INMET weather station data
-  and NOAA's Oceanic Niño Index (ONI). Climate was aggregated by crop
-  development sub-period and complemented by a daily soil water balance
-  (Hargreaves--Samani evapotranspiration and a bucket model). Each forecast
-  combines an expected yield level -- the municipality's mean over the five
-  previous seasons -- with a climate-driven deviation, using only
-  information available by the end of March. Linear Regression, Random
-  Forest and Gradient Boosting were compared against two historical
-  baselines under a temporal split (test 2021--2025) and leave-one-season-out
-  validation. The best model, a linear regression with water deficit and
-  extreme-drought thresholds, reduced RMSE by 14\% and 22\% relative to the
-  municipal historical mean (740 and 684 kg/ha; R\textsuperscript{2} of 0.31
-  and 0.26) and outperformed the tree-based models. December--February
-  rainfall, minimum relative humidity and water deficit were the dominant
-  factors, with losses accelerating beyond a deficit of about 243 mm. The
-  model anticipated the 2012 and 2023 droughts but not the 2020 one, which
-  was not visible in station data. As an application, expected yields were
+  1612 (RS municipalities, 2000--2025), daily weather data from INMET
+  stations and from the NASA POWER gridded dataset, and NOAA's Oceanic Niño
+  Index (ONI). Climate was aggregated by crop development sub-period and
+  complemented by a daily soil water balance (Hargreaves--Samani
+  evapotranspiration and a bucket model). Each forecast combines an
+  expected yield level -- the municipality's mean over the five previous
+  seasons -- with a climate-driven deviation, using only information
+  available by the end of March. Linear Regression, Random Forest and
+  Gradient Boosting were compared against two historical baselines under a
+  temporal split (test 2021--2025) and leave-one-season-out validation.
+  Replacing station data with NASA POWER raised coverage from 5,260 to
+  8,651 municipality-season pairs and lowered the error on the same pairs.
+  The final model, a linear regression with a single extreme-drought term
+  for water deficit, reduced RMSE by 16\% and 28\% relative to the
+  municipal historical mean (739 and 638 kg/ha; R\textsuperscript{2} of 0.34
+  and 0.38) and outperformed the tree-based models. December--February
+  rainfall and minimum relative humidity were the dominant factors, with
+  losses accelerating beyond a deficit of about 290 mm. The model
+  anticipated the 2023 drought and part of the 2012 and 2022 ones, but only
+  a small share of the 2020 loss. As an application, expected yields were
   combined with Embrapa/CQFS-RS/SC tables to produce phosphate and potassium
   fertilization recommendations by soil-test class for the 2026 season.
 
@@ -73,24 +78,27 @@
   trabalho, na opção Framework, desenvolve e avalia uma abordagem de
   aprendizado de máquina para prever a produtividade municipal da soja no
   estado a partir de dados públicos: a Tabela 1612 do IBGE/SIDRA
-  (municípios do RS, 2000--2025), dados diários das estações do INMET e o
-  Oceanic Niño Index (ONI) da NOAA. O clima foi agregado por subperíodo do
-  ciclo da cultura e complementado por um balanço hídrico diário
-  (evapotranspiração de Hargreaves--Samani e modelo de balde). Cada
-  previsão combina um patamar esperado -- a média do município nas cinco
-  safras anteriores -- com um desvio explicado pelo clima, usando apenas
-  informações disponíveis ao fim de março. Regressão Linear, Random
-  Forest e Gradient Boosting foram comparados com duas linhas de base
-  históricas, em validação com corte temporal (teste 2021--2025) e
-  deixando uma safra de fora. O melhor modelo, uma regressão linear com
-  déficit hídrico e limiares de seca extrema, reduziu o RMSE em 14\% e 22\%
-  em relação à média histórica do município (740 e 684 kg/ha;
-  R\textsuperscript{2} de 0,31 e 0,26) e superou os modelos baseados em
-  árvores. A chuva e a umidade relativa mínima de dezembro a fevereiro e
-  o déficit hídrico foram os fatores dominantes, com perdas que se
-  aceleram acima de um déficit de cerca de 243 mm. O modelo antecipou as
-  secas de 2012 e 2023, mas não a de 2020, que não aparece nos dados das
-  estações. Como aplicação, o rendimento esperado foi combinado com as
+  (municípios do RS, 2000--2025), dados climáticos diários das estações do
+  INMET e da base em grade NASA POWER, e o Oceanic Niño Index (ONI) da
+  NOAA. O clima foi agregado por subperíodo do ciclo da cultura e
+  complementado por um balanço hídrico diário (evapotranspiração de
+  Hargreaves--Samani e modelo de balde). Cada previsão combina um patamar
+  esperado -- a média do município nas cinco safras anteriores -- com um
+  desvio explicado pelo clima, usando apenas informações disponíveis ao
+  fim de março. Regressão Linear, Random Forest e Gradient Boosting foram
+  comparados com duas linhas de base históricas, em validação com corte
+  temporal (teste 2021--2025) e deixando uma safra de fora. A troca das
+  estações pelo NASA POWER ampliou a cobertura de 5.260 para 8.651 pares
+  município--safra e reduziu o erro nos mesmos pares. O modelo final, uma
+  regressão linear com um único termo de seca extrema para o déficit
+  hídrico, reduziu o RMSE em 16\% e 28\% em relação à média histórica do
+  município (739 e 638 kg/ha; R\textsuperscript{2} de 0,34 e 0,38) e
+  superou os modelos baseados em árvores. A chuva e a umidade relativa
+  mínima de dezembro a fevereiro foram os fatores dominantes, com perdas
+  que se aceleram acima de um déficit de cerca de 290 mm. O modelo
+  antecipou a seca de 2023 e parte das de 2012 e 2022, mas só uma pequena
+  parcela da perda de 2020. Como aplicação, o rendimento esperado foi
+  combinado com as
   tabelas da Embrapa/CQFS-RS/SC para gerar recomendações de adubação
   fosfatada e potássica por classe de teor do solo para a safra 2026.
 
@@ -151,8 +159,8 @@ Como objetivos específicos, pretende-se:
     município--safra, cobrindo os municípios do RS e as safras
     disponíveis na Tabela 1612 do IBGE/SIDRA (2000--2025);
   \item construir atributos climáticos por subperíodo do ciclo da soja e
-    de balanço hídrico a partir dos dados diários do INMET, além do ONI
-    por safra;
+    de balanço hídrico a partir dos dados diários do INMET e do NASA
+    POWER, além do ONI por safra;
   \item treinar e comparar Regressão Linear, Random Forest e Gradient
     Boosting contra linhas de base históricas (média histórica do
     município e rendimento da safra anterior), com validação temporal e
@@ -188,7 +196,7 @@ climáticas associadas àquela safra. A variável-alvo é o rendimento médio
 municipal da soja, expresso em kg/ha; as variáveis explicativas são
 formadas pelo histórico produtivo do município (patamar esperado), por
 variáveis climáticas por subperíodo do ciclo e de balanço hídrico
-(INMET) e pelo estado do ENOS (índice ONI). Os dados nunca são divididos
+(INMET e NASA POWER) e pelo estado do ENOS (índice ONI). Os dados nunca são divididos
 de forma aleatória, para evitar vazamento de informação futura: o
 patamar de cada safra usa apenas safras anteriores, e os modelos são
 avaliados com corte temporal (treino com safras mais antigas, teste com
@@ -233,7 +241,7 @@ machine learning para previsão de produtividade de soja no Brasil e
 reforçam a vantagem de modelos baseados em árvores frente a baselines
 lineares quando há relações não lineares entre clima e rendimento. Este
 trabalho testa essa vantagem num cenário de dados limitados (cerca de
-5 mil pares município--safra), com o patamar de produtividade calculado
+8,6 mil pares município--safra), com o patamar de produtividade calculado
 apenas com safras anteriores, e liga a previsão municipal a uma
 aplicação prática: a recomendação de adubação fosfatada e potássica.
 
@@ -281,7 +289,13 @@ NOAA/CPC -- ONI & Índice trimestral do ENOS (El Niño/La Niña). & Sinal
   climático de grande escala, disponível antes e durante a safra. \\ \hline
 INMET / BDMEP & Chuva, temperatura máxima e mínima e umidade relativa
   diárias observadas em 45 estações automáticas do RS. & Variáveis
-  climáticas por subperíodo do ciclo e balanço hídrico. \\ \hline
+  climáticas por subperíodo do ciclo e balanço hídrico (Etapas 2--4) e
+  comparação com o NASA POWER. \\ \hline
+NASA POWER (NASA/LaRC) & Chuva, temperatura média, máxima e mínima,
+  ponto de orvalho e umidade relativa diários, em grade de
+  0,5\textdegree\ $\times$ 0,625\textdegree\ (reanálise MERRA-2), sem
+  falhas. & Fonte do clima do modelo final (Etapa 5), para todos os
+  municípios. \\ \hline
 Embrapa / CQFS-RS/SC & Interpretação do teor de P e K no solo e dose
   recomendada de P\textsubscript{2}O\textsubscript{5} e
   K\textsubscript{2}O por classe de teor (Tabelas 2.3 e 2.4). &
@@ -321,12 +335,12 @@ das quatro fontes.
 \texttt{temperatura\_media\_safra\_c} & Temperatura média diária na
   janela de safra & \textdegree C & INMET \\ \hline
 \texttt{chuva\_out\_nov}, \texttt{chuva\_dez\_fev}, \texttt{chuva\_mar} &
-  Chuva acumulada por subperíodo do ciclo & mm & INMET \\ \hline
+  Chuva acumulada por subperíodo do ciclo & mm & INMET / NASA POWER \\ \hline
 \texttt{urmin\_dez\_fev} / \texttt{dias\_calor\_dez\_fev} & Umidade
   relativa mínima média / dias com máxima $\geq$ 32\,\textdegree C em
-  dez--fev & \% / dias & INMET \\ \hline
+  dez--fev & \% / dias & INMET / NASA POWER \\ \hline
 \texttt{deficit\_dez\_fev} & Déficit hídrico acumulado em dez--fev
-  (balanço hídrico) & mm & INMET (calculado) \\ \hline
+  (balanço hídrico) & mm & INMET / NASA POWER (calculado) \\ \hline
 \end{tabular}
 \end{table}
 
@@ -358,7 +372,14 @@ etapas) foram associados a cada município pela estação mais próxima
 precipitação, média de temperatura), com combinações estação--safra de
 janela incompleta (menos de 150 dos $\sim$182 dias esperados, por falha
 de equipamento ou estação recém-instalada) tratadas como ausentes em vez
-de soma parcial. Os dados de adubação fosfatada (Embrapa/CQFS-RS/SC)
+de soma parcial. Os dados diários do NASA POWER (2000--2025, outubro a
+maio) foram obtidos pela API pública do serviço; como todos os pontos de
+uma célula da grade recebem o mesmo valor, cada município foi associado à
+célula que contém a sua coordenada, e os 497 municípios caem em 87
+células. A umidade relativa mínima, não fornecida pelo NASA POWER, foi
+estimada pela razão entre a pressão de vapor no ponto de orvalho e a
+pressão de saturação na temperatura máxima do dia (Allen et al., 1998).
+Os dados de adubação fosfatada (Embrapa/CQFS-RS/SC)
 não foram integrados ao painel como variável, por serem uma tabela de
 referência por classe de solo, e não uma série observada por município;
 seu uso, como aplicação do modelo, é descrito na
@@ -401,8 +422,8 @@ período.
 \end{figure}
 
 Considerando todos os pares município-safra, o rendimento médio
-observado sob La Niña ($\approx$2.151 kg/ha) é inferior ao observado em
-safras neutras ($\approx$2.432 kg/ha) e sob El Niño ($\approx$2.395
+observado sob La Niña ($\approx$2.230 kg/ha) é inferior ao observado em
+safras neutras ($\approx$2.351 kg/ha) e sob El Niño ($\approx$2.462
 kg/ha). Esse resultado é compatível com Pilau et al. (2022) e Nóia
 Júnior et al. (2020), que descrevem efeitos negativos consistentes da
 fase fria do ENOS sobre a produtividade da soja no sul do Brasil, e
@@ -417,7 +438,7 @@ reforça o uso do ONI como atributo do modelo.
 \end{figure}
 
 No nível município-safra (sem separar por município), a correlação
-entre rendimento e ONI médio da safra é fraca ($\approx$0,22) e entre
+entre rendimento e ONI médio da safra é fraca ($\approx$0,16) e entre
 rendimento e precipitação acumulada na safra é moderada ($\approx$0,38)
 -- coerente com a literatura, mas mostra que variáveis agregadas simples
 não bastam sozinhas. A hipótese de que Random Forest e Gradient Boosting
@@ -434,7 +455,7 @@ observada (Seção~\ref{sec:adubacao}).
 
 A pesquisa é aplicada, quantitativa e preditiva, com unidade de análise
 município--safra, restrita ao Rio Grande do Sul. A modelagem foi
-conduzida em quatro etapas, cada uma motivada pelo diagnóstico dos erros
+conduzida em cinco etapas, cada uma motivada pelo diagnóstico dos erros
 da anterior; todas estão em notebooks Python no GitHub do projeto. Duas
 alternativas de série temporal foram consideradas e descartadas: uma
 série agregada por estado (eliminaria a granularidade municipal) e um
@@ -473,6 +494,18 @@ déficit acumulado em dez--fev. Duas hipóteses são declaradas: CAD única
 para todo o estado e coeficiente de cultura igual a 1. A sensibilidade à
 CAD foi testada (50 e 100 mm) e não alterou o resultado.
 
+\subsection{Fonte do clima: estações INMET e NASA POWER}
+
+Nas Etapas 1 a 4, o clima de cada município veio da estação automática do
+INMET mais próxima. Com a exigência de cobertura mínima, cerca de metade
+dos pares município--safra com rendimento ficava fora do modelo por falta
+de dado da estação. Na Etapa 5, as mesmas variáveis (subperíodos, seca,
+calor, umidade mínima e balanço hídrico, com as mesmas regras) foram
+calculadas a partir do NASA POWER, base em grade sem falhas, na célula que
+contém cada município. As duas fontes foram comparadas em cada estação, e
+os modelos foram avaliados com cada uma delas nos mesmos pares
+município--safra, para separar o efeito da fonte do efeito da cobertura.
+
 \subsection{Patamar esperado e modelos}
 
 Cada previsão é a soma de um \textbf{patamar} -- o rendimento esperado do
@@ -493,8 +526,15 @@ $U$ é a umidade mínima, $D$ o déficit hídrico e $U_{20}$ e $D_{80}$ os
 níveis que delimitam as 20\% safras mais secas do treino -- esses termos
 valem zero em safras normais e permitem que a perda cresça mais rápido
 na seca forte; (GB) Gradient Boosting com todas as variáveis climáticas,
-o ONI e as do balanço hídrico; e a média simples de H2 e GB. Random
-Forest (500 árvores) foi avaliado nas primeiras etapas. Os
+o ONI e as do balanço hídrico; e a média simples de H2 e GB. Na Etapa 5,
+como F e H2 empataram com o clima do NASA POWER, foram testadas
+combinações dos dois: a média de F e H2, uma regressão Ridge com as
+variáveis do H2 (penalização escolhida por validação cruzada dentro do
+treino) e o F acrescido de apenas um dos termos de seca extrema -- o de
+umidade ou o de déficit. Esta última variação, denominada \textbf{FL}
+(F + $\max(0,\ D - D_{80})$), foi a melhor de forma consistente e é o
+modelo final. Random Forest (500 árvores) foi avaliado nas primeiras
+etapas. Os
 hiperparâmetros das árvores foram fixados a priori (Gradient Boosting:
 taxa de aprendizado 0,05, até 500 iterações com parada antecipada). As
 linhas de base são a média histórica do município (todas as safras
@@ -505,14 +545,15 @@ variável), permitindo a previsão cerca de um mês antes da colheita
 
 \subsection{Validação e métricas}
 
-A base de modelagem tem 5.260 pares município--safra (448 municípios,
-safras 2005--2025) com rendimento, patamar e todas as variáveis
-climáticas. Foram usadas duas validações: (i) \textbf{corte temporal},
-com treino até 2020 (3.669 linhas) e teste em 2021--2025 (1.591
-linhas), que simula a previsão real nas safras mais recentes; e (ii)
-\textbf{deixando uma safra de fora}, em que cada safra de 2008 a 2025 é
-prevista por um modelo treinado com todas as demais (5.125 linhas
-avaliadas), medindo a estabilidade da relação clima--rendimento. As
+Com o clima do NASA POWER, a base de modelagem tem 8.651 pares
+município--safra (450 municípios, safras 2005--2025) -- todos os pares
+com rendimento e patamar --, contra 5.260 pares (448 municípios) com o
+clima das estações do INMET. Foram usadas duas validações: (i)
+\textbf{corte temporal}, com treino até 2020 (6.497 linhas) e teste em
+2021--2025 (2.154 linhas), que simula a previsão real nas safras mais
+recentes; e (ii) \textbf{deixando uma safra de fora}, em que cada safra de
+2008 a 2025 é prevista por um modelo treinado com todas as demais (7.472
+linhas avaliadas), medindo a estabilidade da relação clima--rendimento. As
 métricas são RMSE, MAE, R\textsuperscript{2} e viés médio (previsto
 $-$ observado). O modelo final é o de menor RMSE médio nas duas
 validações.
@@ -522,7 +563,7 @@ validações.
 
 \subsection{Evolução da modelagem}
 
-A Tabela~\ref{tab:etapas} resume as quatro etapas. Na Etapa 1, nenhum
+A Tabela~\ref{tab:etapas} resume as cinco etapas. Na Etapa 1, nenhum
 modelo superou a média do período de teste (R\textsuperscript{2}
 negativo): as safras 2021 e 2022 tiveram chuva total semelhante
 ($\approx$700 e $\approx$660 mm), mas rendimento recorde e quebra,
@@ -534,7 +575,11 @@ média observada em 2020--2025 foi de $\approx$2.370 kg/ha. Uma lição
 metodológica dessa etapa: a validação deixando uma safra de fora indicou
 R\textsuperscript{2} de 0,44, valor otimista porque a tendência usava
 safras posteriores à prevista; com o patamar calculado apenas com o
-passado (Etapa 3), o valor realista é $\approx$0,25.
+passado (Etapa 3), o valor realista é $\approx$0,25. Na Etapa 4, o
+balanço hídrico e os limiares de seca extrema (H2) trouxeram um ganho
+pequeno. Na Etapa 5, a troca das estações pelo NASA POWER ampliou a base
+em 64\% e reduziu o erro nos mesmos pares, e o modelo FL passou a ser o
+final.
 
 \begin{table}[ht]
 \centering
@@ -550,30 +595,67 @@ passado (Etapa 3), o valor realista é $\approx$0,25.
   +750 kg/ha em 2021--2025 pela tendência extrapolada. \\ \hline
 3 & Patamar com safras anteriores (média móvel 5 anos) & RMSE 767 / 689;
   supera as linhas de base. \\ \hline
-4 & Balanço hídrico e limiares de seca extrema & RMSE 740 / 684 (modelo
-  final, H2). \\ \hline
+4 & Balanço hídrico e limiares de seca extrema & RMSE 740 / 684 (H2). \\ \hline
+5 & Clima do NASA POWER (8.651 pares, +64\%) e combinações de F e H2 &
+  RMSE 739 / 638 (modelo final, FL). \\ \hline
 \end{tabular}
 \end{table}
 
 \subsection{Comparação dos modelos}
 
-A Tabela~\ref{tab:resultados} compara os modelos nas duas validações. O
-modelo final (H2) reduziu o RMSE em 14\% (corte temporal) e 22\%
-(deixando uma safra de fora) em relação à média histórica do município,
-com MAE de 591 e 518 kg/ha. Repetir o rendimento da safra anterior foi
-a pior estratégia, pois propaga secas e recordes para a previsão
-seguinte. O déficit hídrico sozinho (H1) não melhorou o modelo, por medir
-a mesma seca que a chuva e a umidade de dez--fev (correlação $\approx$0,8
-entre elas); o ganho veio dos limiares de seca extrema. Os modelos de
-árvores ficaram atrás da regressão linear em todos os cenários: Random
-Forest teve desempenho semelhante ou inferior ao do Gradient Boosting nas
-Etapas 1 e 2 e não foi levado adiante, e a combinação de H2 com Gradient
-Boosting foi melhor em uma validação e pior na outra.
+\textbf{Fonte do clima.} Comparando cada estação do INMET com a célula
+do NASA POWER que a contém, a correlação entre safras ficou entre 0,78 e
+0,89 para quase todas as variáveis (0,74 a 0,94 na média estadual de cada
+safra); a exceção foi a maior sequência de dias secos (0,53). Nos mesmos
+5.260 pares município--safra, o clima do NASA POWER reduziu o erro de
+todos os modelos lineares (Tabela~\ref{tab:fonte}). Uma explicação
+provável é que a célula da grade ($\sim$50 km) representa a média da área
+do município melhor que uma estação pontual, às vezes a dezenas de
+quilômetros, e não tem falhas a preencher.
 
 \begin{table}[ht]
 \centering
-\caption{Desempenho dos modelos (Etapa 4). RMSE em kg/ha. Fonte:
-  elaboração própria (2026).}
+\caption{Mesmos 5.260 pares município--safra, clima das estações do INMET
+  $\times$ clima do NASA POWER. RMSE em kg/ha (corte temporal / deixando
+  uma safra de fora). Fonte: elaboração própria (2026).}
+\label{tab:fonte}
+\begin{tabular}{|p{5.4cm}|c|c|}
+\hline
+\textbf{Modelo} & \textbf{INMET} & \textbf{NASA POWER} \\ \hline
+F -- Regressão linear reduzida & 767 / 689 & 709 / 643 \\ \hline
+H2 -- F + déficit + dois limiares & 740 / 684 & 700 / 656 \\ \hline
+FL -- F + limiar de déficit & 735 / 678 & 698 / 651 \\ \hline
+GB -- Gradient Boosting & 811 / 738 & 854 / 683 \\ \hline
+\end{tabular}
+\end{table}
+
+\textbf{Modelo final.} A Tabela~\ref{tab:resultados} compara os modelos
+com o NASA POWER em todos os 8.651 pares. O modelo final (FL) reduziu o
+RMSE em 16\% (corte temporal) e 28\% (deixando uma safra de fora) em
+relação à média histórica do município, com MAE de 580 e 479 kg/ha.
+Com essa fonte, F e H2 empataram (RMSE médio de 702 e 705 kg/ha nas duas
+validações), e por isso foram testadas combinações dos dois. O FL foi o
+melhor ou o segundo melhor nos três cenários avaliados -- estações do
+INMET, NASA POWER nos mesmos pares e NASA POWER em todos os pares --,
+enquanto a média de F e H2 e a regressão Ridge não melhoraram em relação
+ao F. Como seis variações foram testadas nos mesmos dados, o resultado
+deve ser lido com cautela: o ganho do FL sobre o F é modesto ($\approx$2\%
+no RMSE médio) e concentrado no período 2021--2025, que teve as secas
+mais fortes da série, mas é consistente entre cenários e fontes. Ele
+também explica o desempenho do H2: o termo de déficit ``normal'' repete a
+informação da chuva e da umidade de dez--fev (correlação $\approx$0,8
+entre elas), e o que acrescenta é apenas o limiar de seca extrema.
+Repetir o rendimento da safra anterior foi a pior estratégia, pois propaga
+secas e recordes para a previsão seguinte. Os modelos de árvores ficaram
+atrás da regressão linear: Random Forest teve desempenho semelhante ou
+inferior ao do Gradient Boosting nas Etapas 1 e 2 e não foi levado
+adiante.
+
+\begin{table}[ht]
+\centering
+\caption{Desempenho dos modelos com o clima do NASA POWER (Etapa 5, 8.651
+  pares município--safra). RMSE em kg/ha. Fonte: elaboração própria
+  (2026).}
 \label{tab:resultados}
 \begin{tabular}{|p{5.4cm}|c|c|c|c|}
 \hline
@@ -581,91 +663,93 @@ Boosting foi melhor em uma validação e pior na outra.
    \multicolumn{2}{c|}{\textbf{Uma safra de fora}} \\ \cline{2-5}
 \textbf{Modelo} & \textbf{RMSE} & \textbf{R\textsuperscript{2}} &
   \textbf{RMSE} & \textbf{R\textsuperscript{2}} \\ \hline
-Linha de base: safra anterior & 1.276 & $-$1,05 & 979 & $-$0,51 \\ \hline
-Linha de base: média histórica & 861 & 0,07 & 877 & $-$0,21 \\ \hline
-GB -- Gradient Boosting & 813 & 0,17 & 721 & 0,18 \\ \hline
-H1 -- F + déficit hídrico & 777 & 0,24 & 688 & 0,25 \\ \hline
-F -- Regressão linear reduzida & 767 & 0,26 & 689 & 0,25 \\ \hline
-Média de H2 e GB & 755 & 0,28 & 677 & 0,28 \\ \hline
-\textbf{H2 -- H1 + limiares (final)} & \textbf{740} & \textbf{0,31} &
-  \textbf{684} & \textbf{0,26} \\ \hline
+Linha de base: safra anterior & 1.366 & $-$1,26 & 999 & $-$0,52 \\ \hline
+Linha de base: média histórica & 877 & 0,07 & 881 & $-$0,18 \\ \hline
+GB -- Gradient Boosting & 857 & 0,11 & 657 & 0,34 \\ \hline
+H2 -- F + déficit + dois limiares & 762 & 0,30 & 648 & 0,36 \\ \hline
+F -- Regressão linear reduzida & 765 & 0,29 & 638 & 0,38 \\ \hline
+\textbf{FL -- F + limiar de déficit (final)} & \textbf{739} &
+  \textbf{0,34} & \textbf{638} & \textbf{0,38} \\ \hline
 \end{tabular}
 \end{table}
 
 \subsection{Fatores climáticos}
 
-Os coeficientes do modelo F, mais estáveis para interpretação, indicam
-(sobre o desvio em relação ao patamar): +208 kg/ha a cada 100 mm de
-chuva em dez--fev acima da média ($\approx$417 mm), com ganho decrescente
-(termo quadrático negativo); +30 kg/ha por ponto percentual de umidade
-relativa mínima em dez--fev; +59 kg/ha a cada 100 mm de chuva em março;
-e $-$2,7 kg/ha por dia de calor. A chuva de out--nov não teve efeito
-significativo. A Figura~\ref{fig:contribuicao} decompõe a previsão de
-cada safra na contribuição de cada fator: em média, a chuva de dez--fev
-move a previsão em $\approx$250 kg/ha e a umidade mínima em $\approx$170
-kg/ha, enquanto chuva de março e calor pesam $\approx$35 kg/ha cada --
-o período de floração e enchimento concentra praticamente todo o efeito
-do clima. No modelo H2, os termos de seca extrema foram significativos:
-cada 100 mm de déficit acima de $\approx$243 mm reduz o rendimento em
-$\approx$300 kg/ha adicionais, e cada ponto de umidade mínima abaixo de
-$\approx$41,5\% em $\approx$37 kg/ha adicionais, evidenciando que a perda
-se acelera quando a seca passa de um limite. O déficit hídrico foi o
-melhor indicador isolado de seca (correlação de $-$0,61 com o desvio do
+Os coeficientes do modelo final (FL, ajustado com todos os pares e o
+clima do NASA POWER) indicam, sobre o desvio em relação ao patamar: +378
+kg/ha a cada 100 mm de chuva em dez--fev acima da média ($\approx$370
+mm), com ganho decrescente (termo quadrático negativo); +20 kg/ha por
+ponto percentual de umidade relativa mínima em dez--fev; e $-$258 kg/ha
+a cada 100 mm de déficit hídrico acima de $\approx$287 mm (o percentil 80
+da base), a perda adicional da seca extrema. A Figura~\ref{fig:contribuicao}
+decompõe a previsão de cada safra na contribuição de cada fator: em
+média, a chuva de dez--fev move a previsão em $\approx$376 kg/ha e a
+umidade mínima em $\approx$133 kg/ha; o termo de seca extrema
+($\approx$65 kg/ha em média) só atua nas safras mais secas (2005, 2012,
+2022 e 2023), e as chuvas de out--nov e de março quase não pesam -- o
+período de floração e enchimento concentra praticamente todo o efeito do
+clima. Os efeitos pequenos mudam de sinal ou perdem significância entre
+as fontes de clima e não devem ser interpretados isoladamente: os dias de
+calor, por exemplo, aparecem com contribuição positiva em safras quentes,
+o que reflete a colinearidade com a umidade mínima, e não um efeito
+agronômico. Com as estações do INMET, o déficit hídrico foi o melhor
+indicador isolado de seca (correlação de $-$0,61 com o desvio do
 rendimento). Os p-valores tendem a ser otimistas, pois linhas da mesma
 safra compartilham o mesmo ano climático.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=.9\textwidth]{figuras/fig4_contribuicao_fatores.png}
+\includegraphics[width=.95\textwidth]{figuras/fig4_contribuicao_fatores.png}
 \caption{Contribuição de cada fator climático para o desvio do
-  rendimento em relação ao patamar, por safra (modelo F; equivalente aos
-  valores SHAP). Losango: desvio previsto; círculo: desvio observado.
-  Fonte: elaboração própria (2026).}
+  rendimento em relação ao patamar, por safra (modelo FL com o clima do
+  NASA POWER; equivalente aos valores SHAP). Losango: desvio previsto;
+  círculo: desvio observado. Fonte: elaboração própria (2026).}
 \label{fig:contribuicao}
 \end{figure}
 
 \subsection{Safras de seca}
 
 A Figura~\ref{fig:secas} mostra, para cada safra prevista sem ter sido
-vista pelo modelo, o desvio médio estadual em relação ao patamar. As
-quebras de 2012 e 2023 foram antecipadas praticamente por inteiro, e a
-de 2022 passou de $\approx$25\% para $\approx$36\% de captação com o
-balanço hídrico e os limiares. A quebra de 2020 ($\approx$1.180 kg/ha
-abaixo do patamar) não foi captada ($\approx$3\%): pelas estações do
-INMET, o verão de 2020 foi apenas moderadamente seco (déficit médio de
-234 mm, contra 322 mm em 2012), com primavera chuvosa. A perda de 2020
-não está nas variáveis disponíveis -- possivelmente por chuva concentrada
-em poucos eventos, estações distantes das lavouras ou efeitos fora de
-dez--fev --, o que caracteriza um limite de informação, e não de
-algoritmo.
+vista pelo modelo, o desvio médio estadual em relação ao patamar. Com o
+modelo FL e o NASA POWER, a quebra de 2023 foi antecipada por inteiro,
+e as de 2012 e 2022 em parte ($\approx$61\% e $\approx$35\%). A quebra
+de 2020 ($\approx$1.130 kg/ha abaixo do patamar) foi a menos captada:
+$\approx$16\%, contra $\approx$3\% com as estações do INMET. Pelas
+estações, o verão de 2020 foi apenas moderadamente seco (déficit médio de
+234 mm, contra 322 mm em 2012), com primavera chuvosa. A maior parte da
+perda de 2020 não está nas variáveis disponíveis -- possivelmente por
+chuva concentrada em poucos eventos ou efeitos fora de dez--fev --, o que
+caracteriza um limite de informação, e não de algoritmo.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=.9\textwidth]{figuras/fig5_secas_desvio_por_safra.png}
 \caption{Desvio médio estadual em relação ao patamar, por safra, na
   validação deixando uma safra de fora: observado e previsto pelos
-  modelos F e H2. Fonte: elaboração própria (2026).}
+  modelos F e FL, com o clima do NASA POWER. Fonte: elaboração própria
+  (2026).}
 \label{fig:secas}
 \end{figure}
 
 \subsection{Erro por região e por município}
 
-O erro relativo (MAE como percentual do rendimento médio) foi menor no
-Nordeste (17,8\%) e no Noroeste (18,6\%) -- principal região produtora,
-com mais da metade das linhas da base -- e maior no Sudeste (27,2\%) e no
-Sudoeste (28,6\%), regiões de produtividade média menor
-(Figura~\ref{fig:regioes}). Entre os 375 municípios com pelo menos 8
-safras avaliadas, o erro relativo mediano foi de 19,9\% (metade entre
-16\% e 25\%), e municípios mais produtivos tiveram erro relativo menor
-(correlação de $-$0,62). Esses valores referem-se ao modelo F; o modelo
-H2 difere dele em menos de 1\% no RMSE dessa validação.
+Na validação deixando uma safra de fora, o erro relativo do modelo final
+(MAE como percentual do rendimento médio) foi menor no Nordeste (16,1\%)
+e no Noroeste (17,1\%) -- principal região produtora, com mais da metade
+das linhas da base -- e maior no Sudeste (27,4\%) e no Sudoeste (28,1\%),
+regiões de produtividade média menor (Figura~\ref{fig:regioes}). Entre os
+424 municípios com pelo menos 8 safras avaliadas, o erro relativo mediano
+foi de 18,0\% (metade entre 15\% e 23\%), e municípios mais produtivos
+tiveram erro relativo menor (correlação de $-$0,68). Na média estadual de
+cada safra, o erro foi de $\approx$250 kg/ha ($\approx$10\% do rendimento
+médio), com correlação de 0,78 com o observado.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=.7\textwidth]{figuras/fig6_erro_por_mesorregiao.png}
 \caption{Erro relativo (MAE \% do rendimento médio) por mesorregião do
-  IBGE, nas duas validações (modelo F). Fonte: elaboração própria
-  (2026).}
+  IBGE, nas duas validações (modelo FL com o clima do NASA POWER). Fonte:
+  elaboração própria (2026).}
 \label{fig:regioes}
 \end{figure}
 
@@ -720,42 +804,44 @@ Sudoeste (1.755 kg/ha) & P\textsubscript{2}O\textsubscript{5} & 110 & 70
 Ao contrário do que sugerem estudos com bases maiores (Jeong et al.,
 2016; Von Bloh et al., 2023), a regressão linear superou Random Forest e
 Gradient Boosting. Dois fatores explicam o resultado: a base tem cerca de
-5 mil linhas e 21 safras, pouco para modelos mais flexíveis; e as secas
+8,6 mil linhas e 21 safras, pouco para modelos mais flexíveis; e as secas
 recentes foram mais extremas que qualquer safra do treino -- 2022 teve 44
 dias de calor em dez--fev, contra no máximo 33 até 2020 --, e modelos de
 árvores não extrapolam além dos valores observados no treino. A não
 linearidade relevante (perda que se acelera na seca extrema) foi
-capturada por termos de limiar explícitos, mantendo o modelo
-interpretável.
+capturada por um termo de limiar explícito, mantendo o modelo
+interpretável. A fonte do clima pesou mais do que a escolha entre os
+modelos lineares: a troca das estações pelo NASA POWER reduziu o erro nos
+mesmos pares mais do que qualquer variação de modelo, além de incluir
+todos os municípios.
 
-O erro remanescente ($\approx$20\% por município) reflete principalmente
-limites de informação: metade dos pares município--safra com rendimento
-não tem clima do INMET com cobertura suficiente; o clima de cada
-município vem da estação mais próxima, que pode estar a dezenas de
-quilômetros; e fatores como pragas, doenças, data de semeadura e manejo
-não estão nos dados. O próprio rendimento municipal da PAM é uma
+O erro remanescente ($\approx$18\% por município) reflete principalmente
+limites de informação: o NASA POWER é uma reanálise em grade de
+$\sim$50 km, não uma medição local, e municípios na mesma célula recebem
+o mesmo clima; a umidade relativa mínima é estimada, e não medida; e
+fatores como pragas, doenças, data de semeadura e manejo não estão nos
+dados. O próprio rendimento municipal da PAM é uma
 estimativa, e alguns municípios apresentam valores idênticos em safras
 consecutivas. Hipóteses declaradas: CAD única de 75 mm e coeficiente de
 cultura igual a 1 no balanço hídrico; e, na adubação, uso de recomendação
 normativa (não de dose aplicada), com rendimento esperado que inclui três
 secas recentes e pode estar abaixo do potencial do produtor. Como
-extensões, a inclusão de clima em grade (ex.: NASA POWER) ampliaria a
-cobertura e aproximaria o clima das lavouras, e índices de vegetação por
-satélite (NDVI) poderiam captar perdas que o clima não explica, como a
-de 2020.
+extensão, índices de vegetação por satélite (NDVI) poderiam captar perdas
+que o clima não explica, como a maior parte da de 2020.
 
 \section{Conclusão}
 
 O trabalho construiu uma base municipal integrada e reprodutível e um
 modelo que prevê, ao fim de março, o rendimento da soja de cada município do RS
-com erro $\approx$14--22\% menor que a média histórica do município. Os
+com erro $\approx$16--28\% menor que a média histórica do município. Os
 resultados mostram que, para este problema, a forma de representar o
 clima e o patamar de produtividade pesou mais do que a escolha do
 algoritmo: resumir a chuva por subperíodo, calcular o patamar apenas com
-o passado e representar explicitamente a seca extrema trouxeram os
-ganhos, enquanto modelos de árvores não superaram a regressão linear. A
-chuva, a umidade e o déficit hídrico de dezembro a fevereiro concentram o
-efeito do clima. A aplicação em adubação mostra como a previsão pode
+o passado, usar um clima em grade sem falhas (NASA POWER) e representar
+explicitamente a seca extrema trouxeram os ganhos, enquanto modelos de
+árvores não superaram a regressão linear. A chuva e a umidade de
+dezembro a fevereiro concentram o efeito do clima, e a perda se acelera
+quando o déficit hídrico passa de um limite. A aplicação em adubação mostra como a previsão pode
 apoiar uma decisão agronômica concreta, mantendo a análise de solo do
 produtor como referência.
 
@@ -807,6 +893,12 @@ predictions. \emph{PLOS ONE}, v. 11, n. 6, e0156571, 2016.
 LUNDBERG, S. M.; LEE, S.-I. A unified approach to interpreting model
 predictions. In: \emph{Advances in Neural Information Processing Systems
 30 (NIPS 2017)}. p. 4765--4774, 2017.
+
+\bibitem{nasapower}
+NASA -- NATIONAL AERONAUTICS AND SPACE ADMINISTRATION. Langley Research
+Center. POWER -- Prediction Of Worldwide Energy Resources: Daily API.
+Disponível em: \url{https://power.larc.nasa.gov/}. Acesso em: 23 out.
+2026.
 
 \bibitem{noaa}
 NOAA -- NATIONAL OCEANIC AND ATMOSPHERIC ADMINISTRATION. Climate Prediction

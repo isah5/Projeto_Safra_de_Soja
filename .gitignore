@@ -15,6 +15,7 @@ __pycache__/
 .venv/
 venv/
 .env
+.vscode/
 
 # Arquivos temporários do Word/Office (criados enquanto o documento está aberto)
 ~$*
