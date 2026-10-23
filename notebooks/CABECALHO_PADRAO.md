@@ -3,9 +3,8 @@
 ```markdown
 # Previsão de Produtividade Municipal da Soja no RS — Análise Exploratória
 
-**Integrantes:** Isabelle Franco (RA 10425395) · Gustavo Rodrigues (RA 10403091) ·
-Pedro Henrique (RA 10388298) · Lorenzo Tadeo (RA 10420067)
-**Orientador:** Prof. Dr. Ivan Carlos Alcântara de Oliveira
+**Integrantes:**
+**Orientador:**
 
 **Síntese do conteúdo deste arquivo:** [ Dados
 brutos do IBGE/SIDRA, ONI e INMET, realiza a limpeza e integração em nível
@@ -18,9 +17,8 @@ correlações, cobertura temporal/espacial e relação ONI × rendimento)."]
 ```python
 """
 Previsão de Produtividade Municipal da Soja no RS
-Integrantes: Isabelle Franco (RA 10425395), Gustavo Rodrigues (RA 10403091),
-             Pedro Henrique (RA 10388298), Lorenzo Tadeo (RA 10420067)
-Orientador: Prof. Dr. Ivan Carlos Alcântara de Oliveira
+Integrantes:
+Orientador:
 
 Síntese do conteúdo deste arquivo: [preencher — o que este script faz]
 
