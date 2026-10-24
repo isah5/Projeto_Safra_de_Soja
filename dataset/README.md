@@ -17,6 +17,7 @@ Data       | Autor           | Descrição
 2026-10-22 |                 | Adicionado o arquivo processado de clima por subperíodo (estação × safra), gerado na Etapa 2 da modelagem
 2026-10-22 |                 | Adicionada a tabela de regiões dos municípios do RS (API de localidades do IBGE)
 2026-10-22 |                 | Removido o JSON bruto do IBGE (não usado; o CSV tabulado é a fonte dos notebooks); tabelas da Embrapa passam a ser usadas na recomendação de adubação; adicionado o arquivo de recomendação da safra 2026
+2026-10-24 |                 | Adicionado o arquivo da Tabela 1612 com os símbolos do SIDRA (`-`, `...`), que distingue sem cultivo, dado não disponível e perda total; coluna `situacao_ibge` no painel
 -->
 
 # Dataset — descrição
@@ -25,7 +26,7 @@ Data       | Autor           | Descrição
 
 | Fonte | Conteúdo | Período | Granularidade | Link | Status |
 |---|---|---|---|---|---|
-| IBGE/SIDRA — Tabela 1612 | Área plantada, área colhida, produção e rendimento médio de soja | 2000–2025 | Município (RS) | https://sidra.ibge.gov.br/tabela/1612 | ✅ baixado — `dataset/raw/ibge_sidra_1612_soja_rs_2000_2025.csv` |
+| IBGE/SIDRA — Tabela 1612 | Área plantada, área colhida, produção e rendimento médio de soja | 2000–2025 | Município (RS) | https://sidra.ibge.gov.br/tabela/1612 | ✅ baixado — `dataset/raw/ibge_sidra_1612_soja_rs_2000_2025.csv` (e versão com símbolos: `..._simbolos.csv`) |
 | NOAA/CPC — ONI | Índice trimestral (médias móveis de 3 meses) do ENOS (El Niño/La Niña) | 1999–2025 | Trimestral (a agregar por safra) | https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt | ✅ baixado — `dataset/raw/noaa_oni_1999_2025.csv` |
 | INMET — BDMEP | Precipitação total diária e temperatura (máx/média/mín) diária, por estação automática | 2000-01-01 a 2025-12-31 | Estação meteorológica (diário) | https://bdmep.inmet.gov.br/ | ✅ baixado (manual, via portal BDMEP, em duas etapas) — `dataset/raw/inmet_estacoes_RS_consolidado_2000_2025.csv` (dados diários) + `dataset/raw/inmet_estacoes_metadados.csv` (lat/long/situação de cada estação) |
 | Embrapa / CQFS-RS/SC | Recomendação de adubação fosfatada e potássica para soja, por classe de teor de P/K no solo | — | Classe de teor de P/K no solo (não por município) | https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192 | ✅ baixado — `dataset/raw/embrapa_tabela_2.3_interpretacao_teor_p_k.csv` + `dataset/raw/embrapa_tabela_2.4_recomendacao_p2o5_k2o_soja.csv` |
@@ -50,8 +51,23 @@ https://servicodados.ibge.gov.br/api/v3/agregados/1612/periodos/2024-2025/variav
 mais confiável dividir a consulta.) As respostas foram unidas e tabuladas
 (município × ano, uma linha por combinação) em
 `dataset/raw/ibge_sidra_1612_soja_rs_2000_2025.csv` (12.922 linhas = 497
-municípios × 26 safras). Valores ausentes (município sem produção de soja
-naquele ano) aparecem como célula vazia.
+municípios × 26 safras). Nesse arquivo, toda ausência aparece como célula
+vazia.
+
+A mesma consulta foi repetida guardando os valores **exatamente como a API os
+devolve**, em `dataset/raw/ibge_sidra_1612_soja_rs_2000_2025_simbolos.csv`
+(colunas `area_plantada`, `area_colhida`, `producao`, `rendimento`, como texto).
+No lugar do número, o SIDRA usa os símbolos `-` (zero absoluto, não resultante
+de arredondamento) e `...` (dado não disponível). Os valores numéricos são
+idênticos aos do CSV acima. Com os símbolos, `notebooks/analise_exploratoria.ipynb`
+classifica cada par município–safra (`situacao_ibge`):
+
+| Situação | Regra | Pares |
+|---|---|---|
+| `com_rendimento` | rendimento numérico | 10.540 |
+| `sem_cultivo` | área plantada `-` (o município não plantou soja) | 2.308 |
+| `nao_disponivel` | `...` (29 municípios em 2000, instalados em 2001; Pinto Bandeira 2000–2012; Cachoeirinha 2014–2025; Imbé 2020) | 54 |
+| `perda_total` | área plantada > 0 e área colhida zero (`-` ou `0`); rendimento indefinido, fora do modelo | 20 |
 
 ### Como os dados do ONI foram obtidos
 
@@ -181,9 +197,9 @@ Salvo em `dataset/raw/ibge_municipios_rs_regioes.csv` (497 municípios, colunas
   e `notebooks/modelagem_etapa4.ipynb`.
 - `dataset/processed/recomendacao_adubacao_safra2026.csv` — gerado por
   `notebooks/modelagem_etapa4.ipynb`; resultado da aplicação do modelo, não
-  insumo. Uma linha por município × classe de teor de P/K no solo (431
+  insumo. Uma linha por município × classe de teor de P/K no solo (429
   municípios × 5 classes), com o rendimento esperado para a safra 2026 (média
-  de 2021–2025) e a dose de P₂O₅ e K₂O (kg/ha) no 1º e 2º cultivo.
+  de 2020–2024, as safras já publicadas pelo IBGE no plantio de out–nov/2025) e a dose de P₂O₅ e K₂O (kg/ha) no 1º e 2º cultivo.
 
 ## Dicionário de variáveis
 
@@ -194,6 +210,7 @@ Salvo em `dataset/raw/ibge_municipios_rs_regioes.csv` (497 municípios, colunas
 | `ano_safra` | Ano da safra | ano | IBGE |
 | `rendimento_kg_ha` | Rendimento médio (variável-alvo) | kg/ha | IBGE/SIDRA |
 | `area_plantada_ha` | Área plantada | ha | IBGE/SIDRA |
+| `situacao_ibge` | Situação do par município–safra: `com_rendimento`, `sem_cultivo`, `nao_disponivel` ou `perda_total` (pelos símbolos do SIDRA) | categoria | IBGE/SIDRA |
 | `producao_ton` | Produção total | toneladas | IBGE/SIDRA |
 | `oni_media_safra` | ONI médio na janela semeadura–colheita | índice | NOAA/CPC |
 | `precipitacao_total_safra_mm` | Soma da precipitação diária na janela semeadura–colheita (estação mais próxima) | mm | INMET |

@@ -39,12 +39,17 @@ dos erros da anterior:
 | `analise_exploratoria.ipynb` | Integração das fontes e painel município–safra | `dataset/processed/painel_municipio_safra.csv` |
 | `modelagem.ipynb` (Etapa 1) | Baseline, Regressão Linear, Random Forest e Gradient Boosting com clima agregado (out–mar) | R² negativo no teste 2021–2025: o total de chuva não distingue as safras |
 | `modelagem_etapa2.ipynb` (Etapa 2) | Clima por subperíodo do ciclo (out–nov, dez–fev, mar) a partir do INMET diário | O clima passa a explicar as safras, mas a tendência extrapolada enviesa 2021–2025 |
-| `modelagem_etapa3.ipynb` (Etapa 3) | Patamar calculado só com safras anteriores (média móvel de 5 anos) + regressão linear reduzida | RMSE 767 / 689 kg/ha; supera as linhas de base; contribuição dos fatores e erro por região |
-| `modelagem_etapa4.ipynb` (Etapa 4) | Balanço hídrico (Hargreaves–Samani + balde), limiares de seca extrema e recomendação de adubação | **Modelo final (H2):** RMSE 740 / 684 kg/ha, R² 0,31 / 0,26 |
+| `modelagem_etapa3.ipynb` (Etapa 3) | Patamar calculado só com as safras já publicadas na data da previsão (média móvel de 5 safras, até Y−2) + regressão linear reduzida | RMSE 873 / 714 kg/ha; supera as linhas de base na validação deixando uma safra de fora; contribuição dos fatores e erro por região |
+| `modelagem_etapa4.ipynb` (Etapa 4) | Balanço hídrico (Hargreaves–Samani + balde), limiares de seca extrema e recomendação de adubação | **Modelo final (H2):** RMSE 870 / 706 kg/ha, R² 0,05 / 0,21; custo da defasagem de publicação (Y−2 × Y−1) |
 
 RMSE e R² são dados como "corte temporal (teste 2021–2025) / deixando uma
-safra de fora". O modelo final reduz o RMSE em 14% e 22% em relação à média
-histórica do município. Detalhes em [`artigo/`](artigo/).
+safra de fora". A previsão é emitida em 31 de março e usa só dados publicados até
+essa data: como o IBGE divulga o rendimento municipal (PAM) em setembro do ano
+seguinte à colheita, o patamar da safra Y usa as safras até Y−2 (para 2026,
+2020–2024; para 2027, 2021–2025). Nessas condições, o modelo final reduz o RMSE
+em 22% em relação à média histórica do município na validação deixando uma safra
+de fora e empata com ela no corte 2021–2025, período de secas consecutivas.
+Detalhes em [`artigo/`](artigo/).
 
 ## Como reproduzir
 
