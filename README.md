@@ -1,4 +1,4 @@
-# Previsão de Produtividade Municipal da Soja no Rio Grande do Sul com Aprendizado de Máquina e Variáveis Agrometeorológicas
+# Modelagem preditiva da produtividade da safra de soja com uso de aprendizado de máquina e dados agrometeorológicos
 
 <!--
 CABEÇALHO DE IDENTIFICAÇÃO DO GRUPO
