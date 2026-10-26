@@ -1,7 +1,7 @@
 ## Para notebooks (.ipynb) — primeira célula, tipo Markdown
 
 ```markdown
-# Previsão de Produtividade Municipal da Soja no RS — Análise Exploratória
+# Modelagem preditiva da produtividade da safra de soja com uso de aprendizado de máquina e dados agrometeorológicos — Análise Exploratória
 
 **Integrantes:**
 **Orientador:**
@@ -16,7 +16,7 @@ correlações, cobertura temporal/espacial e relação ONI × rendimento)."]
 
 ```python
 """
-Previsão de Produtividade Municipal da Soja no RS
+Modelagem preditiva da produtividade da safra de soja com uso de aprendizado de máquina e dados agrometeorológicos
 Integrantes:
 Orientador:
 
