@@ -13,6 +13,7 @@
 % 2026-10-24 |                 | Adequação ao template SBC: citações [Autor Ano] via \cite, referências no estilo SBC, abstract/resumo com até 10 linhas, bloco de autores; situação dos pares pelos símbolos do SIDRA (Tabela de situação)
 % 2026-10-24 |                 | Data de emissão da previsão (31/03) e defasagem de publicação da PAM: patamar e adubação usam só safras publicadas (até Y-2); resultados atualizados, custo da defasagem, quantificação das linhas, ODS e ressalva sobre interpretação não causal
 
+
 \documentclass[12pt]{article}
 
 \usepackage{sbc-template}
@@ -60,17 +61,17 @@
 \end{abstract}
 
 \begin{resumo}
-  A produtividade da soja no Rio Grande do Sul varia muito entre safras,
-  sobretudo por secas de verão. Este trabalho prevê o rendimento municipal
-  da soja em 31 de março, só com dados publicados até essa data: o
-  rendimento do IBGE (até a safra Y$-$2, pela defasagem de publicação), o
-  clima diário do INMET por subperíodo do ciclo, um balanço hídrico e o
-  ONI. Cada previsão soma à média das cinco últimas safras publicadas do
-  município um desvio explicado pelo clima. Uma regressão linear com
-  déficit hídrico e limiares de seca extrema superou os modelos de árvores
-  e reduziu o RMSE em 22\% frente à média histórica na validação deixando
-  uma safra de fora, mas só empatou com ela no teste 2021--2025, de secas
-  consecutivas. O rendimento esperado também gerou recomendações de adubação.
+  A produtividade da soja no Rio Grande do Sul varia entre as safras,
+  sobretudo pelas secas de verão. Este trabalho estima a produtividade por
+  município em 31 de março, antes da colheita, com dados históricos e
+  climáticos. Modelos de aprendizado de máquina (Regressão Linear, Random
+  Forest e Gradient Boosting) foram comparados com a média das safras
+  anteriores. O melhor modelo, uma regressão linear com déficit hídrico e
+  limiares de seca extrema, reduziu o erro em 22\% na validação que deixa
+  uma safra de fora, mas empatou com a média histórica no teste com as
+  safras de 2021 a 2025, de secas consecutivas. Os resultados indicam que
+  o clima contribui para estimativas antecipadas. As estimativas também
+  apoiam recomendações de adubação.
 
   \noindent\textbf{Palavras-chave:} soja; previsão de produtividade;
   aprendizado de máquina; balanço hídrico; adubação.
@@ -112,16 +113,14 @@ prever o resultado de uma propriedade específica; o objetivo é um
 indicador regional, transparente e reprodutível, construído inteiramente
 a partir de dados públicos.
 
-O trabalho se alinha aos Objetivos de Desenvolvimento Sustentável (ODS)
-da ONU: ao ODS 2 (Fome Zero e Agricultura Sustentável), em especial à
-meta 2.4, que trata de sistemas de produção de alimentos sustentáveis e
-resilientes, capazes de se adaptar a secas e a condições climáticas
-extremas; e ao ODS 13 (Ação Contra a Mudança Global do Clima), meta 13.1,
-de fortalecer a capacidade de adaptação a riscos relacionados ao clima.
-Uma estimativa antecipada da quebra de safra por município, somada a uma
-recomendação de adubação proporcional ao rendimento esperado, contribui
-para essas metas ao apoiar o planejamento diante da seca e o uso de
-fertilizantes ajustado ao potencial produtivo.
+O público que mais pode se beneficiar desse indicador são os pequenos
+agricultores do Rio Grande do Sul, que costumam ter menos acesso a
+assistência técnica e a previsões privadas e são mais expostos às quebras
+de safra causadas pela seca. Como os dados do IBGE são médias municipais,
+o modelo não prevê o rendimento de cada lavoura: ele estima o rendimento
+esperado do município, que pode orientar cooperativas, sindicatos rurais
+e serviços de extensão, como a Emater/RS, no planejamento da safra e na
+recomendação de adubação proporcional ao potencial produtivo da região.
 
 \subsection{Objetivo}
 
@@ -183,16 +182,37 @@ variáveis climáticas por subperíodo do ciclo e de balanço hídrico
 e produção da própria safra não são usadas como preditores, pois só são
 conhecidas depois da colheita e o rendimento é a razão entre elas.
 
-A previsão da safra $Y$ é emitida em \textbf{31 de março} de $Y$, e só
-entram informações já disponíveis nessa data. O clima vai de outubro a
-março (a chuva de março é a última variável) e o ONI, de outubro a
-março. O histórico produtivo exige um cuidado adicional: a PAM é
-divulgada em setembro do ano seguinte à colheita -- a PAM 2024, por
-exemplo, saiu em 11 de setembro de 2025 \cite{ibgepam2024} --, de modo que em
-março de $Y$ a última safra publicada é $Y-2$. Assim, a previsão da
-safra 2026 usa os rendimentos de 2020--2024; a de 2027, os de
-2021--2025; e a de 2028, os de 2022--2026. Usar a safra $Y-1$ daria ao
-modelo um dado que só existirá seis meses depois da previsão.
+A safra $Y$ é semeada em outubro--novembro de $Y-1$ e colhida em
+abril--maio de $Y$. Sua previsão é emitida em \textbf{31 de março de
+$Y$}, e só entram informações já disponíveis nessa data. A data reúne
+duas condições: o clima de todo o ciclo, inclusive o de dezembro a
+fevereiro (floração e enchimento de grãos, quando a seca causa as maiores
+perdas), já foi observado; e a colheita ainda não terminou, o que deixa
+cerca de um mês de antecedência para o planejamento. O clima e o ONI
+cobrem de 1º de outubro de $Y-1$ a 31 de março de $Y$ (a chuva de março
+é a última variável). O histórico produtivo exige um cuidado adicional:
+a PAM é divulgada em setembro do ano seguinte à colheita -- a PAM 2024,
+por exemplo, saiu em 11 de setembro de 2025 \cite{ibgepam2024} --, de
+modo que em março de $Y$ a última safra publicada é $Y-2$. Usar a safra
+$Y-1$ daria ao modelo um dado que só existirá seis meses depois da
+previsão. Para as próximas safras, o calendário fica:
+
+\begin{itemize}
+  \item \textbf{safra 2026}: previsão em 31 de março de 2026, com clima
+    de 1º de outubro de 2025 a 31 de março de 2026 e patamar das safras
+    2020--2024;
+  \item \textbf{safra 2027}: previsão em 31 de março de 2027, com clima
+    de 1º de outubro de 2026 a 31 de março de 2027 e patamar das safras
+    2021--2025;
+  \item \textbf{safra 2028}: previsão em 31 de março de 2028, com clima
+    de 1º de outubro de 2027 a 31 de março de 2028 e patamar das safras
+    2022--2026.
+\end{itemize}
+
+Assim, o modelo prevê uma safra por vez, e não várias com anos de
+antecedência. Antes de 31 de março de cada ano, o clima da safra ainda
+não é conhecido, e a única estimativa disponível é o patamar histórico
+do município, sem o efeito do clima.
 
 Os dados nunca são divididos
 de forma aleatória, para evitar vazamento de informação futura: o
@@ -624,10 +644,33 @@ o rendimento da última safra publicada foi a pior estratégia, pois
 propaga secas e recordes para as previsões seguintes. O déficit hídrico sozinho (H1) não melhorou o modelo, por medir
 a mesma seca que a chuva e a umidade de dez--fev (correlação $\approx$0,8
 entre elas); o ganho veio dos limiares de seca extrema. Os modelos de
-árvores ficaram atrás da regressão linear em todos os cenários: Random
-Forest teve desempenho semelhante ou inferior ao do Gradient Boosting nas
-Etapas 1 e 2 e não foi levado adiante, e a combinação de H2 com Gradient
-Boosting foi melhor em uma validação e pior na outra.
+árvores ficaram atrás da regressão linear em todos os cenários, e a
+combinação de H2 com Gradient Boosting foi melhor em uma validação e pior
+na outra. O Random Forest foi comparado nas Etapas 1 e 2
+(Tabela~\ref{tab:rf}): no corte 2021--2025, teve RMSE de 1.033 kg/ha na
+Etapa 1, pior que o do Gradient Boosting (993) e o da regressão linear
+(901), e de 1.013 kg/ha na Etapa 2, praticamente igual ao do Gradient
+Boosting (1.015) e acima do da regressão linear (852). Como não trouxe
+ganho sobre o Gradient Boosting, não foi levado às Etapas 3 e 4.
+
+\begin{table}[ht]
+\centering
+\caption{Regressão linear, Random Forest e Gradient Boosting nas Etapas 1
+  e 2, no corte 2021--2025. RMSE em kg/ha. Cada etapa usa uma base
+  diferente (5.869 e 4.859 linhas), por isso os valores só são comparáveis
+  dentro da mesma etapa. Fonte: elaboração própria (2026).}
+\label{tab:rf}
+\begin{tabular}{|p{4.4cm}|c|c|c|c|}
+\hline
+ & \multicolumn{2}{c|}{\textbf{Etapa 1}} &
+   \multicolumn{2}{c|}{\textbf{Etapa 2}} \\ \cline{2-5}
+\textbf{Modelo} & \textbf{RMSE} & \textbf{R\textsuperscript{2}} &
+  \textbf{RMSE} & \textbf{R\textsuperscript{2}} \\ \hline
+Regressão linear & 901 & $-$0,04 & 852 & 0,07 \\ \hline
+Random Forest & 1.033 & $-$0,36 & 1.013 & $-$0,31 \\ \hline
+Gradient Boosting & 993 & $-$0,26 & 1.015 & $-$0,32 \\ \hline
+\end{tabular}
+\end{table}
 
 \begin{table}[ht]
 \centering
