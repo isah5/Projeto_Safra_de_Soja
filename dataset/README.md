@@ -19,6 +19,7 @@ Data       | Autor           | Descrição
 2026-10-22 |                 | Removido o JSON bruto do IBGE (não usado; o CSV tabulado é a fonte dos notebooks); tabelas da Embrapa passam a ser usadas na recomendação de adubação; adicionado o arquivo de recomendação da safra 2026
 2026-10-23 |                 | Adicionado o clima diário do NASA POWER (87 células da grade que cobrem os municípios do RS, 2000-2025), baixado por `dataset/baixar_nasa_power.py`; adicionados os arquivos processados de balanço hídrico das estações (Etapa 4) e de clima do NASA POWER por célula e safra (Etapa 5)
 2026-10-24 |                 | Adicionado o arquivo da Tabela 1612 com os símbolos do SIDRA (`-`, `...`), que distingue sem cultivo, dado não disponível e perda total; coluna `situacao_ibge` no painel
+2026-10-29 |                 | Complementos para a previsão da safra 2026 (Etapa 6): NASA POWER jan–mai/2026, ONI de 2026 e estimativas do LSPA/IBGE (tabela 6588); arquivos de previsão 2026 e perspectiva 2027 por município; `oni_media_safra` do painel corrigido (tinha voltado à versão anterior à correção do ONI por safra no merge da main na develop)
 -->
 
 # Dataset — descrição
@@ -31,6 +32,7 @@ Data       | Autor           | Descrição
 | NOAA/CPC — ONI | Índice trimestral (médias móveis de 3 meses) do ENOS (El Niño/La Niña) | 1999–2025 | Trimestral (a agregar por safra) | https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt | ✅ baixado — `dataset/raw/noaa_oni_1999_2025.csv` |
 | INMET — BDMEP | Precipitação total diária e temperatura (máx/média/mín) diária, por estação automática | 2000-01-01 a 2025-12-31 | Estação meteorológica (diário) | https://bdmep.inmet.gov.br/ | ✅ baixado (manual, via portal BDMEP, em duas etapas) — `dataset/raw/inmet_estacoes_RS_consolidado_2000_2025.csv` (dados diários) + `dataset/raw/inmet_estacoes_metadados.csv` (lat/long/situação de cada estação) |
 | NASA POWER (NASA/LaRC) | Chuva, temperatura média/máxima/mínima, ponto de orvalho e umidade relativa média diários (reanálise MERRA-2) | 2000–2025 (só out–mai) | Célula da grade de 0,5° × 0,625° (diário) | https://power.larc.nasa.gov/ | ✅ baixado (script `dataset/baixar_nasa_power.py`) — `dataset/raw/nasa_power_rs_2000_2025.csv` + `dataset/raw/nasa_power_celulas_municipios_rs.csv` |
+| IBGE/SIDRA — Tabela 6588 (LSPA) | Estimativa mensal de área, produção e rendimento médio de soja (Levantamento Sistemático da Produção Agrícola) | Levantamentos de set/2007 a set/2026 (e mar/2026) | Estado (RS) | https://sidra.ibge.gov.br/tabela/6588 | ✅ baixado — `dataset/raw/ibge_sidra_6588_lspa_soja_rs.csv` |
 | Embrapa / CQFS-RS/SC | Recomendação de adubação fosfatada e potássica para soja, por classe de teor de P/K no solo | — | Classe de teor de P/K no solo (não por município) | https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192 | ✅ baixado — `dataset/raw/embrapa_tabela_2.3_interpretacao_teor_p_k.csv` + `dataset/raw/embrapa_tabela_2.4_recomendacao_p2o5_k2o_soja.csv` |
 
 ### Como os dados do IBGE foram obtidos
@@ -86,6 +88,28 @@ ONI propriamente dito). A NOAA já disponibiliza observações além de 2025,
 mas cortamos em 2025 porque é o último ano com dado de safra do IBGE. O
 notebook agrega essas janelas trimestrais em uma métrica por safra (média
 do ONI nas janelas que cobrem out–mar de cada safra no RS).
+
+Para a previsão da safra 2026 e a perspectiva de 2027 (Etapa 6), as janelas de
+2026 (DJF a JAS/2026) foram baixadas do mesmo arquivo em 2026-10-29 e salvas à
+parte em `dataset/raw/noaa_oni_2026.csv` (mesmas colunas). Os valores de
+1999–2025 do arquivo novo são idênticos aos de `noaa_oni_1999_2025.csv`.
+
+### Como as estimativas do LSPA foram obtidas
+
+A PAM de uma safra só sai em setembro do ano seguinte, então a safra 2026 ainda
+não tem rendimento municipal. Para comparar a previsão de 2026, foi usada a
+estimativa estadual do LSPA (IBGE, tabela 6588, variáveis 109, 216, 35 e 36,
+produto 39443 = soja, `N3[43]`), pela API pública do SIDRA:
+
+```
+https://servicodados.ibge.gov.br/api/v3/agregados/6588/periodos/202603|202609/variaveis/109|216|35|36?localidades=N3[43]&classificacao=48[39443]
+```
+
+`dataset/raw/ibge_sidra_6588_lspa_soja_rs.csv` guarda o levantamento de setembro
+de cada ano de 2007 a 2026 e o de março/2026 (colunas `periodo_levantamento`
+no formato AAAAMM, `ano_safra`, `area_plantada_ha`, `area_colhida_ha`,
+`producao_ton`, `rendimento_kg_ha`). Baixado em 2026-10-29. Em 2007–2025, o LSPA
+de setembro ficou, em média, a 7 kg/ha do rendimento estadual da PAM.
 
 ### Como os dados do INMET foram obtidos
 
@@ -143,6 +167,11 @@ ausente.
   `tdew_c` (ponto de orvalho) e `rh2m_pct` (umidade relativa média). O NASA POWER não
   fornece a umidade relativa mínima; o notebook da Etapa 5 a estima pelo ponto de
   orvalho e pela temperatura máxima (FAO-56).
+- `dataset/raw/nasa_power_rs_2026.csv` — complemento de 2026-01-01 a 2026-05-31
+  (13.137 linhas, mesmas colunas e células), que fecha a safra 2026 para a Etapa 6.
+  Baixado em 2026-10-29 com
+  `python dataset/baixar_nasa_power.py 20260101 20260531 nasa_power_rs_2026.csv`,
+  sem nenhum valor ausente.
 
 ### Como os dados de adubação fosfatada foram obtidos
 
@@ -239,6 +268,15 @@ Salvo em `dataset/raw/ibge_municipios_rs_regioes.csv` (497 municípios, colunas
   insumo. Uma linha por município × classe de teor de P/K no solo (429
   municípios × 5 classes), com o rendimento esperado para a safra 2026 (média
   de 2020–2024, as safras já publicadas pelo IBGE no plantio de out–nov/2025) e a dose de P₂O₅ e K₂O (kg/ha) no 1º e 2º cultivo.
+- `dataset/processed/previsao_safra_2026_municipio.csv` — gerado por
+  `notebooks/modelagem_etapa6_previsao_2026_2027.ipynb`; resultado do modelo, não
+  insumo. Uma linha por município que colheu soja em 2025 (434), com a área plantada
+  em 2025, o patamar 2020–2024, o clima da safra 2026 (NASA POWER), a previsão do
+  modelo final FL com intervalo de 80% e as previsões dos outros quatro modelos (kg/ha).
+- `dataset/processed/perspectiva_safra_2027_municipio.csv` — gerado pelo mesmo
+  notebook; uma linha por município, com o patamar 2021–2025 e a distribuição da
+  previsão do FL para 2027 nos cenários climáticos de 2006–2026 (percentis 10, 50 e
+  90 de todos os cenários; mínimo, mediana e máximo dos cenários de El Niño).
 
 ## Dicionário de variáveis
 

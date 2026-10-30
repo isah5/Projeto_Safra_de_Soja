@@ -15,13 +15,18 @@ outubro a maio (janela da safra de soja usada nos notebooks). Gera:
   - dataset/raw/nasa_power_celulas_municipios_rs.csv (município → célula)
 
 Uso (a partir da raiz do repositório): python dataset/baixar_nasa_power.py
+Para baixar outro período, passar início, fim e nome do arquivo de saída, por
+exemplo o complemento da safra 2026 (jan–mai/2026), usado na Etapa 6:
+  python dataset/baixar_nasa_power.py 20260101 20260531 nasa_power_rs_2026.csv
 
 Histórico de alterações:
 Data       | Autor           | Descrição
 -----------|-----------------|--------------------------------------------
 2026-10-23 |                 | Criação do script
+2026-10-29 |                 | Período e arquivo de saída opcionais na linha de comando (complemento jan–mai/2026 para a previsão da safra 2026)
 """
 import json
+import sys
 import time
 import urllib.request
 
@@ -29,9 +34,11 @@ import numpy as np
 import pandas as pd
 
 RAW = "dataset/raw"
+INICIO, FIM, SAIDA = (sys.argv[1:4] if len(sys.argv) == 4
+                      else ("20000101", "20251231", "nasa_power_rs_2000_2025.csv"))
 URL = ("https://power.larc.nasa.gov/api/temporal/daily/point"
        "?parameters=PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,T2MDEW,RH2M&community=AG"
-       "&latitude={lat}&longitude={lon}&start=20000101&end=20251231&format=JSON")
+       "&latitude={lat}&longitude={lon}&start=" + INICIO + "&end=" + FIM + "&format=JSON")
 COLUNAS = {"PRECTOTCORR": "chuva_mm", "T2M": "t2m_c", "T2M_MAX": "tmax_c",
            "T2M_MIN": "tmin_c", "T2MDEW": "tdew_c", "RH2M": "rh2m_pct"}
 MESES_SAFRA = [10, 11, 12, 1, 2, 3, 4, 5]
@@ -76,5 +83,5 @@ for i, (lat, lon) in enumerate(celulas, 1):
 saida = pd.concat(partes, ignore_index=True)
 saida = saida[["lat_celula", "lon_celula", "data"] + list(COLUNAS.values())]
 saida[list(COLUNAS.values())] = saida[list(COLUNAS.values())].round(2)
-saida.to_csv(f"{RAW}/nasa_power_rs_2000_2025.csv", index=False)
-print(f"Salvo: {len(saida):,} linhas em {RAW}/nasa_power_rs_2000_2025.csv")
+saida.to_csv(f"{RAW}/{SAIDA}", index=False)
+print(f"Salvo: {len(saida):,} linhas em {RAW}/{SAIDA}")
