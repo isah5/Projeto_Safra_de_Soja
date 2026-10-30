@@ -7,6 +7,7 @@ Data       | Autor           | Descrição
 -----------|-----------------|--------------------------------------------
 2026-09-24 |                 | Criação da pasta do artigo + fonte LaTeX inicial
 2026-10-23 |                 | Inclusão da pasta de figuras e da versão Word na descrição
+2026-10-30 |                 | `.tex` e Word atualizados com as Etapas 5 e 6 (NASA POWER, modelo FL, previsão 2026 e perspectiva 2027) e com as figuras regeradas
 -->
 
 # Artigo
@@ -14,8 +15,9 @@ Data       | Autor           | Descrição
 - `latex/artigo-grupo.tex` — fonte do artigo no template da SBC (mais os
   arquivos de estilo `sbc-template.sty` e `caption2.sty`, necessários para
   compilar).
-- `latex/figuras/` — Figuras 1 a 6 do artigo (análise exploratória e
-  resultados das Etapas 3 e 4 da modelagem).
+- `latex/figuras/` — Figuras 1 a 6 do artigo: 1 a 3 geradas por
+  `notebooks/analise_exploratoria.ipynb` e 4 a 6 (modelo final FL com o
+  NASA POWER) por `notebooks/modelagem_etapa5_nasa_power.ipynb`.
 - `word/Relatorio_N1_Soja_RS.docx` — versão Word do artigo, com o mesmo
   conteúdo do `.tex`. Ao alterar um, atualize o outro.
 - `artigo-grupo.pdf` — **[adicionar aqui]** o PDF final, após compilar o
