@@ -15,17 +15,18 @@ Data       | Descrição
 2026-10-29 | Etapa 6: previsão da safra 2026 e perspectiva da safra 2027
 2026-10-30 | Ambiente padrão (.venv, Python 3.13) e instruções de execução dos notebooks
 2026-10-30 | Resultados da Etapa 5 atualizados após a reexecução com o patamar até Y−2
+2026-10-30 | Artigo no template de TCC da FCI (abnTeX2 e Word)
 -->
 
 Repositório público do projeto da disciplina, com o artigo científico
-(template SBC), o dataset utilizado e os notebooks Python de análise
+(template de TCC da FCI), o dataset utilizado e os notebooks Python de análise
 exploratória e de modelagem.
 
 ## Estrutura do repositório
 
 ```
 .
-├── artigo/         # Artigo (template SBC): fonte LaTeX, figuras e versão Word
+├── artigo/         # Artigo (template de TCC da FCI): fonte LaTeX, figuras e versão Word
 ├── dataset/        # Dados brutos e processados + descrição (dataset/README.md)
 ├── notebooks/      # Notebooks Python: análise exploratória e modelagem (Etapas 1-6)
 └── README.md
