@@ -134,7 +134,7 @@
 \\ 
 \textsuperscript{1}Faculdade de Computação e Informática (FCI) \\ Universidade Presbiteriana Mackenzie São Paulo, SP – Brasil \\ 
 \\
-\textsuperscript{2}Programa de pós-graduação em Computação Aplicada (quando houver) \\ Universidade Presbiteriana Mackenzie São Paulo, SP – Brasil 
+\textsuperscript{2}Programa de pós-graduação em Computação Aplicada \\ Universidade Presbiteriana Mackenzie São Paulo, SP – Brasil 
 \\
 \\
 \url{10425498@mackenzista.com.br}, \url{10425395@mackenzista.com.br}, \url{10146808@mackenzista.com.br}
@@ -210,7 +210,7 @@
 
 % resumo em português
 \begin{resumoumacoluna}
-\textit{A soja é uma das principais culturas do Rio Grande do Sul, mas sua produtividade varia muito entre as safras em razão de secas de verão, e os dados oficiais de rendimento municipal do IBGE só são publicados meses após a colheita. Este estudo aplicado e quantitativo avaliou se modelos de aprendizado de máquina supervisionado conseguem prever o rendimento municipal da soja em março do ano da colheita, usando apenas informações públicas disponíveis nesse mês: rendimento do IBGE (2000--2025), clima do INMET e do NASA POWER, índice ONI e balanço hídrico do solo. Cada previsão soma ao patamar do município um desvio explicado pelo clima. Regressão linear, Random Forest e Gradient Boosting foram comparados a linhas de base históricas em corte temporal (teste em 2021--2025) e em validação leave-one-year-out. A hipótese de que os modelos ensemble superariam a regressão linear não foi confirmada. O melhor modelo foi uma regressão linear com clima em grade e um termo de seca extrema, com RMSE de 772 e 626 kg/ha e R\textsuperscript{2} de 0,28 e 0,40 nas duas validações, redução de 11\% e 31\% no RMSE em relação à média histórica. Na previsão da safra 2026, a única totalmente prospectiva, o modelo estimou 2.097 kg/ha, 23\% abaixo da estimativa de setembro de 2026 do IBGE (LSPA), de 2.734 kg/ha. Para a safra 2027, sob El Niño, a perspectiva é de 2.831 kg/ha. Com poucas safras, a representação do clima pesou mais no desempenho do que a complexidade do algoritmo.}
+\textit{A soja é uma das principais culturas do Rio Grande do Sul, mas seu rendimento varia muito entre as safras em razão de secas de verão, e os dados oficiais de rendimento municipal do IBGE só são publicados meses após a colheita. Este estudo aplicado e quantitativo avaliou se modelos de aprendizado de máquina supervisionado conseguem prever o rendimento municipal da soja em março do ano da colheita, usando apenas informações públicas disponíveis nesse mês: rendimento do IBGE (2000--2025), clima do INMET e do NASA POWER, índice ONI e balanço hídrico do solo. Cada previsão soma ao patamar do município um desvio explicado pelo clima. Regressão linear, Random Forest e Gradient Boosting foram comparados a linhas de base históricas em corte temporal (teste em 2021--2025) e deixando uma safra de fora. A hipótese de que os modelos ensemble superariam a regressão linear não foi confirmada. O melhor modelo foi uma regressão linear com clima em grade e um termo de seca extrema, com RMSE de 772 e 626 kg/ha e R\textsuperscript{2} de 0,28 e 0,40 nas duas validações, redução de 11\% e 31\% no RMSE em relação à média histórica. Na previsão da safra 2026, a única fora da amostra, o modelo estimou 2.097 kg/ha, 23\% abaixo da estimativa de setembro de 2026 do IBGE (LSPA), de 2.734 kg/ha. Para a safra 2027, sob El Niño, a perspectiva é de 2.831 kg/ha. Com poucas safras, a representação do clima pesou mais no desempenho do que a complexidade do algoritmo.}
 
  \vspace{\onelineskip}
 
@@ -222,7 +222,7 @@
 \renewcommand{\resumoname}{Abstract}
 \begin{resumoumacoluna}
  \begin{otherlanguage*}{english}
-\textit{Soybean is one of the main crops in Rio Grande do Sul, Brazil, but its yield varies substantially between seasons because of summer droughts, and official municipal yield statistics from IBGE are published only months after harvest. This applied quantitative study assessed whether supervised machine learning models can predict municipal soybean yield in March of the harvest year, using only public information available by then: IBGE yields (2000--2025), daily weather from INMET and NASA POWER, the Oceanic Niño Index (ONI), and soil water balance indicators. Each forecast adds to the municipality's recent average yield (baseline level) a deviation explained by climate. Linear Regression, Random Forest, and Gradient Boosting were compared against historical baselines using a temporal split (test period 2021--2025) and leave-one-year-out cross-validation. The hypothesis that ensemble models would outperform linear regression was not confirmed. The best model was a linear regression with gridded climate data and an extreme-drought term, with RMSE of 772 kg/ha and R\textsuperscript{2} of 0.28 in the temporal split, and 626 kg/ha and R\textsuperscript{2} of 0.40 in leave-one-year-out validation, corresponding to RMSE reductions of 11\% and 31\% relative to the historical average. For the 2026 season, the only fully prospective forecast, the model predicted 2,097 kg/ha, 23\% below IBGE's September 2026 estimate (LSPA) of 2,734 kg/ha. For the 2027 season, under El Niño conditions, the projected yield is 2,831 kg/ha. With few seasons available, the representation of climate mattered more for predictive performance than algorithm complexity.}
+\textit{Soybean is one of the main crops in Rio Grande do Sul, Brazil, but its yield varies substantially between seasons because of summer droughts, and official municipal yield statistics from IBGE are published only months after harvest. This applied quantitative study assessed whether supervised machine learning models can predict municipal soybean yield in March of the harvest year, using only public information available by then: IBGE yields (2000--2025), daily weather from INMET and NASA POWER, the Oceanic Niño Index (ONI), and soil water balance indicators. Each forecast adds to the municipality's recent average yield (baseline level) a deviation explained by climate. Linear Regression, Random Forest, and Gradient Boosting were compared against historical baselines using a temporal split (test period 2021--2025) and leave-one-year-out cross-validation. The hypothesis that ensemble models would outperform linear regression was not confirmed. The best model was a linear regression with gridded climate data and an extreme-drought term, with RMSE of 772 kg/ha and R\textsuperscript{2} of 0.28 in the temporal split, and 626 kg/ha and R\textsuperscript{2} of 0.40 in leave-one-year-out validation, corresponding to RMSE reductions of 11\% and 31\% relative to the historical average. For the 2026 season, the only out-of-sample forecast, the model predicted 2,097 kg/ha, 23\% below IBGE's September 2026 estimate (LSPA) of 2,734 kg/ha. For the 2027 season, under El Niño conditions, the projected yield is 2,831 kg/ha. With few seasons available, the representation of climate mattered more for predictive performance than algorithm complexity.}
 
    \vspace{\onelineskip}
 
@@ -238,11 +238,11 @@
 
 \section{Introdução}\label{sec:intro}
 
-A soja é uma das principais commodities agrícolas do Brasil, e o Rio Grande do Sul (RS) está entre os maiores produtores nacionais. No estado, a produtividade varia muito entre safras, principalmente por secas de verão associadas à variabilidade climática e aos fenômenos El Niño e La Niña \cite{pilau2022,noia2020}, o que afeta o planejamento produtivo e a gestão de riscos do setor.
+A soja é uma das principais commodities agrícolas do Brasil, e o Rio Grande do Sul (RS) está entre os maiores produtores nacionais. No estado, o rendimento (produtividade por área, em kg/ha) varia muito entre safras, principalmente por secas de verão associadas à variabilidade climática e aos fenômenos El Niño e La Niña \cite{pilau2022,noia2020}, o que afeta o planejamento produtivo e a gestão de riscos do setor.
 
 Os dados oficiais de rendimento municipal são divulgados pelo Instituto Brasileiro de Geografia e Estatística (IBGE) apenas meses após a colheita. Até lá, decisões de comercialização, crédito rural e logística são tomadas sem estimativas oficiais atualizadas por município. Métodos que prevejam o rendimento com antecedência, usando só informações já disponíveis na data da previsão, podem apoiar esse planejamento.
 
-Técnicas de aprendizado de máquina têm sido amplamente empregadas nessa tarefa, e métodos baseados em árvores de decisão, como Random Forest e Gradient Boosting, estão entre os mais utilizados \cite{vanklompenburg2020,jeong2016,vonbloh2023}. A maior parte dessas aplicações, porém, usa bases extensas ou validações que não reproduzem as condições reais de previsão. Ainda são escassos os estudos que avaliam esses algoritmos com dados históricos limitados e apenas com informações públicas disponíveis na data da estimativa.
+Técnicas de aprendizado de máquina têm sido empregadas nessa tarefa, e métodos baseados em árvores de decisão, como Random Forest e Gradient Boosting, estão entre os mais utilizados \cite{vanklompenburg2020,jeong2016,vonbloh2023}. A maior parte dessas aplicações, porém, usa bases extensas ou validações que não reproduzem as condições reais de previsão. Ainda são escassos os estudos que avaliam esses algoritmos com dados históricos limitados e apenas com informações públicas disponíveis na data da estimativa.
 
 A pergunta de pesquisa é: em que medida o rendimento municipal da soja pode ser previsto com antecedência, e com que erro em relação a linhas de base históricas, quando só se usam dados publicados até a data da previsão? A hipótese testada é que modelos \emph{ensemble} (Random Forest e Gradient Boosting) superam a regressão linear nessa tarefa, por capturarem relações não lineares entre clima e rendimento.
 
@@ -255,15 +255,15 @@ O objetivo geral é desenvolver e avaliar modelos de aprendizado de máquina sup
 \item aplicar o método à safra 2026, comparando a previsão com a estimativa oficial do IBGE, e à perspectiva da safra 2027 por cenários climáticos, como demonstração de um procedimento reaplicável a cada nova safra.
 \end{itemize}
 
-O trabalho contribui com uma base municipal integrada de dados climáticos e produtivos, com uma avaliação comparativa de algoritmos sob restrição de disponibilidade temporal das informações e com previsões para as safras de 2026 e 2027. Os resultados permitem analisar o potencial do aprendizado de máquina para apoiar o monitoramento agrícola e a gestão de riscos em escala regional.
+O trabalho contribui com uma base municipal integrada de dados climáticos e produtivos, com uma avaliação comparativa de algoritmos sob restrição de disponibilidade temporal das informações e com a previsão da safra 2026 e a perspectiva da safra 2027. Os resultados permitem analisar o potencial do aprendizado de máquina para apoiar o monitoramento agrícola e a gestão de riscos em escala regional.
 
 O artigo está organizado da seguinte forma: a Seção \ref{sec:referencial} apresenta o referencial teórico; a Seção \ref{sec:metodologia} descreve os dados, as variáveis, os modelos e a validação; a Seção \ref{sec:resultados} apresenta e discute os resultados, incluindo a previsão da safra 2026 e a perspectiva da safra 2027; e a Seção \ref{sec:conclusao} traz as conclusões e as etapas previstas para o TCC 2.
 
 \section{Referencial Teórico}\label{sec:referencial}
 
-\subsection{Clima e produtividade da soja no Rio Grande do Sul}
+\subsection{Clima e rendimento da soja no Rio Grande do Sul}
 
-A soja no RS é semeada predominantemente entre outubro e dezembro, com floração e enchimento de grãos concentrados entre dezembro e fevereiro, período em que o déficit hídrico mais afeta o rendimento. A variabilidade da produtividade está associada sobretudo à precipitação, à temperatura, aos veranicos e ao El Niño--Oscilação Sul (ENOS) \cite{pilau2022,noia2020}.
+A soja no RS é semeada predominantemente entre outubro e dezembro, com floração e enchimento de grãos concentrados entre dezembro e fevereiro, período em que o déficit hídrico mais afeta o rendimento. A variabilidade do rendimento está associada sobretudo à precipitação, à temperatura, aos veranicos e ao El Niño--Oscilação Sul (ENOS) \cite{pilau2022,noia2020}.
 
 O ENOS influencia o regime de chuvas no Sul do Brasil: em geral, a La Niña está associada a menos chuva e a maior risco de perdas, e o El Niño, a condições hídricas mais favoráveis. Sua intensidade é representada pelo Oceanic Niño Index (ONI), calculado a partir das anomalias de temperatura da superfície do mar no Pacífico Equatorial \cite{noaa}.
 
@@ -271,13 +271,13 @@ O balanço hídrico do solo é um indicador mais direto do estresse da cultura d
 
 \subsection{Aprendizado de máquina na previsão de safras}
 
-No aprendizado supervisionado, modelos são treinados com observações históricas para estimar uma variável de interesse; quando ela é contínua, como o rendimento em kg/ha, o problema é de regressão \cite{russell2021}. Na revisão de \citeonline{vanklompenburg2020}, regressão linear, Random Forest e Gradient Boosting estão entre os métodos mais empregados na previsão de produtividade, e temperatura e precipitação, entre os preditores mais usados. \citeonline{jeong2016} observaram desempenho superior do Random Forest em relação à regressão linear múltipla, e \citeonline{vonbloh2023} demonstraram o potencial do aprendizado de máquina para prever a produtividade da soja no Brasil.
+No aprendizado supervisionado, modelos são treinados com observações históricas para estimar uma variável de interesse; quando ela é contínua, como o rendimento em kg/ha, o problema é de regressão \cite{russell2021}. Na revisão de \citeonline{vanklompenburg2020}, regressão linear, Random Forest e Gradient Boosting estão entre os métodos mais empregados na previsão de rendimento, e temperatura e precipitação, entre os preditores mais usados. \citeonline{jeong2016} observaram desempenho superior do Random Forest em relação à regressão linear múltipla, e \citeonline{vonbloh2023} demonstraram o potencial do aprendizado de máquina para prever o rendimento da soja no Brasil.
 
-Este estudo avalia três algoritmos, implementados na biblioteca scikit-learn \cite{pedregosa2011}. A \textbf{regressão linear} modela a produtividade por combinações lineares das variáveis, com elevada interpretabilidade. O \textbf{Random Forest} \cite{breiman2001} combina árvores de decisão construídas com amostras \emph{bootstrap} e seleção aleatória de variáveis, o que reduz a variância. O \textbf{Gradient Boosting} \cite{friedman2001} constrói as árvores em sequência, cada uma ajustada aos erros da anterior. Foi utilizada a implementação baseada em histogramas do scikit-learn (\texttt{HistGradientBoostingRegressor}), que agrupa os valores das variáveis em faixas para acelerar o treinamento. Os dois últimos capturam relações não lineares e interações sem especificação prévia, mas não extrapolam além dos valores vistos no treino.
+A análise principal avalia três algoritmos, implementados na biblioteca scikit-learn \cite{pedregosa2011}. A \textbf{regressão linear} modela o rendimento por combinações lineares das variáveis, com elevada interpretabilidade. O \textbf{Random Forest} \cite{breiman2001} combina árvores de decisão construídas com amostras \emph{bootstrap} e seleção aleatória de variáveis, o que reduz a variância. O \textbf{Gradient Boosting} \cite{friedman2001} constrói as árvores em sequência, cada uma ajustada aos erros da anterior. Foi utilizada a implementação baseada em histogramas do scikit-learn (\texttt{HistGradientBoostingRegressor}), que agrupa os valores das variáveis em faixas para acelerar o treinamento. Os dois últimos capturam relações não lineares e interações sem especificação prévia, mas não extrapolam além dos valores vistos no treino.
 
 \subsection{Validação e interpretação de modelos}
 
-Em problemas com dependência temporal, a divisão aleatória entre treino e teste pode produzir estimativas otimistas, pois permite que informações futuras influenciem o treinamento. Por isso, estudos de previsão agrícola tendem a adotar a validação temporal, que treina com safras passadas e avalia em safras posteriores. Outra estratégia é a \emph{leave-one-year-out}, em que cada safra é retirada do treinamento e usada como teste. Para interpretar os resultados, os valores SHAP \cite{lundberg2017} decompõem cada previsão nas contribuições individuais das variáveis.
+Em problemas com dependência temporal, a divisão aleatória entre treino e teste pode produzir estimativas otimistas, pois permite que informações futuras influenciem o treinamento. Por isso, estudos de previsão agrícola tendem a adotar o corte temporal, que treina com safras passadas e avalia em safras posteriores. Outra estratégia é deixar uma safra de fora (\emph{leave-one-year-out}), em que cada safra é retirada do treinamento e usada como teste. Para interpretar os resultados, os valores SHAP \cite{lundberg2017} decompõem cada previsão nas contribuições individuais das variáveis.
 
 \section{Metodologia}\label{sec:metodologia}
 
@@ -311,11 +311,11 @@ IBGE -- Localidades \cite{ibgelocalidades} & Mesorregião de cada município & E
 
 As bases foram integradas em Python num painel de 12.922 pares município--safra (497 municípios, 2000--2025). Desses, 10.540 têm rendimento; os demais são de municípios que não plantaram soja no ano (2.308), sem dado disponível (54) ou com perda total (20), casos em que o rendimento não é definido. A safra Y é a colhida no ano Y (a safra 2026 corresponde ao ciclo 2025/26).
 
-O clima diário foi associado a cada município pela estação do INMET mais próxima, com cobertura mínima de dados, e pela célula do NASA POWER que contém a sede do município. Como o patamar só existe a partir da safra 2006, a base de modelagem tem 5.236 pares (448 municípios) com o INMET e 8.261 pares (449 municípios) com o NASA POWER.
+O clima diário foi associado a cada município pela estação do INMET mais próxima, com cobertura mínima de dados, e pela célula do NASA POWER que contém a sede do município. Como o patamar só existe a partir da safra 2006, a base de modelagem tem 5.236 pares (448 municípios) com o INMET e 8.261 pares (449 municípios) com o NASA POWER. Assim, o painel cobre 26 safras, das quais 20 (2006–2025) entram na modelagem.
 
 \subsection{Restrição temporal da previsão}
 
-A previsão da safra Y é emitida em março de Y, cerca de um mês antes do fim da colheita, e só usa informações disponíveis nesse mês: o clima de outubro a março e o ONI. Como a Produção Agrícola Municipal (PAM) do IBGE é divulgada em setembro do ano seguinte à colheita — a PAM 2024 saiu em 11 de setembro de 2025 \cite{ibgepam2024} —, em março de Y a última safra publicada é Y$-$2 (Tabela \ref{tab:disponiveis}). Na validação histórica vale a mesma regra: a safra 2022, por exemplo, é prevista com as safras publicadas até 2020.
+A previsão da safra Y é emitida ao fim de março de Y, cerca de um mês antes do fim da colheita, e só usa informações disponíveis nesse mês: o clima de outubro a março e o ONI. Como a Produção Agrícola Municipal (PAM) do IBGE é divulgada em setembro do ano seguinte à colheita, em março de Y a última safra publicada é Y$-$2 (Tabela \ref{tab:disponiveis}); a PAM 2024, por exemplo, saiu em 11 de setembro de 2025 \cite{ibgepam2024}. Na validação histórica vale a mesma regra: a safra 2022, por exemplo, é prevista com as safras publicadas até 2020.
 
 \begin{table}[htbp]
 \centering
@@ -335,13 +335,13 @@ O procedimento não se limita às safras da Tabela \ref{tab:disponiveis}. Para p
 
 \subsection{Estrutura da previsão: patamar e desvio climático}
 
-Cada previsão é a soma de um \textbf{patamar} — o rendimento esperado do município numa safra normal — e de um \textbf{desvio} explicado pelo clima da safra:
+Cada previsão é a soma de um \textbf{patamar}, o rendimento esperado do município numa safra normal, e de um \textbf{desvio} explicado pelo clima da safra:
 
 \begin{equation}
 \hat{y}_{m,Y} = P_{m,Y} + f(\mathbf{x}_{m,Y}), \qquad P_{m,Y} = \frac{1}{5}\sum_{k=2}^{6} y_{m,Y-k}
 \end{equation}
 
-em que m é o município, P é a média das cinco últimas safras publicadas e f é o modelo do desvio, aplicado às variáveis climáticas x. A variável-alvo é o rendimento municipal (kg/ha); nos dados rotulados de treino, os modelos aprendem o desvio, isto é, a diferença entre o rendimento observado e o patamar. Entre as quatro formas de patamar comparadas (reta de tendência estadual, média móvel e média olímpica das cinco últimas safras do município e reta das dez últimas safras), a média móvel teve o melhor desempenho (Tabela \ref{tab:patamares}) e foi adotada. O problema foi tratado como regressão em painel, e não como série temporal por município, porque cerca de 26 safras por município é pouco para ajustar modelos de séries temporais de forma confiável.
+em que m é o município, P é a média das cinco últimas safras publicadas e f é o modelo do desvio, aplicado às variáveis climáticas x. A variável-alvo é o rendimento municipal (kg/ha); nos dados rotulados de treino, os modelos aprendem o desvio, isto é, a diferença entre o rendimento observado e o patamar. Entre as quatro formas de patamar comparadas (reta de tendência estadual, média móvel e média olímpica das cinco últimas safras do município e reta das dez últimas safras), a média móvel teve o melhor desempenho (Tabela \ref{tab:patamares}) e foi adotada. O problema foi tratado como regressão em painel, e não como série temporal por município, porque cerca de 26 safras por município é pouco para ajustá-la de forma confiável.
 
 \subsection{Variáveis climáticas e balanço hídrico}
 
@@ -355,7 +355,7 @@ em que R\emph{a} é a radiação no topo da atmosfera, calculada pela latitude e
 
 \subsection{Modelos comparados}
 
-Foram comparados a regressão linear, usada como referência interpretável, e dois métodos \emph{ensemble} de árvores, Random Forest e Gradient Boosting, com linhas de base históricas. Os algoritmos foram selecionados por sua ampla adoção na previsão de produtividade (seção 2.2) e por representarem níveis crescentes de complexidade. Modelos de aprendizado profundo não foram avaliados, pois a série disponível, de cerca de 26 safras por município, é curta para ajustá-los de forma confiável.
+Foram comparados a regressão linear, usada como referência interpretável, e dois métodos \emph{ensemble} de árvores, Random Forest e Gradient Boosting, com linhas de base históricas. Os algoritmos foram selecionados por sua ampla adoção na previsão de rendimento (seção 2.2) e por representarem níveis crescentes de complexidade. Modelos de aprendizado profundo não foram avaliados, pois a série disponível, de cerca de 26 safras por município, é curta para ajustá-los de forma confiável.
 
 A Tabela \ref{tab:modelos} lista os modelos. Nos termos de seca extrema, U é a umidade mínima e D o déficit hídrico de dezembro a fevereiro; U\textsubscript{20} e D\textsubscript{80} delimitam as 20\% safras mais secas do treino. Esses termos valem zero em safras normais e permitem que a perda cresça mais rápido na seca forte. Médias, limiares e penalizações são calculados apenas com o treino de cada rodada, e os hiperparâmetros das árvores foram fixados \emph{a priori} (Gradient Boosting: taxa de aprendizado 0,05 e até 500 iterações com parada antecipada; Random Forest: 500 árvores), para que as safras de teste não influenciem a escolha. O efeito de ajustar esses hiperparâmetros foi avaliado em um teste complementar (seção \ref{sec:algoritmos}).
 
@@ -427,7 +427,7 @@ A Tabela \ref{tab:etapas} resume as seis etapas da modelagem, cada uma motivada 
 
 \begin{table}[htbp]
 \centering
-\caption{Evolução da modelagem (RMSE em kg/ha: corte 2021--2025 / uma safra de fora)}
+\caption{Evolução da modelagem (RMSE em kg/ha: corte temporal / deixando uma safra de fora)}
 \label{tab:etapas}
 \small
 \begin{tabular}{|>{\centering\arraybackslash}p{1.32cm}|>{\raggedright\arraybackslash}p{4.70cm}|>{\raggedright\arraybackslash}p{7.33cm}|}
@@ -437,7 +437,7 @@ A Tabela \ref{tab:etapas} resume as seis etapas da modelagem, cada uma motivada 
 2 & Clima por subperíodo do ciclo & O clima explica as safras, mas a tendência extrapolada gera viés de +490 a +740 kg/ha em 2021--2025 \\ \hline
 3 & Patamar com as safras publicadas (média de 5 safras até Y$-$2) & F: RMSE 873 / 714; supera as linhas de base deixando uma safra de fora \\ \hline
 4 & Balanço hídrico e limiares de seca extrema & H2: RMSE 870 / 706 \\ \hline
-5 & Clima em grade do NASA POWER & Base de 5.236 para 8.261 linhas; FL: RMSE 772 / 626, R\textsuperscript{2} 0,28 / 0,40 \\ \hline
+5 & Clima em grade do NASA POWER & Base de 5.236 para 8.261 pares; FL: RMSE 772 / 626, R\textsuperscript{2} 0,28 / 0,40 \\ \hline
 6 & Revalidação e aplicação às safras 2026 e 2027 & FL reconfirmado; 2026 prevista em 2.097 kg/ha; 2027 com mediana de 2.831 kg/ha sob El Niño \\ \hline
 \end{tabular}
 \fonte{Elaborado pelos autores (2026).}
@@ -452,7 +452,7 @@ Na Etapa 1, com a chuva total e a temperatura média de outubro a março, nenhum
 \small
 \begin{tabular}{|>{\raggedright\arraybackslash}p{5.5cm}|>{\centering\arraybackslash}p{2.6cm}|>{\centering\arraybackslash}p{2.6cm}|>{\centering\arraybackslash}p{2.6cm}|}
 \hline
-\textbf{Patamar} & \textbf{Corte 2021--2025} & \textbf{Uma safra de fora} & \textbf{Média} \\ \hline
+\textbf{Patamar} & \textbf{Corte temporal} & \textbf{Deixando uma safra de fora} & \textbf{Média} \\ \hline
 \textbf{Média móvel de 5 safras} & \textbf{873} & \textbf{714} & \textbf{793} \\ \hline
 Média olímpica de 5 safras & 927 & 724 & 825 \\ \hline
 Reta das 10 últimas safras & 962 & 819 & 890 \\ \hline
@@ -462,7 +462,7 @@ Reta de tendência estadual & 1.020 & 771 & 896 \\ \hline
 \fonte{Elaborado pelos autores (2026).}
 \end{table}
 
-Na Etapa 4, o déficit hídrico sozinho (H1) não melhorou o modelo, por medir a mesma seca que a chuva e a umidade de dezembro a fevereiro (correlação $\approx$0,8 entre elas); o ganho veio dos limiares de seca extrema (H2), que reduziram o RMSE em 22\% em relação à média histórica deixando uma safra de fora (706 $\times$ 901 kg/ha). No corte 2021--2025, porém, nenhum modelo com o clima do INMET superou a média histórica (857 kg/ha).
+Na Etapa 4, o déficit hídrico sozinho (H1) não melhorou o modelo, por medir a mesma seca que a chuva e a umidade de dezembro a fevereiro (correlação $\approx$0,8 entre elas); o ganho veio dos limiares de seca extrema (H2), que reduziram o RMSE em 22\% em relação à média histórica deixando uma safra de fora (706 $\times$ 901 kg/ha). No corte temporal, porém, nenhum modelo com o clima do INMET superou a média histórica (857 kg/ha).
 
 As Etapas 5 e 6 são detalhadas nas seções \ref{sec:fonteclima} a \ref{sec:perspectiva}.
 
@@ -472,12 +472,12 @@ A Tabela \ref{tab:algoritmos} compara os três algoritmos nas duas primeiras eta
 
 \begin{table}[htbp]
 \centering
-\caption{Regressão linear, Random Forest e Gradient Boosting nas Etapas 1 e 2 (corte 2021--2025; RMSE em kg/ha)}
+\caption{Regressão linear, Random Forest e Gradient Boosting nas Etapas 1 e 2 (corte temporal; RMSE em kg/ha)}
 \label{tab:algoritmos}
 \small
 \begin{tabular}{|>{\raggedright\arraybackslash}p{4.17cm}|>{\centering\arraybackslash}p{2.08cm}|>{\centering\arraybackslash}p{2.08cm}|>{\centering\arraybackslash}p{2.08cm}|>{\centering\arraybackslash}p{2.08cm}|}
 \hline
- & \multicolumn{2}{c|}{\textbf{Etapa 1 (5.869 linhas)}} & \multicolumn{2}{c|}{\textbf{Etapa 2 (4.859 linhas)}} \\ \cline{2-3}\cline{4-5}
+ & \multicolumn{2}{c|}{\textbf{Etapa 1 (5.869 pares)}} & \multicolumn{2}{c|}{\textbf{Etapa 2 (4.859 pares)}} \\ \cline{2-3}\cline{4-5}
 \textbf{Modelo} & \textbf{RMSE} & \textbf{R\textsuperscript{2}} & \textbf{RMSE} & \textbf{R\textsuperscript{2}} \\ \hline
 Regressão linear & 935 & $-$0,12 & 831 & 0,12 \\ \hline
 Random Forest & 1.031 & $-$0,36 & 1.037 & $-$0,38 \\ \hline
@@ -487,16 +487,16 @@ Gradient Boosting & 1.013 & $-$0,31 & 1.018 & $-$0,33 \\ \hline
 \fonte{Elaborado pelos autores (2026).}
 \end{table}
 
-A Tabela \ref{tab:final} mostra a validação final, com o clima do NASA POWER e as 8.261 linhas. O modelo FL teve o menor erro nas duas validações, e o Gradient Boosting, o maior entre os modelos com clima: RMSE 24\% maior que o do FL no corte temporal e 12\% maior deixando uma safra de fora, com R\textsuperscript{2} negativo no período 2021--2025. \textbf{A hipótese de que os modelos \emph{ensemble} superariam a regressão linear não foi confirmada nas condições testadas} (hiperparâmetros fixados \emph{a priori}; o teste com ajuste está ao final desta seção). O mesmo ocorreu nas etapas em que os algoritmos foram comparados, inclusive na combinação das previsões de H2 e do Gradient Boosting, que não superou o H2 sozinho.
+A Tabela \ref{tab:final} mostra a validação final, com o clima do NASA POWER e os 8.261 pares. Entre os modelos dessa tabela, o FL teve o menor erro nas duas validações, e o Gradient Boosting, o maior entre os que usam clima: RMSE 24\% maior que o do FL no corte temporal e 11\% maior deixando uma safra de fora, com R\textsuperscript{2} negativo no período 2021--2025. \textbf{A hipótese de que os modelos \emph{ensemble} superariam a regressão linear não foi confirmada nas condições testadas} (hiperparâmetros fixados \emph{a priori}; o teste com ajuste está ao final desta seção). O mesmo ocorreu nas etapas em que os algoritmos foram comparados, inclusive na combinação das previsões de H2 e do Gradient Boosting, que não superou o H2 sozinho.
 
 \begin{table}[htbp]
 \centering
-\caption{Validação final dos modelos (NASA POWER, 8.261 linhas; RMSE, MAE e viés em kg/ha)}
+\caption{Validação final dos modelos (NASA POWER, 8.261 pares; RMSE, MAE e viés em kg/ha)}
 \label{tab:final}
 \footnotesize
 \begin{tabular}{|>{\raggedright\arraybackslash}p{2.62cm}|>{\centering\arraybackslash}p{1.07cm}|>{\centering\arraybackslash}p{1.03cm}|>{\centering\arraybackslash}p{0.95cm}|>{\centering\arraybackslash}p{0.99cm}|>{\centering\arraybackslash}p{1.07cm}|>{\centering\arraybackslash}p{1.03cm}|>{\centering\arraybackslash}p{0.95cm}|>{\centering\arraybackslash}p{1.11cm}|}
 \hline
- & \multicolumn{4}{c|}{\textbf{Corte 2021--2025}} & \multicolumn{3}{c|}{\textbf{Uma safra de fora}} & \textbf{Média} \\ \cline{2-5}\cline{6-8}
+ & \multicolumn{4}{c|}{\textbf{Corte temporal}} & \multicolumn{3}{c|}{\textbf{Deixando uma safra de fora}} & \textbf{Média} \\ \cline{2-5}\cline{6-8}
 \textbf{Modelo} & \textbf{RMSE} & \textbf{MAE} & \textbf{R\textsuperscript{2}} & \textbf{Viés} & \textbf{RMSE} & \textbf{MAE} & \textbf{R\textsuperscript{2}} & \textbf{RMSE} \\ \hline
 \textbf{FL (final)} & \textbf{772} & \textbf{604} & \textbf{0,28} & \textbf{+298} & \textbf{626} & \textbf{476} & \textbf{0,40} & \textbf{699} \\ \hline
 H2 & 793 & 619 & 0,24 & +317 & 636 & 484 & 0,39 & 715 \\ \hline
@@ -504,22 +504,22 @@ F & 814 & 630 & 0,20 & +325 & 633 & 482 & 0,39 & 724 \\ \hline
 GB -- Gradient Boosting & 958 & 735 & $-$0,11 & +496 & 698 & 532 & 0,26 & 828 \\ \hline
 Média histórica & 868 & 737 & 0,09 & $-$106 & 905 & 785 & $-$0,24 & 886 \\ \hline
 \end{tabular}
-\nota{Acurácia (100\% menos o MAE relativo ao rendimento médio observado, de 2.446 kg/ha no corte 2021--2025 e 2.572 kg/ha deixando uma safra de fora): FL 75,3\% e 81,5\%; H2 74,7\% e 81,2\%; F 74,3\% e 81,2\%; GB 69,9\% e 79,3\%; média histórica 69,9\% e 69,5\%.}
+\nota{Acurácia (100\% menos o MAE relativo ao rendimento médio observado, de 2.446 kg/ha no corte temporal e 2.572 kg/ha deixando uma safra de fora): FL 75,3\% e 81,5\%; H2 74,7\% e 81,2\%; F 74,3\% e 81,2\%; GB 69,9\% e 79,3\%; média histórica 69,9\% e 69,5\%.}
 \fonte{Elaborado pelos autores (2026).}
 \end{table}
 
-O resultado contraria estudos com bases maiores \cite{jeong2016,vonbloh2023} e tem duas explicações. Primeiro, a base tem de 5 a 8 mil linhas, mas só cerca de 20 safras, e é a safra — e não o município — que carrega a variação climática; há poucos exemplos independentes para um modelo flexível aprender interações sem sobreajuste. Segundo, as secas recentes foram mais extremas que qualquer safra do treino: 2022 teve 44 dias de calor em dezembro--fevereiro nas estações do INMET, contra no máximo 33 até 2020, e modelos de árvores não extrapolam além dos valores vistos no treino. A não linearidade relevante — a perda que se acelera na seca extrema — foi capturada por um termo de limiar explícito, mantendo o modelo interpretável.
+O resultado difere de estudos com bases maiores \cite{jeong2016,vonbloh2023} e tem duas explicações. Primeiro, a base tem de 5 a 8 mil pares, mas só 20 safras, e é a safra, e não o município, que carrega a variação climática; há poucos exemplos independentes para um modelo flexível aprender interações sem sobreajuste. Segundo, as secas recentes foram mais extremas que qualquer safra do treino: 2022 teve 44 dias de calor em dezembro--fevereiro nas estações do INMET, contra no máximo 33 até 2020, e modelos de árvores não extrapolam além dos valores vistos no treino. A não linearidade relevante, a perda que se acelera na seca extrema, foi capturada por um termo de limiar explícito, mantendo o modelo interpretável.
 
-Como os hiperparâmetros das árvores foram fixados \emph{a priori}, foi feito um teste complementar com a mesma base e as mesmas validações (notebook \path{modelagem_teste_algoritmos} do repositório). O Gradient Boosting e o XGBoost \cite{chen2016} tiveram a taxa de aprendizado, o número de iterações e a profundidade escolhidos em cada rodada só com safras do treino, em validação interna que separa safras inteiras. O ajuste reduziu o RMSE do Gradient Boosting deixando uma safra de fora, de 698 para 651 kg/ha, mas não no corte 2021--2025 (de 958 para 970 kg/ha), e os dois modelos ajustados ficaram acima do FL nas duas validações (Tabela \ref{tab:hiperparametros}). A conclusão sobre a hipótese se mantém, com a ressalva de que os ajustes escolheram quase sempre as configurações mais simples da grade, e grades mais amplas poderiam alterar um pouco os números. O teste também avaliou Lasso, Elastic Net, SVR e um modelo misto com efeitos por mesorregião. Só o modelo misto teve RMSE menor que o do FL nas duas validações (677 e 586 kg/ha), mas a margem é pequena e a comparação usou as mesmas safras das demais escolhas. Por isso, o FL foi mantido como modelo final, e o modelo misto será comparado a ele no TCC 2.
+Como os hiperparâmetros das árvores foram fixados \emph{a priori}, foi feito um teste complementar com a mesma base e as mesmas validações (notebook \path{modelagem_teste_algoritmos} do repositório). O Gradient Boosting e o XGBoost \cite{chen2016} tiveram a taxa de aprendizado, o número de iterações e a profundidade escolhidos em cada rodada só com safras do treino, em validação interna que separa safras inteiras. O ajuste reduziu o RMSE do Gradient Boosting deixando uma safra de fora, de 698 para 651 kg/ha, mas não no corte temporal (de 958 para 970 kg/ha), e os dois modelos ajustados ficaram acima do FL nas duas validações (Tabela \ref{tab:hiperparametros}). A conclusão sobre a hipótese se mantém, com a ressalva de que os ajustes escolheram quase sempre as configurações mais simples da grade, e grades mais amplas poderiam alterar um pouco os números. O teste também avaliou Lasso, Elastic Net, SVR e um modelo misto com efeitos por mesorregião. Só o modelo misto teve RMSE menor que o do FL nas duas validações (677 e 586 kg/ha), mas a margem é pequena e a comparação usou as mesmas safras. Por isso, o FL foi mantido como modelo final, e o modelo misto será comparado a ele no TCC 2.
 
 \begin{table}[htbp]
 \centering
-\caption{Teste complementar de hiperparâmetros (NASA POWER, 8.261 linhas; RMSE em kg/ha)}
+\caption{Teste complementar de hiperparâmetros (NASA POWER, 8.261 pares; RMSE em kg/ha)}
 \label{tab:hiperparametros}
 \small
 \begin{tabular}{|>{\raggedright\arraybackslash}p{5.5cm}|>{\centering\arraybackslash}p{2.6cm}|>{\centering\arraybackslash}p{2.6cm}|>{\centering\arraybackslash}p{2.6cm}|}
 \hline
-\textbf{Modelo} & \textbf{Corte 2021--2025} & \textbf{Uma safra de fora} & \textbf{Média} \\ \hline
+\textbf{Modelo} & \textbf{Corte temporal} & \textbf{Deixando uma safra de fora} & \textbf{Média} \\ \hline
 \textbf{FL (final)} & \textbf{772} & \textbf{626} & \textbf{699} \\ \hline
 Gradient Boosting original & 958 & 698 & 828 \\ \hline
 Gradient Boosting ajustado & 970 & 651 & 810 \\ \hline
@@ -531,7 +531,7 @@ XGBoost ajustado & 974 & 636 & 805 \\ \hline
 
 \subsection{Efeito da fonte de clima}\label{sec:fonteclima}
 
-Até a Etapa 4, cerca de metade dos pares com rendimento ficava fora do modelo por falha ou distância das estações do INMET. A grade do NASA POWER concorda com as estações — a correlação entre safras ficou entre 0,78 e 0,89 para quase todas as variáveis, com exceção da maior sequência de dias secos (0,53) — e aumentou a base em 58\%, com ganho em todas as mesorregiões (+43\% a +80\%). Nas mesmas linhas, só trocar a fonte do clima reduziu o erro de todos os modelos lineares (Tabela \ref{tab:nasa}), provavelmente porque a célula da grade ($\approx$50 km) representa a média da área do município melhor que uma estação pontual e não tem falhas. Entre as seis variações lineares testadas, o FL teve o menor RMSE médio e foi adotado como modelo final: o termo de déficit ``normal'' do H2 repete a informação da chuva e da umidade, e o que acrescenta é só o limiar.
+Até a Etapa 4, cerca de metade dos pares com rendimento ficava fora do modelo por falha ou distância das estações do INMET. A grade do NASA POWER concorda com as estações (correlação por estação e safra entre 0,78 e 0,89 para quase todas as variáveis, com exceção da maior sequência de dias secos, de 0,53) e aumentou a base em 58\%, com ganho em todas as mesorregiões (+43\% a +80\%). Nos mesmos pares, só trocar a fonte do clima reduziu o erro de todos os modelos lineares (Tabela \ref{tab:nasa}), provavelmente porque a célula da grade ($\approx$50 km) representa a média da área do município melhor que uma estação pontual e não tem falhas. Entre as seis variações lineares testadas, o FL teve o menor RMSE médio e foi adotado como modelo final: o termo de déficit ``normal'' do H2 repete a informação da chuva e da umidade, e o que acrescenta é só o limiar.
 
 \begin{table}[htbp]
 \centering
@@ -540,13 +540,13 @@ Até a Etapa 4, cerca de metade dos pares com rendimento ficava fora do modelo p
 \small
 \begin{tabular}{|>{\raggedright\arraybackslash}p{5.97cm}|>{\centering\arraybackslash}p{1.77cm}|>{\centering\arraybackslash}p{1.49cm}|>{\centering\arraybackslash}p{1.77cm}|>{\centering\arraybackslash}p{1.49cm}|}
 \hline
- & \multicolumn{2}{c|}{\textbf{Corte 2021--2025}} & \multicolumn{2}{c|}{\textbf{Uma safra de fora}} \\ \cline{2-3}\cline{4-5}
+ & \multicolumn{2}{c|}{\textbf{Corte temporal}} & \multicolumn{2}{c|}{\textbf{Deixando uma safra de fora}} \\ \cline{2-3}\cline{4-5}
 \textbf{Cenário e modelo} & \textbf{RMSE} & \textbf{R\textsuperscript{2}} & \textbf{RMSE} & \textbf{R\textsuperscript{2}} \\ \hline
-INMET (5.236 linhas) -- H2 & 870 & 0,05 & 706 & 0,21 \\ \hline
-INMET (5.236 linhas) -- FL & 842 & 0,11 & 704 & 0,22 \\ \hline
-NASA POWER, mesmas linhas -- H2 & 739 & 0,31 & 637 & 0,36 \\ \hline
-NASA POWER, mesmas linhas -- FL & 722 & 0,34 & 627 & 0,38 \\ \hline
-\textbf{NASA POWER, todas as linhas -- FL (final)} & \textbf{772} & \textbf{0,28} & \textbf{626} & \textbf{0,40} \\ \hline
+INMET (5.236 pares) -- H2 & 870 & 0,05 & 706 & 0,21 \\ \hline
+INMET (5.236 pares) -- FL & 842 & 0,11 & 704 & 0,22 \\ \hline
+NASA POWER, mesmos pares -- H2 & 739 & 0,31 & 637 & 0,36 \\ \hline
+NASA POWER, mesmos pares -- FL & 722 & 0,34 & 627 & 0,38 \\ \hline
+\textbf{NASA POWER, todos os pares -- FL (final)} & \textbf{772} & \textbf{0,28} & \textbf{626} & \textbf{0,40} \\ \hline
 \end{tabular}
 \fonte{Elaborado pelos autores (2026).}
 \end{table}
@@ -555,9 +555,9 @@ Para medir o custo de respeitar a data de publicação da PAM, os modelos també
 
 \subsection{Modelo final: desempenho e fatores climáticos}
 
-O FL erra em média 604 kg/ha por município no corte 2021--2025 e 476 kg/ha deixando uma safra de fora, o que equivale a 24,7\% e 18,5\% do rendimento médio observado (2.446 e 2.572 kg/ha), ou seja, a uma \textbf{acurácia de 75,3\% e 81,5\%}. A média histórica, sem clima, tem acurácia de 69,9\% e 69,5\%: o FL ganha 5 e 12 pontos percentuais, com RMSE 11\% e 31\% menor. O Gradient Boosting fica em 69,9\% e 79,3\%. Na média estadual de cada safra, o erro médio é de 244 kg/ha, com correlação de 0,85 com o observado.
+O FL erra em média 604 kg/ha por município no corte temporal e 476 kg/ha deixando uma safra de fora, o que equivale a 24,7\% e 18,5\% do rendimento médio observado (2.446 e 2.572 kg/ha), ou seja, a uma \textbf{acurácia de 75,3\% e 81,5\%}. A média histórica, sem clima, tem acurácia de 69,9\% e 69,5\%: o FL ganha 5 e 12 pontos percentuais, com RMSE 11\% e 31\% menor. O Gradient Boosting fica em 69,9\% e 79,3\%. Na média estadual de cada safra, o erro médio é de 244 kg/ha, com correlação de 0,85 com o observado.
 
-A acurácia alta convive com um R\textsuperscript{2} baixo (0,28 e 0,40) porque as métricas medem coisas diferentes: a acurácia compara o erro com o nível do rendimento, que o patamar do município já acerta em boa parte; o R\textsuperscript{2} mede quanto da variação entre os pares município--safra o modelo explica além da média do período, e é nessa parte — o desvio causado pelo clima — que está a dificuldade. Já o MAPE do FL (41,5\% e 26,2\%) é bem maior que o WAPE por causa dos municípios com rendimento muito baixo nas secas. No período de secas consecutivas, o modelo supera a média histórica, ao contrário do que ocorria com o INMET, mas ainda superestima o rendimento (viés de +298 kg/ha), porque o patamar publicado não reflete as secas seguidas de 2022--2023.
+A acurácia alta convive com um R\textsuperscript{2} baixo (0,28 e 0,40) porque as métricas medem coisas diferentes: a acurácia compara o erro com o nível do rendimento, que o patamar do município já acerta em boa parte; o R\textsuperscript{2} mede quanto da variação entre os pares município--safra o modelo explica além da média do período, e é nessa parte, o desvio causado pelo clima, que está a dificuldade. Já o MAPE do FL (41,5\% e 26,2\%) é bem maior que o WAPE por causa dos municípios com rendimento muito baixo nas secas. No período de secas consecutivas, o modelo supera a média histórica, ao contrário do que ocorria com o INMET, mas ainda superestima o rendimento (viés de +298 kg/ha), porque o patamar publicado não reflete as secas seguidas de 2022--2023.
 
 Os coeficientes do FL indicam, sobre o desvio em relação ao patamar: +380 kg/ha a cada 100 mm de chuva em dezembro--fevereiro acima da média ($\approx$379 mm), com ganho decrescente; +15 kg/ha por ponto percentual de umidade relativa mínima no mesmo período; e $-$307 kg/ha a cada 100 mm de déficit hídrico acima de $\approx$272 mm, a perda adicional da seca extrema. A Figura \ref{fig:contrib} decompõe a previsão de cada safra na contribuição de cada fator, o que, para um modelo linear, equivale aos valores SHAP: em média, a chuva de dezembro--fevereiro move a previsão em $\approx$368 kg/ha, a umidade mínima em $\approx$103 kg/ha e a seca extrema em $\approx$80 kg/ha; os demais fatores pesam pouco ($\approx$48, $\approx$29 e $\approx$20 kg/ha). O período de floração e enchimento de grãos concentra quase todo o efeito do clima, como esperado pela fisiologia da cultura. Coeficientes e contribuições medem associação, e não efeito causal.
 
@@ -569,7 +569,7 @@ Os coeficientes do FL indicam, sobre o desvio em relação ao patamar: +380 kg/h
 \fonte{Elaborado pelos autores (2026).}
 \end{figure}
 
-Nas safras previstas sem terem sido vistas pelo modelo, o FL captou 91\% da quebra de 2012, 81\% da de 2023, 38\% da de 2022 e 26\% da de 2020 (Figura \ref{fig:secas}). A quebra de 2020 ($\approx$1.000 kg/ha abaixo do patamar) é a menos captada: o verão foi apenas moderadamente seco, com primavera chuvosa. Parte das perdas de 2020 e 2022 não está nas variáveis disponíveis — possivelmente por chuva concentrada em poucos eventos ou por efeitos fora de dezembro--fevereiro —, o que caracteriza um limite de informação, e não de algoritmo.
+Nas safras previstas sem terem sido vistas pelo modelo, o FL captou 91\% da quebra de 2012, 81\% da de 2023, 38\% da de 2022 e 26\% da de 2020 (Figura \ref{fig:secas}). A quebra de 2020 ($\approx$1.000 kg/ha abaixo do patamar) é a menos captada: o verão foi apenas moderadamente seco, com primavera chuvosa. Parte das perdas de 2020 e 2022 não está nas variáveis disponíveis, possivelmente por chuva concentrada em poucos eventos ou por efeitos fora de dezembro--fevereiro, o que caracteriza um limite de informação, e não de algoritmo.
 
 \begin{figure}[htbp]
 \centering
@@ -579,7 +579,7 @@ Nas safras previstas sem terem sido vistas pelo modelo, o FL captou 91\% da queb
 \fonte{Elaborado pelos autores (2026).}
 \end{figure}
 
-O erro relativo (MAE como percentual do rendimento médio, deixando uma safra de fora) foi menor no Nordeste (16,2\%, acurácia de 83,8\%) e no Noroeste (17,0\%, acurácia de 83,0\%), principal região produtora, e maior no Sudeste (28,0\%, acurácia de 72,0\%) e no Sudoeste (29,1\%, acurácia de 70,9\%), de produtividade média menor (Figura \ref{fig:regioes}). Entre os 424 municípios com pelo menos oito safras avaliadas, o erro relativo mediano foi de 17,9\% (metade entre 15\% e 22\%), e municípios mais produtivos tiveram erro relativo menor (correlação de $-$0,62).
+O erro relativo (MAE como percentual do rendimento médio, deixando uma safra de fora) foi menor no Nordeste (16,2\%, acurácia de 83,8\%) e no Noroeste (17,0\%, acurácia de 83,0\%), principal região produtora, e maior no Sudeste (28,0\%, acurácia de 72,0\%) e no Sudoeste (29,1\%, acurácia de 70,9\%), de rendimento médio menor (Figura \ref{fig:regioes}). Entre os 424 municípios com pelo menos oito safras avaliadas, o erro relativo mediano foi de 17,9\% (metade entre 15\% e 22\%), e municípios mais produtivos tiveram erro relativo menor (correlação de $-$0,62).
 
 \begin{figure}[htbp]
 \centering
@@ -591,7 +591,7 @@ O erro relativo (MAE como percentual do rendimento médio, deixando uma safra de
 
 \subsection{Previsão da safra 2026}
 
-O FL foi treinado com todas as safras de 2006 a 2025 e aplicado ao patamar 2020--2024 e ao clima de outubro de 2025 a março de 2026, nos 434 municípios que colheram soja em 2025. Pelo NASA POWER, a safra teve chuva bem abaixo da média em outubro--novembro (161 $\times$ 295 mm na média 2006--2025) e em dezembro--fevereiro (281 $\times$ 368 mm), com umidade mínima baixa (47\% $\times$ 52\%) e mais dias de calor (33 $\times$ 24); o déficit hídrico (245 mm) ficou abaixo do limiar de seca extrema, e o ONI médio da safra foi de $-$0,45 (fase neutra).
+O FL foi treinado com todas as safras de 2006 a 2025 e aplicado ao patamar 2020--2024 e ao clima de outubro de 2025 a março de 2026, nos 434 municípios que colheram soja em 2025. Como a PAM 2025 só foi publicada em setembro de 2026, o treino, a lista de municípios e a ponderação por área usam dados que não estavam disponíveis em março de 2026: trata-se de um teste retrospectivo fora da amostra, e não de uma previsão emitida em tempo real. Pelo NASA POWER, a safra teve chuva abaixo da média em outubro--novembro (161 $\times$ 295 mm na média 2006--2025) e em dezembro--fevereiro (281 $\times$ 368 mm), com umidade mínima baixa (47\% $\times$ 52\%) e mais dias de calor (33 $\times$ 24); o déficit hídrico (245 mm) ficou abaixo do limiar de seca extrema, e o ONI médio da safra foi de $-$0,45 (fase neutra).
 
 Com o patamar de 2.270 kg/ha (ponderado pela área), o FL prevê \textbf{2.097 kg/ha} para o estado, com intervalo de 80\% de 1.685 a 2.430 kg/ha (Tabela \ref{tab:prev2026}). A queda de 173 kg/ha em relação ao patamar vem principalmente da chuva de dezembro--fevereiro ($-$284 kg/ha) e da umidade mínima ($-$103 kg/ha), em parte compensadas pela chuva de outubro--novembro (+62 kg/ha) e pelo desvio médio do treino (+153 kg/ha). A queda se concentra no Sudoeste ($-$36\% sobre o patamar) e no Sudeste ($-$26\%), enquanto o Noroeste, com quase metade da área plantada, fica próximo do patamar ($-$1\%). A previsão de cada município está no arquivo \path{previsao_safra_2026_municipio.csv} do repositório.
 
@@ -614,13 +614,13 @@ Referência: LSPA/IBGE, set/2026 & 2.734 & -- \\ \hline
 \fonte{Elaborado pelos autores (2026).}
 \end{table}
 
-O resultado oficial (PAM) da safra 2026 só será divulgado em setembro de 2027. A referência disponível é o Levantamento Sistemático da Produção Agrícola (LSPA) de setembro de 2026 \cite{ibgelspa}, que estima \textbf{2.734 kg/ha} e, em 2007--2025, ficou em média a 7 kg/ha da PAM (diferença máxima de 35 kg/ha). Em relação a ele, o FL subestimou a safra em cerca de 640 kg/ha ($-$23\%), fora do intervalo de 80\%, e todos os modelos ficaram abaixo do LSPA. É o primeiro teste totalmente fora da amostra do projeto. Uma explicação possível é que o clima descrito pelo NASA POWER sugira um ano mais seco do que a safra mostrou, hipótese ainda não testada; outras causas possíveis são chuvas concentradas em poucos eventos, fatores de manejo e a incerteza do próprio LSPA, que ainda não é a PAM. A perspectiva feita no plantio da safra 2026, com os cenários descritos a seguir, indicava mediana de 2.491 kg/ha e percentil 90 de 2.989 kg/ha, mais perto do LSPA.
+O resultado oficial (PAM) da safra 2026 só será divulgado em setembro de 2027. A referência disponível é o Levantamento Sistemático da Produção Agrícola (LSPA) de setembro de 2026 \cite{ibgelspa}, que estima \textbf{2.734 kg/ha} e, em 2007--2025, ficou em média a 7 kg/ha da PAM (diferença máxima de 35 kg/ha). Em relação a ele, o FL subestimou a safra em cerca de 640 kg/ha ($-$23\%), fora do intervalo de 80\%, e todos os modelos ficaram abaixo do LSPA. É o primeiro teste fora da amostra do projeto. Uma explicação possível é que o clima descrito pelo NASA POWER sugira um ano mais seco do que a safra mostrou, hipótese ainda não testada; outras causas possíveis são chuvas concentradas em poucos eventos, fatores de manejo e a incerteza do próprio LSPA, que ainda não é a PAM. A perspectiva feita no plantio da safra 2026, com os cenários descritos a seguir, indicava mediana de 2.491 kg/ha e percentil 90 de 2.989 kg/ha, mais perto do LSPA.
 
 \subsection{Perspectiva da safra 2027}\label{sec:perspectiva}
 
-Em outubro de 2026, a soja de 2027 está sendo semeada. O patamar já é conhecido — média de 2021--2025, de 2.300 kg/ha, ainda baixo por incluir as secas de 2022, 2023 e 2025 —, mas o clima de dezembro a março, o que mais pesa no FL, ainda não aconteceu. O clima, portanto, não é previsto: o FL é aplicado ao patamar de 2027 com o clima observado em cada uma das 21 safras de 2006 a 2026 (cenários), separados pela fase do ENOS da safra de origem (ONI médio $\geq$ +0,5: El Niño; $\leq$ $-$0,5: La Niña). Como o ONI estava em +2,16 em julho--setembro de 2026, a safra 2027 deve ocorrer sob El Niño.
+Em outubro de 2026, a soja de 2027 está sendo semeada. O patamar já é conhecido (média de 2021--2025, de 2.300 kg/ha, ainda baixo por incluir as secas de 2022, 2023 e 2025), mas o clima de dezembro a março, o que mais pesa no FL, ainda não aconteceu. O clima, portanto, não é previsto: o FL é aplicado ao patamar de 2027 com o clima observado em cada uma das 21 safras de 2006 a 2026 (cenários), separados pela fase do ENOS da safra de origem (ONI médio $\geq$ +0,5: El Niño; $\leq$ $-$0,5: La Niña). Como o ONI estava em +2,16 em julho--setembro de 2026, a safra 2027 deve ocorrer sob El Niño.
 
-Com todos os cenários, a mediana é de 2.522 kg/ha; nos sete cenários de El Niño, sobe para \textbf{2.831 kg/ha}, acima do patamar e próxima das boas safras recentes (Tabela \ref{tab:prev2027} e Figura \ref{fig:prev}). O risco de quebra é menor, mas não nulo: o cenário de 2020, classificado como El Niño, resulta em 1.746 kg/ha, e o clima de La Niña de 2022 levaria a 1.195 kg/ha. Sob El Niño, todas as mesorregiões ficam acima do patamar, com maior ganho relativo no Sudoeste (+35\%) e no Centro Ocidental (+31\%). Como o FL subestimou 2026, essa perspectiva pode estar pessimista. A previsão propriamente dita será emitida em março de 2027, com o clima observado de outubro de 2026 a março de 2027.
+Com todos os cenários, a mediana é de 2.522 kg/ha; nos sete cenários de El Niño, sobe para \textbf{2.831 kg/ha}, acima do patamar e próxima das boas safras recentes (Tabela \ref{tab:prev2027} e Figura \ref{fig:prev}). O risco de quebra é menor, mas não nulo: o cenário de 2020, classificado como El Niño, resulta em 1.746 kg/ha, e o clima de La Niña de 2022 levaria a 1.195 kg/ha. Sob El Niño, todas as mesorregiões ficam acima do patamar, com maior ganho relativo no Sudoeste (+35\%) e no Centro Ocidental (+31\%). Como o FL subestimou 2026, essa perspectiva pode estar pessimista. A previsão será emitida em março de 2027, com o clima observado de outubro de 2026 a março de 2027.
 
 \begin{table}[htbp]
 \centering
@@ -654,19 +654,21 @@ O indicador não deve ser tomado como decisão automática de crédito, seguro o
 
 \section{Conclusão}\label{sec:conclusao}
 
-Este trabalho investigou se é possível prever o rendimento da soja de cada município do Rio Grande do Sul em março do ano da colheita, antes do fim da colheita e apenas com dados públicos já publicados nesse mês. Para isso, integrou o rendimento municipal do IBGE, o clima do INMET e do NASA POWER, o ONI e um balanço hídrico do solo, e comparou regressão linear, Random Forest e Gradient Boosting com linhas de base históricas, em validações que respeitam a data de publicação dos dados.
+Este trabalho investigou se é possível prever o rendimento da soja de cada município do Rio Grande do Sul em março do ano da colheita e apenas com dados públicos disponíveis nesse mês. Para isso, integrou o rendimento municipal do IBGE, o clima do INMET e do NASA POWER, o ONI e um balanço hídrico do solo, e comparou regressão linear, Random Forest e Gradient Boosting com linhas de base históricas, em validações que respeitam a data de publicação dos dados.
 
 \subsection{Síntese dos resultados}
 
-A resposta é positiva, com ressalvas. O modelo final, FL — uma regressão linear que soma ao patamar do município um desvio explicado pela chuva, pela umidade e pela seca extrema —, erra $\approx$19\% por município e $\approx$244 kg/ha na média estadual, com acurácia de 81,5\% deixando uma safra de fora e de 75,3\% no período de secas de 2021--2025, contra $\approx$70\% da média histórica, e RMSE 31\% e 11\% menor que o dela. A hipótese inicial, de que os modelos \emph{ensemble} superariam a regressão linear, não foi confirmada: com cerca de 20 safras e secas mais extremas que as do histórico, os ganhos vieram da forma de representar o clima e o patamar — clima por subperíodo, patamar só com as safras publicadas, clima em grade e um termo de seca extrema —, e não da troca de algoritmo. A chuva e a umidade de dezembro a fevereiro são as variáveis mais associadas ao desvio do rendimento.
+O rendimento municipal pode ser previsto nessa data, com ressalvas. O modelo final, FL (uma regressão linear que soma ao patamar do município um desvio explicado pela chuva, pela umidade e pela seca extrema), erra $\approx$19\% por município e $\approx$244 kg/ha na média estadual, com acurácia de 81,5\% deixando uma safra de fora e de 75,3\% no corte temporal (secas de 2021--2025), contra $\approx$70\% da média histórica, e RMSE 31\% e 11\% menor que o dela. A hipótese inicial, de que os modelos \emph{ensemble} superariam a regressão linear, não foi confirmada: com 20 safras e secas mais extremas que as do histórico, os ganhos vieram da forma de representar o clima e o patamar (clima por subperíodo, patamar só com as safras publicadas, clima em grade e um termo de seca extrema), e não da troca de algoritmo. A chuva e a umidade de dezembro a fevereiro são as variáveis mais associadas ao desvio do rendimento.
 
 \subsection{Contribuições e limitações}
 
-As contribuições são uma base municipal integrada e reprodutível, um protocolo de previsão que usa só dados publicados na data de emissão e uma previsão real da safra 2026, que ficou 23\% abaixo da estimativa do IBGE e expôs uma limitação do modelo, cuja causa, possivelmente a qualidade do clima de entrada, ainda precisa ser investigada. Para 2027, sob o El Niño esperado, a perspectiva é de 2.831 kg/ha, acima do patamar de 2.300 kg/ha. As principais limitações são o erro ainda alto nas regiões de menor produtividade, a ausência de informações de manejo e de sanidade e a defasagem de publicação da PAM.
+As contribuições são uma base municipal integrada e reprodutível, um protocolo de previsão que usa só dados publicados na data de emissão e uma previsão fora da amostra da safra 2026, que ficou 23\% abaixo da estimativa do IBGE e expôs uma limitação do modelo, cuja causa, possivelmente a qualidade do clima de entrada, ainda precisa ser investigada. Para 2027, sob o El Niño esperado, a perspectiva é de 2.831 kg/ha, acima do patamar de 2.300 kg/ha. As principais limitações são o erro ainda alto nas regiões de menor rendimento, a ausência de informações de manejo e de sanidade e a defasagem de publicação da PAM; além disso, a previsão de 2026 usou no treino a PAM 2025, ainda não publicada em março daquele ano.
 
 \subsection{Etapas do TCC 2 e trabalhos futuros}
 
-O TCC 2 dá sequência às seis etapas da modelagem em três etapas (Figura \ref{fig:tcc2}): validar o clima de entrada com as estações do INMET e com outra reanálise e investigar a subestimativa de 2026 (Etapa 7); prever a safra 2027 em março de 2027 com o modelo FL, usando os dados publicados até esse mês (Etapa 8); e comparar a previsão com o LSPA de março e com o último LSPA publicado até junho de 2027, prazo do TCC 2 (Etapa 9). Nessa mesma safra, o modelo misto testado na seção \ref{sec:algoritmos} será comparado ao FL, que só será substituído se o ganho se confirmar. A validação do clima termina em fevereiro de 2027, e a fonte só será trocada se a nova reduzir o RMSE médio nas duas validações; caso contrário, mantém-se o NASA POWER e registra-se a limitação. A PAM 2026 e a PAM 2027 só serão divulgadas em setembro de 2027 e de 2028, depois desse prazo. A repetição do procedimento em novas safras não garante o mesmo desempenho: o FL subestimou a safra 2026 em cerca de 23\% em relação ao LSPA, e a causa ainda não foi investigada. A aplicação também depende da continuidade das bases públicas utilizadas e pode perder precisão em anos com clima diferente do observado no histórico. Por isso, a cada nova safra, a comparação entre a previsão e o resultado oficial deverá indicar se o desempenho se mantém e se o modelo precisa ser revisto. Além disso, ainda não há rotina automática: a repetição anual é feita com os notebooks do repositório, e a automação faz parte da futura ferramenta descrita ao final desta seção. Como trabalhos futuros, após o TCC 2, recomenda-se testar índices de vegetação por satélite (NDVI), para captar perdas que o clima não explica, como as de 2020 e 2026; buscar uma estimativa antecipada do rendimento da safra anterior por município, que reduziria a defasagem do patamar; e reavaliar os modelos de árvores à medida que a série de safras crescer. Esses passos formam a base lógica para uma futura ferramenta de apoio à decisão, atualizada a cada safra.
+O TCC 2 dá sequência às seis etapas da modelagem em três etapas (Figura \ref{fig:tcc2}): validar o clima de entrada com as estações do INMET e com outra reanálise e investigar a subestimativa de 2026 (Etapa 7); prever a safra 2027 em março de 2027 com o modelo FL, usando os dados publicados até esse mês (Etapa 8); e comparar a previsão com o LSPA de março e com o último LSPA publicado até junho de 2027, prazo do TCC 2 (Etapa 9). Nessa mesma safra, o modelo misto testado na seção \ref{sec:algoritmos} será comparado ao FL, que só será substituído se o ganho se confirmar. A validação do clima termina em fevereiro de 2027, e a fonte só será trocada se a nova reduzir o RMSE médio nas duas validações; caso contrário, mantém-se o NASA POWER e registra-se a limitação. A PAM 2026 e a PAM 2027 só serão divulgadas em setembro de 2027 e de 2028, depois desse prazo.
+
+A repetição do procedimento em novas safras não garante o mesmo desempenho: o FL subestimou a safra 2026 em cerca de 23\% em relação ao LSPA, e a causa ainda será investigada; a aplicação também depende da continuidade das bases públicas e pode perder precisão em anos com clima diferente do histórico. Por isso, a cada nova safra, a comparação entre a previsão e o resultado oficial deverá indicar se o modelo precisa ser revisto. Ainda não há rotina automática: a repetição anual é feita com os notebooks do repositório, e a automação faz parte da futura ferramenta descrita ao final desta seção. Como trabalhos futuros, após o TCC 2, recomenda-se testar índices de vegetação por satélite (NDVI), para captar perdas que o clima não explica, como as de 2020 e 2026; buscar uma estimativa antecipada do rendimento da safra anterior por município, que reduziria a defasagem do patamar; e reavaliar os modelos de árvores à medida que a série de safras crescer. Esses passos podem sustentar uma futura ferramenta de apoio à decisão, atualizada a cada safra.
 
 \begin{figure}[htbp]
 \centering
