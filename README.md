@@ -16,6 +16,10 @@ Data       | Descrição
 2026-10-30 | Ambiente padrão (.venv, Python 3.13) e instruções de execução dos notebooks
 2026-10-30 | Resultados da Etapa 5 atualizados após a reexecução com o patamar até Y−2
 2026-10-30 | Artigo no template de TCC da FCI (abnTeX2 e Word)
+2026-11-06 | Previsão indicada por mês e ano (março do ano da colheita), e não por dia
+2026-11-06 | Removida a recomendação de adubação, que não fazia parte do modelo
+2026-11-06 | Artigo: `.tex` igual ao Word, com texto resumido e Figura 6 (etapas do TCC 2)
+2026-11-06 | Etapa 7 (TCC 2): comparação parcial do clima do NASA POWER com o INMET
 -->
 
 Repositório público do projeto da disciplina, com o artigo científico
@@ -43,22 +47,23 @@ dos erros da anterior, e a sexta aplica o modelo final à próxima safra:
 | `modelagem.ipynb` (Etapa 1) | Baseline, Regressão Linear, Random Forest e Gradient Boosting com clima agregado (out–mar) | R² negativo no teste 2021–2025: o total de chuva não distingue as safras |
 | `modelagem_etapa2.ipynb` (Etapa 2) | Clima por subperíodo do ciclo (out–nov, dez–fev, mar) a partir do INMET diário | O clima passa a explicar as safras, mas a tendência extrapolada enviesa 2021–2025 |
 | `modelagem_etapa3.ipynb` (Etapa 3) | Patamar calculado só com as safras já publicadas na data da previsão (média móvel de 5 safras; para prever 2026, 2020–2024) + regressão linear reduzida | RMSE 873 / 714 kg/ha; supera as linhas de base na validação deixando uma safra de fora; contribuição dos fatores e erro por região |
-| `modelagem_etapa4.ipynb` (Etapa 4) | Balanço hídrico (Hargreaves–Samani + balde), limiares de seca extrema e recomendação de adubação | **Modelo final até a Etapa 4 (H2):** RMSE 870 / 706 kg/ha, R² 0,05 / 0,21; custo da defasagem de publicação (para prever 2026: patamar 2020–2024, publicado, × 2021–2025, hipotético) |
+| `modelagem_etapa4.ipynb` (Etapa 4) | Balanço hídrico (Hargreaves–Samani + balde) e limiares de seca extrema | **Modelo final até a Etapa 4 (H2):** RMSE 870 / 706 kg/ha, R² 0,05 / 0,21; custo da defasagem de publicação (para prever 2026: patamar 2020–2024, publicado, × 2021–2025, hipotético) |
 | `modelagem_etapa5_nasa_power.ipynb` (Etapa 5) | Clima do NASA POWER (grade, sem falhas) no lugar do INMET: comparação entre as fontes, modelos F, H2 e Gradient Boosting e combinações de F e H2 | Cobertura de ~5,2 mil para ~8,3 mil pares município–safra (+58%) e erro menor que o do INMET nas mesmas linhas. **Novo modelo final (FL = F + limiar de déficit):** RMSE 772 / 626 kg/ha, R² 0,28 / 0,40 |
 | `modelagem_etapa6_previsao_2026_2027.ipynb` (Etapa 6) | Validação dos cinco modelos com o patamar só das safras publicadas, previsão da safra 2026 por município (comparada ao LSPA/IBGE) e perspectiva da safra 2027 por cenários climáticos (El Niño) | **FL reconfirmado:** RMSE 772 / 626 kg/ha. Safra 2026: FL prevê 2.097 kg/ha, contra 2.734 kg/ha do LSPA (subestima ~23%). Safra 2027: mediana de 2.831 kg/ha nos cenários de El Niño |
+| `modelagem_etapa7_validacao_clima.ipynb` (Etapa 7, TCC 2) | Validação do clima de entrada: chuva do NASA POWER × estações do INMET, nos mesmos dias, e sensibilidade do FL | **Parcial (out–dez/2025):** em out–nov, NASA POWER 47 mm mais seco que o padrão histórico, mas a correção não explica a subestimativa de 2026; falta baixar o INMET de jan–mar/2026 |
 
 RMSE e R² são dados como "corte temporal (teste 2021–2025) / deixando uma
-safra de fora". A previsão de cada safra é emitida em 31 de março do ano da
-colheita e usa só dados publicados até essa data. Como o IBGE divulga o rendimento
+safra de fora". A previsão de cada safra é emitida em março do ano da
+colheita e usa só dados publicados até esse mês. Como o IBGE divulga o rendimento
 municipal (PAM) em setembro do ano seguinte à colheita:
 
 | Safra prevista | Emissão da previsão | Última PAM publicada | Patamar (5 safras) |
 |---|---|---|---|
-| 2026 | 31/03/2026 | 2024 (set/2025) | 2020–2024 |
-| 2027 | 31/03/2027 | 2025 (set/2026) | 2021–2025 |
+| 2026 | mar/2026 | 2024 (set/2025) | 2020–2024 |
+| 2027 | mar/2027 | 2025 (set/2026) | 2021–2025 |
 
 Na validação histórica vale a mesma regra: a safra 2022, por exemplo, é prevista
-em 31/03/2022 com o patamar 2016–2020. Nessas condições, o modelo H2 reduz o RMSE
+em março de 2022 com o patamar 2016–2020. Nessas condições, o modelo H2 reduz o RMSE
 em 22% em relação à média histórica do município na validação deixando uma safra
 de fora e empata com ela no corte 2021–2025, período de secas consecutivas.
 Detalhes em [`artigo/`](artigo/).
@@ -82,10 +87,9 @@ mudam levemente os resultados.
    `..\.venv\Scripts\python.exe -m jupyter nbconvert --to notebook --execute --inplace <notebook>.ipynb`.
    Ordem: `analise_exploratoria`, `modelagem`, `modelagem_etapa2`,
    `modelagem_etapa3`, `modelagem_etapa4`, `modelagem_etapa5_nasa_power` e
-   `modelagem_etapa6_previsao_2026_2027`. A
+   `modelagem_etapa6_previsao_2026_2027` (e, no TCC 2, `modelagem_etapa7_validacao_clima`). A
    Etapa 2 gera `dataset/processed/clima_subperiodos_estacao_safra.csv`, usado
    pelas Etapas 3 a 5; a Etapa 4 gera
-   `dataset/processed/recomendacao_adubacao_safra2026.csv` e
    `dataset/processed/balanco_hidrico_estacao_safra.csv` (usado pela Etapa 5).
    Os dados do NASA POWER já estão em `dataset/raw/`; para baixá-los de novo,
    rode `.venv\Scripts\python.exe dataset/baixar_nasa_power.py` a partir da raiz do repositório
@@ -100,4 +104,4 @@ A fonte LaTeX, as figuras e a versão Word do artigo estão em
 ## Licença / Uso dos dados
 
 Este projeto utiliza exclusivamente dados públicos (IBGE/SIDRA, NOAA, INMET,
-NASA POWER, Embrapa/CQFS-RS-SC), agregados em nível municipal, sem dados pessoais.
+NASA POWER), agregados em nível municipal, sem dados pessoais.

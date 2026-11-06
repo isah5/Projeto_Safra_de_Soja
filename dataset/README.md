@@ -20,6 +20,7 @@ Data       | Autor           | Descrição
 2026-10-23 |                 | Adicionado o clima diário do NASA POWER (87 células da grade que cobrem os municípios do RS, 2000-2025), baixado por `dataset/baixar_nasa_power.py`; adicionados os arquivos processados de balanço hídrico das estações (Etapa 4) e de clima do NASA POWER por célula e safra (Etapa 5)
 2026-10-24 |                 | Adicionado o arquivo da Tabela 1612 com os símbolos do SIDRA (`-`, `...`), que distingue sem cultivo, dado não disponível e perda total; coluna `situacao_ibge` no painel
 2026-10-29 |                 | Complementos para a previsão da safra 2026 (Etapa 6): NASA POWER jan–mai/2026, ONI de 2026 e estimativas do LSPA/IBGE (tabela 6588); arquivos de previsão 2026 e perspectiva 2027 por município; `oni_media_safra` do painel corrigido (tinha voltado à versão anterior à correção do ONI por safra no merge da main na develop)
+2026-11-06 |                 | Removidas as tabelas da Embrapa e o arquivo de recomendação de adubação, que não faziam parte do modelo
 -->
 
 # Dataset — descrição
@@ -33,7 +34,6 @@ Data       | Autor           | Descrição
 | INMET — BDMEP | Precipitação total diária e temperatura (máx/média/mín) diária, por estação automática | 2000-01-01 a 2025-12-31 | Estação meteorológica (diário) | https://bdmep.inmet.gov.br/ | ✅ baixado (manual, via portal BDMEP, em duas etapas) — `dataset/raw/inmet_estacoes_RS_consolidado_2000_2025.csv` (dados diários) + `dataset/raw/inmet_estacoes_metadados.csv` (lat/long/situação de cada estação) |
 | NASA POWER (NASA/LaRC) | Chuva, temperatura média/máxima/mínima, ponto de orvalho e umidade relativa média diários (reanálise MERRA-2) | 2000–2025 (só out–mai) | Célula da grade de 0,5° × 0,625° (diário) | https://power.larc.nasa.gov/ | ✅ baixado (script `dataset/baixar_nasa_power.py`) — `dataset/raw/nasa_power_rs_2000_2025.csv` + `dataset/raw/nasa_power_celulas_municipios_rs.csv` |
 | IBGE/SIDRA — Tabela 6588 (LSPA) | Estimativa mensal de área, produção e rendimento médio de soja (Levantamento Sistemático da Produção Agrícola) | Levantamentos de set/2007 a set/2026 (e mar/2026) | Estado (RS) | https://sidra.ibge.gov.br/tabela/6588 | ✅ baixado — `dataset/raw/ibge_sidra_6588_lspa_soja_rs.csv` |
-| Embrapa / CQFS-RS/SC | Recomendação de adubação fosfatada e potássica para soja, por classe de teor de P/K no solo | — | Classe de teor de P/K no solo (não por município) | https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192 | ✅ baixado — `dataset/raw/embrapa_tabela_2.3_interpretacao_teor_p_k.csv` + `dataset/raw/embrapa_tabela_2.4_recomendacao_p2o5_k2o_soja.csv` |
 
 ### Como os dados do IBGE foram obtidos
 
@@ -173,48 +173,6 @@ ausente.
   `python dataset/baixar_nasa_power.py 20260101 20260531 nasa_power_rs_2026.csv`,
   sem nenhum valor ausente.
 
-### Como os dados de adubação fosfatada foram obtidos
-
-O manual original da CQFS-RS/SC (2016), citado nas Referências do artigo, é
-comercializado como livro impresso pela SBCS-Núcleo Regional Sul
-(sbcs-nrs.org.br) e **não tem PDF gratuito oficial**. As mesmas tabelas de
-recomendação (a base técnica é a mesma comissão/manual) são reproduzidas
-livremente pela Embrapa em "Indicações Técnicas para a Cultura da Soja no
-Rio Grande do Sul e em Santa Catarina", disponível sem custo no repositório
-oficial Infoteca-e da Embrapa:
-<https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1011192>
-(edição safras 2014/2015 e 2015/2016, que cita "MANUAL... (2004)" como
-fonte primária das tabelas — a estrutura de classes e doses é a mesma usada
-nas edições posteriores do manual, incluindo a de 2016).
-
-Duas tabelas foram transcritas dessas páginas (Tabela 2.3 e Tabela 2.4 do
-documento):
-
-- `dataset/raw/embrapa_tabela_2.3_interpretacao_teor_p_k.csv` — classifica o
-  teor de P e K do solo (mg/dm³) em Muito baixo/Baixo/Médio/Alto/Muito alto,
-  variando conforme a classe textural do solo (argila) e a CTC a pH 7,0.
-- `dataset/raw/embrapa_tabela_2.4_recomendacao_p2o5_k2o_soja.csv` — dose de
-  P₂O₅ e K₂O (kg/ha) recomendada por classe de teor, para 1º e 2º cultivo
-  após a adubação corretiva, considerando rendimento esperado de 2 t/ha
-  (para rendimentos maiores, soma-se 15 kg/ha de P₂O₅ e 25 kg/ha de K₂O por
-  tonelada adicional). Há também uma recomendação pontual de enxofre (20 kg
-  S/ha quando o teor no solo é menor que 10 mg/dm³), registrada aqui como
-  nota e não como tabela.
-
-**Importante — isto não é uma série por município/ano**: ao contrário do
-IBGE, ONI e INMET, esta fonte é uma **tabela de referência agronômica**
-(dose recomendada em função do teor de P/K no solo), não uma medição
-histórica. Não existe base pública de "quanto fósforo foi realmente
-aplicado" por município e safra. Por isso, **as tabelas não entram como
-variável de previsão** (uma dose fixa por município não acrescenta
-informação ao modelo, que já capta o que é fixo de cada município pelo
-patamar). Elas são usadas na **aplicação do modelo**
-(`notebooks/modelagem_etapa4.ipynb`, seção 11): o rendimento esperado de
-cada município é combinado com a Tabela 2.4 para gerar a dose de P₂O₅ e K₂O
-para **cada uma das cinco classes de teor**, e a Tabela 2.3 orienta o
-produtor a identificar a sua classe pela própria análise de solo. Nenhuma
-suposição sobre o solo dos municípios é feita.
-
 ### Coordenadas dos municípios (auxiliar, para casar com o INMET)
 
 O IBGE não expõe latitude/longitude na API usada para a Tabela 1612, mas o
@@ -243,8 +201,7 @@ Salvo em `dataset/raw/ibge_municipios_rs_regioes.csv` (497 municípios, colunas
 - Arquivo(s) brutos: `dataset/raw/`
 - Arquivo processado/final: `dataset/processed/painel_municipio_safra.csv` —
   gerado pelo notebook `notebooks/analise_exploratoria.ipynb`, junta IBGE +
-  clima INMET (estação mais próxima) + ONI por safra. Não inclui a
-  adubação fosfatada (ver seção acima).
+  clima INMET (estação mais próxima) + ONI por safra.
 - `dataset/processed/clima_subperiodos_estacao_safra.csv` — gerado por
   `notebooks/modelagem_etapa2.ipynb` a partir do INMET diário; uma linha por
   estação × safra (chave `codigo_estacao` + `ano_safra`, que liga ao painel), com
@@ -263,11 +220,6 @@ Salvo em `dataset/raw/ibge_municipios_rs_regioes.csv` (497 municípios, colunas
   por célula × safra (chave `celula` + `ano_safra`; a célula de cada município está em
   `dataset/raw/nasa_power_celulas_municipios_rs.csv`), com as mesmas variáveis do clima
   por subperíodo e do balanço hídrico das estações.
-- `dataset/processed/recomendacao_adubacao_safra2026.csv` — gerado por
-  `notebooks/modelagem_etapa4.ipynb`; resultado da aplicação do modelo, não
-  insumo. Uma linha por município × classe de teor de P/K no solo (429
-  municípios × 5 classes), com o rendimento esperado para a safra 2026 (média
-  de 2020–2024, as safras já publicadas pelo IBGE no plantio de out–nov/2025) e a dose de P₂O₅ e K₂O (kg/ha) no 1º e 2º cultivo.
 - `dataset/processed/previsao_safra_2026_municipio.csv` — gerado por
   `notebooks/modelagem_etapa6_previsao_2026_2027.ipynb`; resultado do modelo, não
   insumo. Uma linha por município que colheu soja em 2025 (434), com a área plantada
@@ -292,7 +244,6 @@ Salvo em `dataset/raw/ibge_municipios_rs_regioes.csv` (497 municípios, colunas
 | `oni_media_safra` | ONI médio na janela semeadura–colheita | índice | NOAA/CPC |
 | `precipitacao_total_safra_mm` | Soma da precipitação diária na janela semeadura–colheita (estação mais próxima) | mm | INMET |
 | `temperatura_media_safra_c` | Média da temperatura média diária na janela semeadura–colheita | °C | INMET |
-| `dose_p2o5_recomendada` | Dose de P₂O₅ recomendada por classe de solo | kg/ha | Embrapa / CQFS-RS/SC |
 | ... | [completar conforme colunas finais geradas nos notebooks] | | |
 
 Colunas brutas disponíveis em `inmet_estacoes_RS_consolidado_2000_2025.csv` (antes da
@@ -309,8 +260,6 @@ RAJADA MAXIMA DIARIA (AUT)(m/s)`, `VENTO, VELOCIDADE MEDIA DIARIA
 
 ## Limitações conhecidas
 
-- Dados de adubação são **recomendações agronômicas por classe de solo**, não
-  consumo real por produtor/município/ano.
 - Municípios criados por desmembramento ao longo do período (2000–2025)
   podem ter séries históricas incompletas.
 - A estação INMET usada por município é a mais próxima disponível, podendo
